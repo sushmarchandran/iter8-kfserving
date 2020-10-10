@@ -17,9 +17,7 @@ git clone https://github.com/iter8-tools/iter8-kfserving.git
 3. Install Istio, KNative Serving, KNative Monitoring, and KFServing.
 ```
 cd iter8-kfserving
-mkdir tmp
-cd tmp
-
+./bin/install-everything.sh
 ```
 
 4. Check KFServing pods. Ctrl-c out of this command once you verify pods are running.

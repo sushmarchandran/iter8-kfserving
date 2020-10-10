@@ -17,7 +17,9 @@ git clone https://github.com/iter8-tools/iter8-kfserving.git
 3. Install Istio, KNative Serving, KNative Monitoring, and KFServing.
 ```
 cd iter8-kfserving
-source bin/install-everything.sh
+mkdir tmp
+cd tmp
+
 ```
 
 4. Check KFServing and KNative monitoring installations

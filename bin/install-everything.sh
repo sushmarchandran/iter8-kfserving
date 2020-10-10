@@ -1,4 +1,4 @@
-#!/usr/bin/env bash
+set -e 
 
 mkdir .tmp
 
@@ -8,6 +8,6 @@ git clone https://github.com/kubeflow/kfserving.git
 
 cd kfserving
 
-source ./hack/quick_install.sh
+./hack/quick_install.sh
 
 kubectl apply --filename https://github.com/knative/serving/releases/download/v0.18.0/monitoring-metrics-prometheus.yaml

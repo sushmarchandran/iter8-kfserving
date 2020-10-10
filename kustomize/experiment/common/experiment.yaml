@@ -1,0 +1,34 @@
+apiVersion: iter8.tools/v1alpha3
+kind: Experiment
+metadata:
+  name: sklearn-iris-experiment-VERSION
+spec:
+  targetKey: sklearn-iris
+  versions:
+    baseline:
+      name: default # optional; targetWeightFieldRef is absent for baseline
+    candidates:
+      - name: canary
+        targetWeightFieldRef:
+          # always patch this resource
+          objRef:
+            kind: InferenceService # what if this disappears in the middle of an experiment?
+            name: sklearn-iris
+            namespace: default            
+          fieldPath: spec.canaryTrafficPercent # always patch this field within the resource
+          # field paths have the same issue as well.
+
+# - match query instead of index?
+# -- Why watch? Simply fetch and check weightFieldRefs?
+# -- More slow detection?
+
+# -- additional sanity check with conditions on the object?
+
+# What if the pods are not ready yet? What if the pods had failed?
+
+# — State of the object can change in the middle of the experiment?
+# — RBAC
+
+# How will users use it / sanity check / 
+
+# Subresources => changes to CR.

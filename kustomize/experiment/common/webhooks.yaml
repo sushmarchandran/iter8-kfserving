@@ -1,0 +1,8 @@
+apiVersion: iter8.tools/v1alpha3
+kind: Experiment
+metadata:
+  name: sklearn-iris-experiment-VERSION
+spec:
+    webhooks: # optional; these URLs that will be notified with appropriate CloudEvents.
+      initialization: https://initialize.me  
+      termination: https://terminate.me

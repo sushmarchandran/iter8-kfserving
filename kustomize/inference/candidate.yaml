@@ -1,0 +1,12 @@
+apiVersion: "serving.kubeflow.org/v1alpha2"
+kind: "InferenceService"
+metadata:
+  name: sklearn-iris
+  labels:
+    version: VERSION
+spec:
+  canaryTrafficPercent: 0    
+  canary:
+    predictor:
+      sklearn:
+        storageUri: STORAGE_URI

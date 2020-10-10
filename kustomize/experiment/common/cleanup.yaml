@@ -1,0 +1,18 @@
+apiVersion: iter8.tools/v1alpha3
+kind: Experiment
+metadata:
+  name: sklearn-iris-experiment-VERSION
+spec:
+    cleanupJobSpec:
+        template:
+            spec:
+              containers:
+              - name: cleanup
+                image: iter8-kubectl # image with kubectl
+                command: 
+                    - $PATH_TO_KUSTOMIZE_FOLDER/scripts/promote.sh
+                env:
+                    - name: PATH_TO_KUSTOMIZE_FOLDER
+                      value: "/tekton/created/workspace"
+              restartPolicy: Never # if start up fails, experiment will be terminated (aborted).
+            backoffLimit: 4

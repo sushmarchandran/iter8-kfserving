@@ -1,0 +1,10 @@
+apiVersion: iter8.tools/v1alpha3
+kind: Experiment
+metadata:
+  name: sklearn-iris-experiment-VERSION
+spec:
+    criteria:
+        - metric: iter8_mean_latency
+          threshold:
+              type: absolute
+              value: 200

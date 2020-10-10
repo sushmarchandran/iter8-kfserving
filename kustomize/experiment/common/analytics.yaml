@@ -1,0 +1,25 @@
+apiVersion: iter8.tools/v1alpha3
+kind: Experiment
+metadata:
+  name: sklearn-iris-experiment-VERSION
+spec:
+    analyticProviders: # queries are stacked vertically. Query responses are stacked horizontally.
+        - name: metrics
+          url: http://iter8-analytics:8080/metrics
+          configmap: # Optional. But, the above url will not function without it.
+            name: iter8-metrics
+            namespace: default
+        # - name: metricsAggregator
+        #   url: http://iter8-analytics:8080/metrics_aggregator
+        #   # Note the absence of the configmap. Not needed for this url.
+        # - name: beliefs
+        #   url: http://iter8-analytics:8080/beliefs
+        # - name: versionAssessment
+        #   url: http://iter8-analytics:8080/version_assessment
+        - name: winner-assessment
+          url: http://iter8-analytics:8080/winner_assessment
+        - name: weights
+          url: http://iter8-analytics:8080/epsilongreedy
+
+# 
+# Complexity

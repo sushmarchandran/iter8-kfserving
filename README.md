@@ -22,8 +22,12 @@ cd tmp
 
 ```
 
-4. Check KFServing and KNative monitoring installations
+4. Check KFServing pods. Ctrl-c out of this command once you verify pods are running.
 ```
 kubectl get pods -n kfserving-system --watch
+```
+
+5. Check KNative monitoring pods. Ctrl-c out of this command once you verify pods are running.
+```
 kubectl get pods -n knative-monitoring --watch
 ```

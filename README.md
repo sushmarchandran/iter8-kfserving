@@ -5,14 +5,17 @@
 ## Quick start on Minikube
 
 1. Start Minikube with sufficient resources.
-
 ```
 minikube start --memory=16384 --cpus=4 --kubernetes-version=v1.17.5
 ```
 
-2. Install Istio, KNative Serving, and KFServing.
+2. Git clone iter8-kfserving repo.
 ```
-source <(curl -s https://raw.githubusercontent.com/kubeflow/kfserving/master/hack/quick_install.sh)
+https://github.com/iter8-tools/iter8-kfserving.git
 ```
 
-3. Install KNative Monitoring.
+3. Install Istio, KNative Serving, KNative Monitoring, and KFServing.
+```
+cd iter8-kfserving
+source install-bundle.sh
+```

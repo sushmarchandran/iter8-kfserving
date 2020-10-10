@@ -6,6 +6,15 @@
 
 1. Start Minikube with sufficient resources.
 
-```minikube start --memory=16384 --cpus=4 --kubernetes-version=v1.17.5```
+```
+minikube start --memory=16384 --cpus=4 --kubernetes-version=v1.17.5
+```
+
+2. Install Istio, KNative Serving and Monitoring, and KFServing.
+```
+source <(curl -s )
+```
+
+
 
 

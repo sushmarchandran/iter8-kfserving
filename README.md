@@ -12,7 +12,7 @@ minikube start --memory=16384 --cpus=4 --kubernetes-version=v1.17.5
 
 2. Install Istio, KNative Serving and Monitoring, and KFServing.
 ```
-source <(curl -s https://raw.githubusercontent.com/iter8-tools/iter8-kfserving/main/bin/quickstartinstall.sh?token=ABIQFRKNXH5UQFLPTNMXHUK7QGXX2)
+source <(curl -s https://raw.githubusercontent.com/iter8-tools/iter8-kfserving/main/bin/quickstartinstall.sh?token=ABIQFRPMQOBRTGOKIQUUPHS7QGYGQ)
 ```
 
 

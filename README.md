@@ -19,3 +19,9 @@ https://github.com/iter8-tools/iter8-kfserving.git
 cd iter8-kfserving
 source bin/install-everything.sh
 ```
+
+4. Check KFServing and KNative monitoring installations
+```
+kubectl get pods -n kfserving-system --watch
+kubectl get pods -n knative-monitoring --watch
+```

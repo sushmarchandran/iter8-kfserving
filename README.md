@@ -20,7 +20,7 @@ cd iter8-kfserving
 ./bin/install-everything.sh
 ```
 
-4. Check KFServing pods. Ctrl-c out of this command once you verify pods are running.
+4. Check KFServing controller pod. Ctrl-c out of this command once you verify pods are running.
 ```
 kubectl get pods -n kfserving-system --watch
 ```

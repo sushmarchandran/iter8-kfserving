@@ -1,7 +1,7 @@
 {
     "schemas": [
         {
-            "name": "prom_singleton",
+            "name": "prom_singleton_vector",
             "data": {
                 "$schema": "http://json-schema.org/schema#",
                 "$id": "http://iter8.tools/schemas/prom_singleton.json",
@@ -32,12 +32,14 @@
                                             "minItems": 2,
                                             "maxItems": 2
                                         }
-                                    }
+                                    },
+                                    "required": ["value"]
                                 },
                                 "minItems": 1,
                                 "maxItems": 1
                             }
-                        }
+                        },
+                        "required": ["resultType", "result"]
                     }
                 },
                 "required": [
@@ -49,7 +51,7 @@
         {
             "name": "scalar",
             "data": {
-                "type": "string"
+                "type": "number"
             }
         }
     ],

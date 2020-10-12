@@ -29,3 +29,36 @@ kubectl get pods -n kfserving-system --watch
 ```
 kubectl get pods -n knative-monitoring --watch
 ```
+
+6. Create baseline model.
+```
+kubectl create ns kfserving-test
+kubectl apply -f demo/sklearn-iris.yaml -n kfserving-test
+```
+
+7. Check iter8 metric configmaps are installed.
+```
+kubectl get cm -n iter8-kfserving
+```
+
+8. Setup InferenceService for canary analysis.
+```
+cp demo/candidate.yaml inferenceservice/candidate.yaml
+kubectl get inferenceservice -n kfserving-test -o yaml > inferenceservice/baseline.yaml
+kubectl kustomize inferenceservice | kubectl apply -f -
+```
+
+9. Setup an `automated canary release with SLOs` experiment.
+```
+kubectl kustomize experiment/canary | kubectl apply -f -
+```
+
+10. As an alternative to step 9, you can set up an `automated A/B rollout with SLOs` experiment as follows.
+```
+kubectl kustomize experiment/ab | kubectl apply -f -
+```
+
+11. As an alternative to steps 9 and 10, you can set up an `automated BlueGreen deployment` experiment as follows.
+```
+kubectl kustomize experiment/bluegreen | kubectl apply -f -
+```

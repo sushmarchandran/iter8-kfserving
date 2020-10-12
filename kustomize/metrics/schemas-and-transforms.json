@@ -1,10 +1,10 @@
 {
     "schemas": [
         {
-            "name": "prom_singleton_vector",
+            "name": "prometheus_singleton_vector",
             "data": {
                 "$schema": "http://json-schema.org/schema#",
-                "$id": "http://iter8.tools/schemas/prom_singleton.json",
+                "$id": "http://iter8.tools/kfserving/schemas/prometheus_singleton.json",
                 "type": "object",
                 "properties": {
                     "status": {
@@ -51,21 +51,25 @@
         {
             "name": "scalar",
             "data": {
+                "$schema": "http://json-schema.org/schema#",
+                "$id": "http://iter8.tools/kfserving/schemas/scalar.json",
                 "type": "number"
             }
         }
     ],
     "transforms": [
         {
+            "$id": "http://iter8.tools/kfserving/transforms/jq/number_extractor",
             "name": "number_extractor",
             "data": ".data.result[0].value[1] | tonumber"
         }
     ],
-    "vtx_sequences": [
+    "formats": [
         {
+            "$id": "http://iter8.tools/kfserving/formats/prometheus",
             "name": "prometheus",
             "sequence": [
-                "prom_singleton_vector",
+                "prometheus_singleton_vector",
                 "number_extractor",
                 "scalar"
             ]

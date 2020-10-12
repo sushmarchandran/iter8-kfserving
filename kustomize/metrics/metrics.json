@@ -7,7 +7,7 @@
             "params": {
                 "query": "sum(increase(revision_app_request_latencies_count{service_name=~'.*name'}[$interval])) or vector(0)"
             },
-            "vtx_sequence": "prometheus",
+            "format": "prometheus",
             "type": "counter"
         },
         {
@@ -17,7 +17,7 @@
             "params": {
                 "query": "(sum(increase(revision_app_request_latencies_sum{service_name=~'.*name'}[$interval])) or vector(0)) / (sum(increase(revision_app_request_latencies_count{service_name=~'.*name'}[$interval])) or vector(0))"
             },
-            "vtx_sequence": "prometheus",
+            "format": "prometheus",
             "type": "mean",
             "sample_size": "request_count"
         },
@@ -28,7 +28,7 @@
             "params": {
                 "query": "query=histogram_quantile(0.95, sum(rate(revision_app_request_latencies_bucket{service_name=~'.*name'}[$interval])) by (le))"
             },
-            "vtx_sequence": "prometheus",
+            "format": "prometheus",
             "sample_size": "request_count",
             "type": "gauge"
         },
@@ -38,7 +38,7 @@
             "params": {
                 "query": "sum(increase(revision_app_request_latencies_count{response_code_class!='2xx', service_name=~'.*$name'}[$interval])) or vector(0)"
             },
-            "vtx_sequence": "prometheus",
+            "format": "prometheus",
             "type": "counter"
         },
         {
@@ -48,7 +48,7 @@
             "params": {
                 "query": "(sum(increase(revision_app_request_latencies_count{response_code_class!='2xx', service_name=~'.*$name'}[$interval])) or vector(0)) / (sum(increase(revision_app_request_latencies_count{service_name=~'.*name'}[$interval])) or vector(0))"
             },
-            "vtx_sequence": "prometheus",
+            "format": "prometheus",
             "type": "fraction",
             "sample_size": "request_count"
         }

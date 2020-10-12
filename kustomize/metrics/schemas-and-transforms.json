@@ -1,0 +1,72 @@
+{
+    "schemas": [
+        {
+            "name": "prom_singleton",
+            "data": {
+                "$schema": "http://json-schema.org/schema#",
+                "$id": "http://iter8.tools/schemas/prom_singleton.json",
+                "type": "object",
+                "properties": {
+                    "status": {
+                        "type": "string",
+                        "enum": [
+                            "success"
+                        ]
+                    },
+                    "data": {
+                        "type": "object",
+                        "properties": {
+                            "resultType": {
+                                "type": "string",
+                                "enum": [
+                                    "vector"
+                                ]
+                            },
+                            "result": {
+                                "type": "array",
+                                "items": {
+                                    "type": "object",
+                                    "properties": {
+                                        "value": {
+                                            "type": "array",
+                                            "minItems": 2,
+                                            "maxItems": 2
+                                        }
+                                    }
+                                },
+                                "minItems": 1,
+                                "maxItems": 1
+                            }
+                        }
+                    }
+                },
+                "required": [
+                    "status",
+                    "data"
+                ]
+            }
+        },
+        {
+            "name": "scalar",
+            "data": {
+                "type": "string"
+            }
+        }
+    ],
+    "transforms": [
+        {
+            "name": "number_extractor",
+            "data": ".data.result[0].value[1] | tonumber"
+        }
+    ],
+    "vtx_sequences": [
+        {
+            "name": "prometheus",
+            "sequence": [
+                "prom_singleton_vector",
+                "number_extractor",
+                "scalar"
+            ]
+        }
+    ]
+}

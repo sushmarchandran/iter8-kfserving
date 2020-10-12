@@ -1,0 +1,20 @@
+apiVersion: tekton.dev/v1beta1
+kind: Task
+metadata:
+  name: promote-and-cleanup
+spec:
+  params:
+    - name: experimentID
+      type: string
+      description: The unique name of the kfserving-iter8 canary release experiment
+  steps:
+    - name: promote
+      image: docker.io/iter8/kfserving-cli
+      command: ["kubectl", "iter8", "rollout"]
+      args:
+        - --experiment=$(params.experimentID)
+    - name: cleanup
+        image: docker.io/iter8/kfserving-cli
+        command: ["kubectl", "iter8", "cleanup"]
+        args:
+          - --experiment=$(params.experimentID)

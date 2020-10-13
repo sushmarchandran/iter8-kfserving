@@ -4,6 +4,6 @@ metadata:
   name: sklearn-iris-experiment-VERSION
 spec:
     duration:
-        maxIterations: 8 # default. Omitting this implies infinite horizon experiment.
-        interval: 20s # default.
-        phase: normal # Optional. Default = normal; paused / terminated are other possible values.
+        maxIterations: 8
+        interval: 20s
+        phase: normal

@@ -3,6 +3,6 @@ kind: Experiment
 metadata:
   name: sklearn-iris-experiment-VERSION
 spec:
-    webhooks: # optional; these URLs that will be notified with appropriate CloudEvents.
+    webhooks:
       initialization: https://initialize.me  
       termination: https://terminate.me

@@ -8,11 +8,11 @@ spec:
             spec:
               containers:
               - name: cleanup
-                image: iter8-kubectl # image with kubectl
+                image: iter8-kubectl
                 command: 
                     - $PATH_TO_KUSTOMIZE_FOLDER/scripts/promote.sh
                 env:
                     - name: PATH_TO_KUSTOMIZE_FOLDER
                       value: "/tekton/created/workspace"
-              restartPolicy: Never # if start up fails, experiment will be terminated (aborted).
+              restartPolicy: Never
             backoffLimit: 4

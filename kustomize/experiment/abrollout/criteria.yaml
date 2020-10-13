@@ -8,5 +8,5 @@ spec:
           threshold:
             type: absolute
             value: 200
-        - metric: user_engagement
+        - metric: container-memory-usage
           is_reward: True

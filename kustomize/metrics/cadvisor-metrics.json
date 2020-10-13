@@ -1,0 +1,109 @@
+{
+    "telemetry_url": "https://prometheus:9090/v1/api/query",
+    "metrics": [
+        {
+            "name": "container_throttled_seconds_total",
+            "description": "Total time duration the container has been throttled",
+            "units": "seconds",
+            "params": {
+                "query": "container_cpu_cfs_throttled_seconds_total{container='kfserving-container', id=~'/kubepods.*', pod=~'.*$name.*'} or on() vector(0)"
+            },
+            "format": "prometheus",
+            "type": "counter"
+        },
+        {
+            "name": "container_cpu_load_average_10s",
+            "description": "Value of container cpu load average over the last 10 seconds",
+            "params": {
+                "query": "container_cpu_load_average_10s{container='kfserving-container', id=~'/kubepods.*', pod=~'.*$name.*'}"
+            },
+            "format": "prometheus",
+            "type": "gauge"
+        },
+        {
+            "name": "container_fs_io_time_seconds_total",
+            "description": "Cumulative count of seconds spent doing I/Os",
+            "units": "seconds",
+            "params": {
+                "query": "container_fs_io_time_seconds_total{container='kfserving-container', id=~'/kubepods.*', pod=~'.*$name.*'} or on() vector(0)"
+            },
+            "format": "prometheus",
+            "type": "counter"
+        },
+        {
+            "name": "container_memory_usage_bytes",
+            "description": "Current memory usage, including all memory regardless of when it was accessed",
+            "units": "bytes",
+            "params": {
+                "query": "container_memory_usage_bytes{container='kfserving-container', id=~'/kubepods.*', pod=~'.*$name.*'}"
+            },
+            "format": "prometheus",
+            "type": "gauge"
+        },
+        {
+            "name": "container_memory_failcnt",
+            "description": "Number of memory usage hits limits",
+            "params": {
+                "query": "container_memory_failcnt{container='kfserving-container', id=~'/kubepods.*', pod=~'.*$name.*'} or on() vector(0)"
+            },
+            "format": "prometheus",
+            "type": "counter"
+        },
+        {
+            "name": "container_network_receive_errors_total",
+            "description": "Cumulative count of errors encountered while receiving",
+            "params": {
+                "query": "container_network_receive_errors_total{container='kfserving-container', id=~'/kubepods.*', pod=~'.*$name.*'} or on() vector(0)"
+            },
+            "format": "prometheus",
+            "type": "counter"
+        },        
+        {
+            "name": "container_network_transmit_errors_total",
+            "description": "Cumulative count of errors encountered while transmitting",
+            "params": {
+                "query": "container_network_transmit_errors_total{container='kfserving-container', id=~'/kubepods.*', pod=~'.*$name.*'} or on() vector(0)"
+            },
+            "format": "prometheus",
+            "type": "counter"
+        },        
+        {
+            "name": "container_processes",
+            "description": "Number of processes running inside the container",
+            "params": {
+                "query": "container_processes{container='kfserving-container', id=~'/kubepods.*', pod=~'.*$name.*'}"
+            },
+            "format": "prometheus",
+            "type": "gauge"
+        },
+        {
+            "name": "container_tasks_state",
+            "description": "Number of tasks in given state (sleeping, running, stopped, uninterruptible, or ioawaiting)",
+            "params": {
+                "query": "container_tasks_state{container='kfserving-container', id=~'/kubepods.*', pod=~'.*$name.*', state='running'}"
+            },
+            "format": "prometheus",
+            "type": "gauge"
+        },
+        {
+            "name": "container_start_time_seconds",
+            "description": "Start time of the container since unix epoch",
+            "units": "seconds",
+            "params": {
+                "query": "container_start_time_seconds{container='kfserving-container', id=~'/kubepods.*', pod=~'.*$name.*'}"
+            },
+            "format": "prometheus",
+            "type": "gauge"
+        },
+        {
+            "name": "container_duration",
+            "description": "Time elapsed since this container started",
+            "units": "seconds",
+            "params": {
+                "query": "(time() - container_start_time_seconds{container='kfserving-container', id=~'/kubepods.*', pod=~'.*$name.*'}) or on() vector(0)"
+            },
+            "format": "prometheus",
+            "type": "counter"
+        }
+    ]
+}

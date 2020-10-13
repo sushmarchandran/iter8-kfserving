@@ -5,7 +5,7 @@
             "name": "request_count",
             "description": "Number of requests",
             "params": {
-                "query": "sum(increase(revision_app_request_latencies_count{service_name=~'.*name'}[$interval])) or vector(0)"
+                "query": "sum(increase(revision_app_request_latencies_count{service_name=~'.*$name'}[$interval])) or on() vector(0)"
             },
             "format": "prometheus",
             "type": "counter"
@@ -13,20 +13,20 @@
         {
             "name": "mean_latency",
             "description": "Mean latency",
-            "units": "msec",
+            "units": "milli seconds",
             "params": {
-                "query": "(sum(increase(revision_app_request_latencies_sum{service_name=~'.*name'}[$interval])) or vector(0)) / (sum(increase(revision_app_request_latencies_count{service_name=~'.*name'}[$interval])) or vector(0))"
+                "query": "(sum(increase(revision_app_request_latencies_sum{service_name=~'.*$name'}[$interval])) or on() vector(0)) / (sum(increase(revision_app_request_latencies_count{service_name=~'.*$name'}[$interval])) or on() vector(0))"
             },
             "format": "prometheus",
-            "type": "mean",
+            "type": "gauge",
             "sample_size": "request_count"
         },
         {
             "name": "95th_percentile_tail_latency",
             "description": "95th percentile tail latency",
-            "units": "msec",
+            "units": "milli seconds",
             "params": {
-                "query": "query=histogram_quantile(0.95, sum(rate(revision_app_request_latencies_bucket{service_name=~'.*name'}[$interval])) by (le))"
+                "query": "query=histogram_quantile(0.95, sum(rate(revision_app_request_latencies_bucket{service_name=~'.*$name'}[$interval])) by (le))"
             },
             "format": "prometheus",
             "sample_size": "request_count",
@@ -36,7 +36,7 @@
             "name": "error_count",
             "description": "Number of error responses",
             "params": {
-                "query": "sum(increase(revision_app_request_latencies_count{response_code_class!='2xx', service_name=~'.*$name'}[$interval])) or vector(0)"
+                "query": "sum(increase(revision_app_request_latencies_count{response_code_class!='2xx', service_name=~'.*$name'}[$interval])) or on() vector(0)"
             },
             "format": "prometheus",
             "type": "counter"
@@ -44,12 +44,12 @@
         {
             "name": "error_rate",
             "description": "Fraction of requests with error responses",
-            "units": "msec",
+            "units": "milli seconds",
             "params": {
-                "query": "(sum(increase(revision_app_request_latencies_count{response_code_class!='2xx', service_name=~'.*$name'}[$interval])) or vector(0)) / (sum(increase(revision_app_request_latencies_count{service_name=~'.*name'}[$interval])) or vector(0))"
+                "query": "(sum(increase(revision_app_request_latencies_count{response_code_class!='2xx', service_name=~'.*$name'}[$interval])) or on() vector(0)) / (sum(increase(revision_app_request_latencies_count{service_name=~'.*$name'}[$interval])) or on() vector(0))"
             },
             "format": "prometheus",
-            "type": "fraction",
+            "type": "gauge",
             "sample_size": "request_count"
         }
     ]

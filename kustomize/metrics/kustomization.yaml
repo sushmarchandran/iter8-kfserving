@@ -1,7 +1,8 @@
 configMapGenerator:
 - name: iter8-metrics
   files:
-  - metrics.json
+  - revision-metrics.json
+  - cadvisor-metrics.json
 - name: schemas-and-transforms
   files:
   - schemas-and-transforms.json

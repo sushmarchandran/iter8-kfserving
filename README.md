@@ -48,20 +48,9 @@ kubectl get inferenceservice -n kfserving-test -o yaml > inferenceservice/baseli
 kubectl kustomize inferenceservice | kubectl apply -f -
 ```
 
-### Automated canary release with SLOs
-9. Setup an `automated canary release with SLOs` experiment.
+9. Setup an **automated canary release experiment with SLOs**.
 ```
 kubectl kustomize experiment/canary | kubectl apply -f -
 ```
 
-### Automated A/B rollout with SLOs
-10. As an alternative to step 9, you can set up an `automated A/B rollout with SLOs` experiment.
-```
-kubectl kustomize experiment/ab | kubectl apply -f -
-```
-
-### Automated BlueGreen deployment
-11. As an alternative to steps 9 and 10, you can set up an `automated BlueGreen deployment` experiment.
-```
-kubectl kustomize experiment/bluegreen | kubectl apply -f -
-```
+**Note:** As an alternative to step 9, you can choose to set up an **automated A/B rollout experiment with SLOs** using `kubectl kustomize experiment/ab | kubectl apply -f -` or you can choose to set up an **automated BlueGreen deployment experiment with SLOs** using `kubectl kustomize experiment/bluegreen | kubectl apply -f -`

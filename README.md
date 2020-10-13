@@ -53,4 +53,8 @@ kubectl kustomize inferenceservice | kubectl apply -f -
 kubectl kustomize experiment/canary | kubectl apply -f -
 ```
 
-**Note:** As an alternative to step 9, you can choose to set up an **automated A/B rollout experiment with SLOs** using `kubectl kustomize experiment/ab | kubectl apply -f -` or you can choose to set up an **automated BlueGreen deployment experiment with SLOs** using `kubectl kustomize experiment/bluegreen | kubectl apply -f -`
+**Note:** As an alternative to step 9, you can choose to set up an **automated A/B rollout experiment with SLOs** or an **automated BlueGreen deployment experiment with SLOs** using the following commands respectively. 
+```
+kubectl kustomize experiment/ab | kubectl apply -f - # A/B rollout
+kubectl kustomize experiment/bluegreen | kubectl apply -f - # BlueGreen deployment
+```

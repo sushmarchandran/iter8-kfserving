@@ -1,4 +1,0 @@
-resources:
-    - baseline.yaml
-patchesStrategicMerge:
-    - candidate.yaml

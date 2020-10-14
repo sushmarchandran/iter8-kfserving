@@ -4,14 +4,13 @@ metadata:
   name: sklearn-iris-experiment-VERSION
 spec:
   targetKey: sklearn-iris
+  supportingResources:
+  - kind: InferenceService
+    name: sklearn-iris
+    namespace: kfserving-test
   versions:
     baseline:
       name: default
     candidates:
       - name: canary
-        targetWeightFieldRef:
-          objRef:
-            kind: InferenceService
-            name: sklearn-iris
-            namespace: default            
-          fieldPath: spec.canaryTrafficPercent
+        weightFieldPath: spec.supportingResources[0].canaryTrafficPercent

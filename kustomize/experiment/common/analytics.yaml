@@ -4,16 +4,23 @@ metadata:
   name: sklearn-iris-experiment-VERSION
 spec:
     analyticProviders:
-        - name: metrics
-          url: http://iter8-analytics:8080/metrics
+        # - name: metrics
+        #   url: http://iter8-analytics:8080/metrics
+        #   configmaps:
+        #   - name: iter8-metrics
+        #     namespace: kfserving-test
+        #   - name: schemas-and-transforms
+        #     namespace: kfserving-test
+        # - name: metrics-aggregation
+        #   url: http://iter8-analytics:8080/aggregated_metrics
+        # - name: assessment
+        #   url: http://iter8-analytics:8080/assessments
+        # - name: action
+        #   url: http://iter8-analytics:8080/epsilongreedy
+        - name: iter8-analytics
+          url: http://iter8-analytics:8080/
           configmaps:
-          - name: iter8-metrics
-            namespace: kfserving-test
+          - name: iter8-kfserving-metrics
+            namespace: iter8-kfserving
           - name: schemas-and-transforms
-            namespace: kfserving-test
-        - name: metrics-aggregation
-          url: http://iter8-analytics:8080/aggregated_metrics
-        - name: assessments
-          url: http://iter8-analytics:8080/assessments
-        - name: actions
-          url: http://iter8-analytics:8080/epsilongreedy
+            namespace: iter8-kfserving

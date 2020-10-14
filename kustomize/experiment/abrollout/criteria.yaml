@@ -3,10 +3,15 @@ kind: Experiment
 metadata:
   name: sklearn-iris-experiment-VERSION
 spec:
-    criteria:
-        - metric: iter8_mean_latency
-          threshold:
-            type: absolute
-            value: 200
-        - metric: container-memory-usage
-          is_reward: True
+    reward:
+      metric: container-memory-usage-bytes
+      function: minimize
+    objectives:
+    - metric: mean_latency
+      upperLimit: 200
+      # type: absolute # by default; can also be relative.
+    - metric: error_rate
+      upperLimit: 0.01 # no more than 1% error will be tolerated
+    indicators:
+    - 95th_percentile_tail_latency
+    - container_throttled_seconds_total

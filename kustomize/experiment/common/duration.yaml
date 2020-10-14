@@ -6,4 +6,3 @@ spec:
     duration:
         maxIterations: 8
         interval: 20s
-        phase: normal

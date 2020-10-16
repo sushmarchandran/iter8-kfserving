@@ -8,6 +8,10 @@ spec:
   handlers:
     setup: setup-handler.kfserving-test.svc.cluster.local
     cleanup: cleanup-handler.kfserving-test.svc.cluster.local
-  webhooks:
-    init: https://initialize.me
-    terminate: https://terminate.me
+  notifications:
+    init:
+    - https://initialize.me
+    iteration:
+    - https://iterate.me
+    terminate:
+    - https://terminate.me

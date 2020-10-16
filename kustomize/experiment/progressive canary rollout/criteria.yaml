@@ -1,7 +1,7 @@
-apiVersion: iter8.tools/v1alpha3
-kind: Experiment
+apiVersion: iter8.tools/v1alpha1
+kind: ExperimentCriteria
 metadata:
-  name: sklearn-iris-experiment-VERSION
+  name: sklearn-iris-canary-experiment-criteria
   spec:
     objectives:
     - metric: mean_latency

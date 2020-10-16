@@ -1,8 +1,0 @@
-resources:
-- experiment.yaml
-patchesStrategicMerge:
-- analytics.yaml
-- duration.yaml
-- webhooks.yaml
-- setup.yaml
-- cleanup.yaml

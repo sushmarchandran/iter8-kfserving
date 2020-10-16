@@ -1,5 +1,6 @@
 {
     "telemetry_url": "https://prometheus:9090/v1/api/query",
+    "format": "prometheus",
     "metrics": [
         {
             "name": "request_count",
@@ -7,7 +8,6 @@
             "params": {
                 "query": "sum(increase(revision_app_request_latencies_count{service_name=~'.*$name'}[$interval])) or on() vector(0)"
             },
-            "format": "prometheus",
             "type": "counter"
         },
         {
@@ -17,7 +17,6 @@
             "params": {
                 "query": "(sum(increase(revision_app_request_latencies_sum{service_name=~'.*$name'}[$interval])) or on() vector(0)) / (sum(increase(revision_app_request_latencies_count{service_name=~'.*$name'}[$interval])) or on() vector(0))"
             },
-            "format": "prometheus",
             "type": "gauge",
             "sample_size": "request_count"
         },
@@ -28,7 +27,6 @@
             "params": {
                 "query": "query=histogram_quantile(0.95, sum(rate(revision_app_request_latencies_bucket{service_name=~'.*$name'}[$interval])) by (le))"
             },
-            "format": "prometheus",
             "sample_size": "request_count",
             "type": "gauge"
         },
@@ -38,7 +36,6 @@
             "params": {
                 "query": "sum(increase(revision_app_request_latencies_count{response_code_class!='2xx', service_name=~'.*$name'}[$interval])) or on() vector(0)"
             },
-            "format": "prometheus",
             "type": "counter"
         },
         {
@@ -48,7 +45,6 @@
             "params": {
                 "query": "(sum(increase(revision_app_request_latencies_count{response_code_class!='2xx', service_name=~'.*$name'}[$interval])) or on() vector(0)) / (sum(increase(revision_app_request_latencies_count{service_name=~'.*$name'}[$interval])) or on() vector(0))"
             },
-            "format": "prometheus",
             "type": "gauge",
             "sample_size": "request_count"
         }

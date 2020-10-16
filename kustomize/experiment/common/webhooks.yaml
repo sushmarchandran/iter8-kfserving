@@ -1,8 +1,0 @@
-apiVersion: iter8.tools/v1alpha3
-kind: Experiment
-metadata:
-  name: sklearn-iris-experiment-VERSION
-spec:
-    # webhooks:
-    #   initialization: https://initialize.me  
-    #   termination: https://terminate.me

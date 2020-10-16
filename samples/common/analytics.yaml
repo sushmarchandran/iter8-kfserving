@@ -1,7 +1,7 @@
 apiVersion: iter8.tools/v1alpha3
-kind: Experiment
+kind: AnalyticsEngine
 metadata:
-  name: sklearn-iris-experiment-VERSION
+  name: iter8-analytics-engine
 spec:
     analyticProviders:
         # - name: metrics
@@ -19,8 +19,3 @@ spec:
         #   url: http://iter8-analytics:8080/epsilongreedy
         - name: iter8-analytics
           url: http://iter8-analytics:8080/
-          configmaps:
-          - name: iter8-kfserving-metrics
-            namespace: iter8-kfserving
-          - name: schemas-and-transforms
-            namespace: iter8-kfserving

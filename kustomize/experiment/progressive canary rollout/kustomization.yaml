@@ -1,4 +1,4 @@
 bases:
-- ../common
+- ../base
 patchesStrategicMerge:
-- criteria.yaml
+- patch.yaml

@@ -3,14 +3,12 @@ kind: Experiment
 metadata:
   name: sklearn-iris-experiment-12
 spec:
-  targetKey: sklearn-iris
-  versions:
+  targetKey: sklearn-iris # required
+  versions: # required
     baseline: default.kfserving-test.svc.cluster.local
-    candidates:
+    candidates: # optional
       - canary.kfserving-test.svc.cluster.local
-  duration:
-    maxIterations: 8
-    interval: 20s
-  analyticsEngine:
-  - name: iter8-analytics
-    url: http://iter8-analytics:8080/    
+  duration: # optional with default.
+    maxIterations: 8 # default equals infinity.
+    interval: 20s # default equals 30s
+  analyticsEngineConfig: analytics-engine-config.iter8.cluster.local # optional with default.

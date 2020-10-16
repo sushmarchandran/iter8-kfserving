@@ -1,9 +1,30 @@
 apiVersion: iter8.tools/v1alpha3
-kind: AnalyticsEngine
+kind: AnalyticsEngineConfig
 metadata:
   name: iter8-analytics-engine
 spec:
     analyticProviders:
+    - name: iter8-analytics
+      url: http://iter8-analytics:8080/default
+      weightConstraints:
+        min: 0
+        max: 100
+        sum: 100
+        maxIncrement: 10
+      strategy:
+        type: progressive # fixed-split, BlueGreen, and shadow are other options
+
+
+
+
+
+        # type: fixed-split
+        # split:
+        #   default: 20
+        #   canary: 80
+
+
+
         # - name: metrics
         #   url: http://iter8-analytics:8080/metrics
         #   configmaps:
@@ -17,5 +38,4 @@ spec:
         #   url: http://iter8-analytics:8080/assessments
         # - name: action
         #   url: http://iter8-analytics:8080/epsilongreedy
-        - name: iter8-analytics
-          url: http://iter8-analytics:8080/
+        

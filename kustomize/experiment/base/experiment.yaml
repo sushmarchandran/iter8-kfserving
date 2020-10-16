@@ -11,4 +11,6 @@ spec:
   duration:
     maxIterations: 8
     interval: 20s
-  analyticsEngine: iter8-analytics-engine.iter8.svc.cluster.local
+  analyticsEngine:
+  - name: iter8-analytics
+    url: http://iter8-analytics:8080/    

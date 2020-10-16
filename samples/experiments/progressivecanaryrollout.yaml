@@ -3,14 +3,27 @@ kind: Experiment
 metadata:
   name: sklearn-iris-experiment-12
 spec:
-  analyticsEngine: iter8-analytics-engine.iter8.svc.cluster.local
+  targetKey: sklearn-iris
+  experimentType: ProgressiveCanaryRollout
+  versions:
+    baseline: default.kfserving-test.svc.cluster.local
+    candidates:
+    - canary.kfserving-test.svc.cluster.local
+  criteria:
+    indicators:
+    - 95th_percentile_tail_latency
+    - container_throttled_seconds_total
+    objectives:
+    - metric: mean_latency
+      upperLimit: 200
+    - metric: error_rate
+      upperLimit: 0.01
   duration:
     interval: 20s
     maxIterations: 8
-  experimentType: ProgressiveCanaryRollout
   handlers:
+    init: init-handler.kfserving-test.svc.cluster.local
     cleanup: cleanup-handler.kfserving-test.svc.cluster.local
-    setup: setup-handler.kfserving-test.svc.cluster.local
   notifications:
     init:
     - https://initialize.me
@@ -18,8 +31,6 @@ spec:
     - https://iterate.me
     terminate:
     - https://terminate.me
-  targetKey: sklearn-iris
-  versions:
-    baseline: default.kfserving-test.svc.cluster.local
-    candidates:
-    - canary.kfserving-test.svc.cluster.local
+  analyticsEngine:
+  - name: iter8-analytics
+    url: http://iter8-analytics:8080/

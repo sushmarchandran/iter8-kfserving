@@ -43,7 +43,6 @@ spec:
   duration:
     interval: 20s
     maxIterations: 8
-  analyticsEngineConfig: analytics-engine-config.iter8.cluster.local
   handlers:
     init: init-handler.iter8-kfserving.svc.cluster.local
     cleanup: cleanup-handler.iter8-kfserving.svc.cluster.local

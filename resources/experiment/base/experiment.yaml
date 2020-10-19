@@ -11,4 +11,3 @@ spec:
   duration: # optional with default.
     maxIterations: 8 # default equals infinity.
     interval: 20s # default equals 30s
-  analyticsEngineConfig: analytics-engine-config.iter8.cluster.local # optional with default.

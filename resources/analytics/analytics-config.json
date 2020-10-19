@@ -1,0 +1,15 @@
+[
+    {
+        "name": "iter8-analytics",
+        "url": "http://iter8-analytics:8080/default",
+        "weightConstraints": {
+            "min": 0,
+            "max": 100,
+            "sum": 100,
+            "maxIncrement": 10
+        },
+        "strategy": {
+            "type": "progressive"
+        }
+    }
+]

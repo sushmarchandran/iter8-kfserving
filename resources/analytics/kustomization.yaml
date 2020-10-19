@@ -1,16 +1,6 @@
 configMapGenerator:
-- name: iter8-kfserving-metrics
+- name: iter8-kfserving-analytics-config
   files:
-  - revision-metrics.json
-  - cadvisor-metrics.json
-  options:
-    annotations:
-      type: metrics
-- name: schemas-and-transforms
-  files:
-  - schemas-and-transforms.json
-  options:
-    annotations:
-      type: st
+  - analytics-config.json
 generatorOptions:
   disableNameSuffixHash: true

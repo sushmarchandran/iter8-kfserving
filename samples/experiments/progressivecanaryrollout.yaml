@@ -45,8 +45,8 @@ spec:
     maxIterations: 8
   analyticsEngineConfig: analytics-engine-config.iter8.cluster.local
   handlers:
-    init: init-handler.kfserving-test.svc.cluster.local
-    cleanup: cleanup-handler.kfserving-test.svc.cluster.local
+    init: init-handler.iter8-kfserving.svc.cluster.local
+    cleanup: cleanup-handler.iter8-kfserving.svc.cluster.local
   notifications:
     start:
     - https://start.lisetener

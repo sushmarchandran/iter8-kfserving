@@ -1,4 +1,0 @@
-bases:
-- ../common
-patchesStrategicMerge:
-- criteria.yaml

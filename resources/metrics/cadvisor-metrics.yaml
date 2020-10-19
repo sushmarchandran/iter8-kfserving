@@ -1,0 +1,112 @@
+apiVersion: iter8.tools/v1alpha3
+kind: Metric
+metadata:
+  name: container_throttled_seconds_total
+spec:
+  params:
+    query: container_cpu_cfs_throttled_seconds_total{container='kfserving-container', id=~'/kubepods.*', pod=~'.*$name.*'} or on() vector(0)
+  description: Total time duration the container has been throttled
+  units: seconds
+  type: counter
+  telemetry_url: https://prometheus:9090/v1/api/query
+  format: prometheus
+---
+apiVersion: iter8.tools/v1alpha3
+kind: Metric
+metadata:
+  name: container_cpu_load_average_10s
+spec:
+  params:
+    query: container_cpu_load_average_10s{container='kfserving-container', id=~'/kubepods.*',pod=~'.*$name.*'}
+  description: Value of container cpu load average over the last 10 seconds
+  type: gauge
+  telemetry_url: https://prometheus:9090/v1/api/query
+  format: prometheus
+---
+apiVersion: iter8.tools/v1alpha3
+kind: Metric
+metadata:
+  name: container_fs_io_time_seconds_total
+spec:
+  params:
+    query: container_fs_io_time_seconds_total{container='kfserving-container', id=~'/kubepods.*',pod=~'.*$name.*'} or on() vector(0)
+  description: Cumulative count of seconds spent doing I/Os
+  units: seconds
+  type: counter
+  telemetry_url: https://prometheus:9090/v1/api/query
+  format: prometheus
+---
+apiVersion: iter8.tools/v1alpha3
+kind: Metric
+metadata:
+  name: container_memory_usage_bytes
+spec:
+  params:
+    query: container_memory_usage_bytes{container='kfserving-container', id=~'/kubepods.*', pod=~'.*$name.*'}
+  description: Current memory usage, including all memory regardless of when it was
+    accessed
+  units: bytes
+  type: gauge
+  telemetry_url: https://prometheus:9090/v1/api/query
+  format: prometheus
+---
+apiVersion: iter8.tools/v1alpha3
+kind: Metric
+metadata:
+  name: container_memory_failcnt
+spec:
+  params:
+    query: container_memory_failcnt{container='kfserving-container', id=~'/kubepods.*', pod=~'.*$name.*'} or on() vector(0)
+  description: Number of times memory usage hit resource limit
+  type: counter
+  telemetry_url: https://prometheus:9090/v1/api/query
+  format: prometheus
+---
+apiVersion: iter8.tools/v1alpha3
+kind: Metric
+metadata:
+  name: container_network_receive_errors_total
+spec:
+  params:
+    query: container_network_receive_errors_total{container='kfserving-container', id=~'/kubepods.*', pod=~'.*$name.*'} or on() vector(0)
+  description: Cumulative count of errors encountered while receiving
+  type: counter
+  telemetry_url: https://prometheus:9090/v1/api/query
+  format: prometheus
+---
+apiVersion: iter8.tools/v1alpha3
+kind: Metric
+metadata:
+  name: container_network_transmit_errors_total
+spec:
+  params:
+    query: container_network_transmit_errors_total{container='kfserving-container', id=~'/kubepods.*', pod=~'.*$name.*'} or on() vector(0)
+  description: Cumulative count of errors encountered while transmitting
+  type: counter
+  telemetry_url: https://prometheus:9090/v1/api/query
+  format: prometheus
+---
+apiVersion: iter8.tools/v1alpha3
+kind: Metric
+metadata:
+  name: container_processes
+spec:
+  params:
+    query: container_processes{container='kfserving-container', id=~'/kubepods.*', pod=~'.*$name.*'}
+  description: Number of processes running inside the container
+  type: gauge
+  telemetry_url: https://prometheus:9090/v1/api/query
+  format: prometheus
+---
+apiVersion: iter8.tools/v1alpha3
+kind: Metric
+metadata:
+  name: container_tasks_state
+spec:
+  params:
+    query: container_tasks_state{container='kfserving-container', id=~'/kubepods.*', pod=~'.*$name.*', state='running'}
+  description: Number of tasks in given state (sleeping, running, stopped, uninterruptible,
+    or ioawaiting)
+  type: gauge
+  telemetry_url: https://prometheus:9090/v1/api/query
+  format: prometheus

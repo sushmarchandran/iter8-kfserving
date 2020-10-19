@@ -7,9 +7,9 @@ spec:
     spec:
       containers:
       - name: cleanup
-        image: iter8-kubectl
-        command: 
-        - /tekton/created/workspace/scripts/promote.sh
-        - "version=$winner"
+        image: iter8-kfserving
+        command:
+        - /handlers/scripts/cleanup.sh
+        - "experiment-name=$metadata.name"
       restartPolicy: Never
   backoffLimit: 4

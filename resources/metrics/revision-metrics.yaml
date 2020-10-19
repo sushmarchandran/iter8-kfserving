@@ -1,0 +1,67 @@
+apiVersion: iter8.tools/v1alpha3
+kind: Metric
+metadata:
+  name: request_count
+spec:
+  params:
+    query: sum(increase(revision_app_request_latencies_count{service_name=~'.*$name'}[$interval])) or on() vector(0)
+  description: Number of requests
+  type: counter
+  telemetry_url: https://prometheus:9090/v1/api/query
+  format: prometheus
+---
+apiVersion: iter8.tools/v1alpha3
+kind: Metric
+metadata:
+  name: mean_latency
+spec:
+  description: Mean latency
+  units: milli seconds
+  params:
+    query: (sum(increase(revision_app_request_latencies_sum{service_name=~'.*$name'}[$interval]))or on() vector(0)) / (sum(increase(revision_app_request_latencies_count{service_name=~'.*$name'}[$interval])) or on() vector(0))
+  type: gauge
+  sample_size: request_count
+  telemetry_url: https://prometheus:9090/v1/api/query
+  format: prometheus
+---
+apiVersion: iter8.tools/v1alpha3
+kind: Metric
+metadata:
+  name: 95th_percentile_tail_latency
+spec:
+  description: 95th percentile tail latency
+  units: milli seconds
+  params:
+    query: query=histogram_quantile(0.95, sum(rate(revision_app_request_latencies_bucket{service_name=~'.*$name'}[$interval]))
+      by (le))
+  type: gauge
+  sample_size: request_count
+  telemetry_url: https://prometheus:9090/v1/api/query
+  format: prometheus
+---
+apiVersion: iter8.tools/v1alpha3
+kind: Metric
+metadata:
+  name: error_count
+spec:
+  description: Number of error responses
+  params:
+    query: sum(increase(revision_app_request_latencies_count{response_code_class!='2xx',service_name=~'.*$name'}[$interval])) or on() vector(0)
+  type: counter
+  telemetry_url: https://prometheus:9090/v1/api/query
+  format: prometheus
+---
+apiVersion: iter8.tools/v1alpha3
+kind: Metric
+metadata:
+  name: error_rate
+spec:
+  description: Fraction of requests with error responses
+  units: milli seconds
+  params:
+    query: (sum(increase(revision_app_request_latencies_count{response_code_class!='2xx',service_name=~'.*$name'}[$interval])) or on() vector(0)) / (sum(increase(revision_app_request_latencies_count{service_name=~'.*$name'}[$interval])) or on() vector(0))
+  type: gauge
+  sample_size: request_count
+  telemetry_url: https://prometheus:9090/v1/api/query
+  format: prometheus
+    

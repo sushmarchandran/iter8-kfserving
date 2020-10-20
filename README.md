@@ -1,4 +1,4 @@
-# Iter8-KFServing Domain Package
+# Iter8 domain package for KFServing models
 
 [KFServing](https://github.com/kubeflow/kfserving) enables serverless inferencing on Kubernetes. [Iter8](https://iter8.tools) enables live experiments and release automation for containerized applications and ML models on Kubernetes. This iter8-KFServing domain package brings these projects together.
 

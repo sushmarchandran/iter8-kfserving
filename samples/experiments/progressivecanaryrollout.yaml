@@ -45,7 +45,7 @@ spec:
     maxIterations: 8
   handlers:
     cleanup: cleanup-handler.iter8-kfserving.svc.cluster.local
-    init: init-handler.iter8-kfserving.svc.cluster.local
+    setup: setup-handler.iter8-kfserving.svc.cluster.local
   notifications:
     end:
     - https://end.listener

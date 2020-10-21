@@ -9,5 +9,5 @@ spec:
     candidates: # optional
       - canary.kfserving-test.svc.cluster.local
   duration: # optional with default.
-    maxIterations: 8 # default equals infinity.
+    maxIterations: 8 # default equals infsetupy.
     interval: 20s # default equals 30s

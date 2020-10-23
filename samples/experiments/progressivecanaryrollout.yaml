@@ -27,10 +27,11 @@ metadata:
   name: sklearn-iris-experiment-12
 spec:
   targetKey: sklearn-iris
-  versions:
-    baseline: default.kfserving-test.svc.cluster.local
-    candidates:
-    - canary.kfserving-test.svc.cluster.local
+  inferenceServiceRef: modelnamespace/sklearn-iris
+  canarySpec:
+    predictor:
+      tensorflow:
+        storageUri: gs://kfserving-samples/models/tensorflow/flowers-2
   criteria:
     indicators:
     - 95th_percentile_tail_latency
@@ -44,8 +45,8 @@ spec:
     interval: 20s
     maxIterations: 8
   handlers:
-    cleanup: cleanup-handler.iter8-kfserving.svc.cluster.local
-    setup: setup-handler.iter8-kfserving.svc.cluster.local
+    setup: setup.iter8-kfserving.svc.cluster.local
+    finish: finish.iter8-kfserving.svc.cluster.local
   notifications:
     end:
     - https://end.listener

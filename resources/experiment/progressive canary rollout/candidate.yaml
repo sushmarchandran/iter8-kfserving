@@ -2,10 +2,8 @@ apiVersion: iter8.tools/v1alpha1
 kind: Version
 metadata:
   name: candidate
-  spec:
-    supportingResources:
-    - kind: InferenceService
-      name: sklearn-iris.kfserving-test.svc.cluster.local
-    weightFieldPath: spec.supportingResources[0]/spec.canaryTrafficPercent
-    tags:
-      storageUri: gs://kfserving-samples/models/tensorflow/flowers-2
+spec:
+  weightResource: sklearn-iris.kfserving-test.svc.cluster.local
+  weightFieldPath: spec.canaryTrafficPercent
+  tags:
+    storageUri: gs://kfserving-samples/models/tensorflow/flowers-2

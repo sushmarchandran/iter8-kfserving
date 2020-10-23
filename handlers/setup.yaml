@@ -10,6 +10,7 @@ spec:
         image: iter8-kfserving
         command:
         - /handlers/scripts/setup.sh
-        - "experiment-name=$metadata.name"
+        - "$metadata.name"
+        - "inferenceService"
       restartPolicy: Never
   backoffLimit: 4

@@ -1,6 +1,7 @@
 configMapGenerator:
-- name: iter8-kfserving-analytics-config
+- name: iter8-kfserving-config
   files:
   - analytics-config.json
+  - default-handlers.yaml
 generatorOptions:
   disableNameSuffixHash: true

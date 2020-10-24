@@ -26,7 +26,7 @@ spec:
     - https://start.lisetener
 status: # not a subresource
   iterationCount: 1
-  state: progressing
+  phase: progressing
   versionSpecs:
     baseline:
       name: default
@@ -41,4 +41,3 @@ status: # not a subresource
   metricSpecs:
   - ...
   startTimeStamp: "2020-08-13T17:26:37Z"
-

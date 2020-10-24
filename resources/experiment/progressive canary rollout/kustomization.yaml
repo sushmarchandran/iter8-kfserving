@@ -1,7 +1,4 @@
 bases:
 - ../base
-resources:
-- baseline.yaml
-- candidate.yaml
 patchesStrategicMerge:
 - patch.yaml

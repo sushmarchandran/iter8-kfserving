@@ -12,10 +12,7 @@ spec:
     indicators:
     - 95th_percentile_tail_latency
     - container_throttled_seconds_total
-  handlers:
-    setup: setup-handler.iter8-kfserving.svc.cluster.local
-    cleanup: cleanup-handler.iter8-kfserving.svc.cluster.local
-  notifications:
+  webhooks:
     start:
     - https://start.lisetener
     postIteration:

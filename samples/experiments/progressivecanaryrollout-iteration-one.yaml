@@ -3,6 +3,7 @@ kind: Experiment
 metadata:
   name: sklearn-iris-experiment-12
 spec:
+  targetKey: sklearn-iris # ignore for now
   criteria:
     indicators:
     - 95th_percentile_tail_latency
@@ -16,11 +17,28 @@ spec:
     interval: 20s
     maxIterations: 8
   inferenceServiceRef: modelnamespace/sklearn-iris
-  targetKey: sklearn-iris
-  webhooks:
+  webhooks: # ignore for now
     end:
     - https://end.listener
     postIteration:
     - https://iteration.listerner
     start:
     - https://start.lisetener
+status: # not a subresource
+  iterationCount: 1
+  state: progressing
+  versionSpecs:
+    baseline:
+      name: default
+    candidates:
+    - name: canary
+      weightObjRef: 
+        apiVersion: serving.kubeflow.org/v1alpha2
+        kind: InferenceService
+        name: sklearn-iris
+        namespace: modelnamespaces
+        fieldPath: spec.canaryTrafficPercent
+  metricSpecs:
+  - ...
+  startTimeStamp: "2020-08-13T17:26:37Z"
+

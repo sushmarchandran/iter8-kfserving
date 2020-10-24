@@ -4,10 +4,7 @@ metadata:
   name: sklearn-iris-experiment-12
 spec:
   targetKey: sklearn-iris # required
-  versions: # required
-    baseline: default.kfserving-test.svc.cluster.local
-    candidates: # optional
-      - canary.kfserving-test.svc.cluster.local
+  inferenceServiceRef: modelnamespace/sklearn-iris
   duration: # optional with default.
     maxIterations: 8 # default equals infsetupy.
     interval: 20s # default equals 30s

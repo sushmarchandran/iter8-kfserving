@@ -2,10 +2,9 @@
 
 # Note: Failure handling is yet-to-be-implemented.
 
-# Steps 1a through 1f: Ensure assert the required pre-conditions prior to cleanup.
+# Steps 1a through 1f: Ensure assert the required pre-conditions prior to finish.
 
 # Step 1a: Get the experiment resource yaml
-EXPERIMENT_NAME=$1
 kubectl get experiment $EXPERIMENT_NAME -o yaml > experiment.yaml
 
 # Step 1b: Get the name of the baseline version resource; all names are fully qualified

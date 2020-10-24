@@ -1,0 +1,22 @@
+apiVersion: iter8.tools/v1alpha3
+kind: Handler
+metadata:
+  name: finish-handler
+spec: # this is a kubernetes raw extension type. Tomorrow, you can replace job with tekton task if you want.
+  apiVersion: batch/v1
+  kind: Job
+  metadata:
+    name: $experiment.name-finish
+  spec:
+    template:
+      spec:
+        containers:
+        - name: finish
+          image: iter8-kfserving
+          command:
+          - /handlers/scripts/finish.sh
+          env:
+          - name: EXPERIMENT_NAME
+            value: $experiment.name
+        restartPolicy: OnFailure
+    backoffLimit: 4

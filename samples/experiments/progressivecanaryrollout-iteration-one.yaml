@@ -3,7 +3,7 @@ kind: Experiment
 metadata:
   name: sklearn-iris-experiment-12
 spec:
-  targetKey: sklearn-iris # ignore for now
+  targetKey: sklearn-iris # ignore in MVP demo
   criteria:
     indicators:
     - 95th_percentile_tail_latency
@@ -17,7 +17,7 @@ spec:
     interval: 20s
     maxIterations: 8
   inferenceServiceRef: modelnamespace/sklearn-iris
-  webhooks: # ignore for now
+  webhooks: # ignore in MVP demo
     end:
     - https://end.listener
     postIteration:

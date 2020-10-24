@@ -3,13 +3,18 @@ kind: Handler
 metadata:
   name: cleanup-handler
 spec:
-  template:
-    spec:
-      containers:
-      - name: cleanup
-        image: iter8-kfserving
-        command:
-        - /handlers/scripts/cleanup.sh
-        - "experiment-name=$metadata.name"
-      restartPolicy: Never
-  backoffLimit: 4
+  apiVersion: batch/v1
+  kind: Job
+  metadata:
+    name: $experiment.name-cleanup
+  spec:
+    template:
+      spec:
+        containers:
+        - name: cleanup
+          image: iter8-kfserving
+          command:
+          - /handlers/scripts/cleanup.sh
+          - "$experiment.name"
+        restartPolicy: OnFailure
+    backoffLimit: 4

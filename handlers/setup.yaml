@@ -3,14 +3,18 @@ kind: Handler
 metadata:
   name: setup-handler
 spec:
-  template:
-    spec:
-      containers:
-      - name: setup
-        image: iter8-kfserving
-        command:
-        - /handlers/scripts/setup.sh
-        - "$metadata.name"
-        - "inferenceService"
-      restartPolicy: Never
-  backoffLimit: 4
+  apiVersion: batch/v1
+  kind: Job
+  metadata:
+    name: $experiment.name-setup
+  spec:
+    template:
+      spec:
+        containers:
+        - name: setup
+          image: iter8-kfserving
+          command:
+          - /handlers/scripts/setup.sh
+          - "$experiment.name"
+        restartPolicy: OnFailure
+    backoffLimit: 4

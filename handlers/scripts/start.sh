@@ -1,4 +1,5 @@
-#!/bin/bash
+#!/bin/sh
+set -e -x
 
 # Note: Failure handling is yet-to-be-implemented.
 # A possible implementation could be as follows. If any of the steps fail (i.e., return with non-zero return code, this script returns with the non-zero error code, and the container enters failed state). 

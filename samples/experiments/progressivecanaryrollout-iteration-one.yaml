@@ -3,7 +3,7 @@ kind: Experiment
 metadata:
   name: sklearn-iris-experiment-12
 spec:
-  targetKey: sklearn-iris # ignore in MVP demo
+  target: mymodelnamespace/sklearn-iris # fully-qualified inference service
   criteria:
     indicators:
     - 95th_percentile_tail_latency
@@ -16,18 +16,10 @@ spec:
   duration:
     interval: 20s
     maxIterations: 8
-  inferenceServiceRef: modelnamespace/sklearn-iris
-  webhooks: # ignore in MVP demo
-    end:
-    - https://end.listener
-    postIteration:
-    - https://iteration.listerner
-    start:
-    - https://start.lisetener
 status: # not a subresource
   iterationCount: 1
   phase: progressing
-  versionSpecs:
+  versionInfo:
     baseline:
       name: default
     candidates:

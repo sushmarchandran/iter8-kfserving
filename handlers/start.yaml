@@ -6,7 +6,7 @@ spec: # this is a kubernetes raw extension type. Tomorrow, you can replace job w
   apiVersion: batch/v1
   kind: Job
   metadata:
-    name: $experiment.name-start
+    name: $experiment.name-start-handler
   spec:
     template:
       spec:
@@ -18,5 +18,7 @@ spec: # this is a kubernetes raw extension type. Tomorrow, you can replace job w
           env:
           - name: EXPERIMENT_NAME
             value: $experiment.name
+          - name: DOMAIN_PACKAGE_ROOT_DIR
+            value: /iter8-kfserving
         restartPolicy: OnFailure
     backoffLimit: 4

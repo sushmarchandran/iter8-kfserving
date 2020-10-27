@@ -1,0 +1,14 @@
+status:
+  iterationCount: 0
+  phase: in-progress
+  versionInfo:
+    baseline:
+      name: default
+    candidates:
+    - name: canary
+      weightObjRef: 
+        apiVersion: serving.kubeflow.org/v1alpha2
+        kind: InferenceService
+        name: MODEL_NAME
+        namespace: MODEL_NAMESPACE
+        fieldPath: spec.canaryTrafficPercent

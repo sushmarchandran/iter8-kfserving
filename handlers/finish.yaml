@@ -15,7 +15,7 @@ spec: # this is a kubernetes raw extension type. Tomorrow, you can replace job w
           image: iter8-kfserving
           command:
           - /handlers/scripts/finish.sh
-          # for a gitops finish, replace the above command in the handler with the following:
+          # for a gitopsy finish, replace the above command in the handler with the following:
           # /handlers/scripts/gitopsfinish.sh
           env:
             - name: EXPERIMENT_NAME

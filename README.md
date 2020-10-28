@@ -30,9 +30,9 @@ kubectl get pods -n kfserving-system --watch
 kubectl get pods -n knative-monitoring --watch
 ```
 
-6. Check iter8 metrics are installed.
+6. Check iter8 pods. `Ctrl-c` out of this command once you verify pods are running.
 ```
-kubectl get metrics -n iter8-kfserving
+kubectl get pods -n iter8 --watch
 ```
 
 7. Create InferenceService.

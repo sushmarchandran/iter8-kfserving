@@ -42,7 +42,7 @@ samples/common/create-inferenceservice.sh
 
 8. Create automated canary rollout experiment.
 ```
-samples/experiments/create-progressive-canary-rollout-experiment.sh
+samples/experiments/create-automated-canary-rollout-experiment.sh
 ```
 
 9. Watch as the traffic shifts from default to canary model. `Ctrl-c` out of this command once you verify that the experiment is working.

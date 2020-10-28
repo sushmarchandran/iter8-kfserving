@@ -14,7 +14,7 @@ minikube start --memory=16384 --cpus=4 --kubernetes-version=v1.17.5
 git clone https://github.com/iter8-tools/iter8-kfserving.git
 ```
 
-3. Install Istio, KNative Serving, KNative Monitoring, and KFServing, iter8, and iter8-KFServing.
+3. Install Istio, KNative Serving, KNative Monitoring, KFServing, iter8, and iter8-KFServing.
 ```
 cd iter8-kfserving
 ./common/install-everything.sh

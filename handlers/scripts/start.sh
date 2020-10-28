@@ -21,6 +21,7 @@ MODEL_NAMESPACE=$(echo $INFERENCE_SERVICE_FQRN | cut -f1 -d/)
 MODEL_NAME=$(echo $INFERENCE_SERVICE_FQRN | cut -f2 -d/)
 
 # Step 5: Create a patch file with appropriate InferenceService name and namespace
+# replace sed with yq
 PATCH_FILE=$DOMAIN_PACKAGE_ROOT_DIR/resources/start/patch.yaml
 sed -i "s/MODEL_NAME/$MODEL_NAME/g" $PATCH_FILE
 sed -i "s/MODEL_NAMESPACE/$MODEL_NAMESPACE/g" $PATCH_FILE

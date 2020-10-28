@@ -10,7 +10,7 @@ kubectl get experiment $EXPERIMENT_NAME -o yaml > experiment.yaml
 
 # Step 2: Get fully qualified resource name for InferenceService. Get the InferenceService object.
 INFERENCE_SERVICE_FQRN=$(yq r experiment.yaml spec.target)
-INFERENCE_SERVICE_FILE=$DOMAIN_PACKAGE_ROOT_DIR/resources/experiment/promote/inferenceservice.yaml
+INFERENCE_SERVICE_FILE=$DOMAIN_PACKAGE_ROOT_DIR/resources/experiment/promote/inferenceservice/inferenceservice.yaml
 kubectl get $INFERENCE_SERVICE_FQRN -o yaml > $INFERENCE_SERVICE_FILE
 
 # Step 1f: Get the version to be promoted
@@ -23,6 +23,7 @@ if [ "$VERSION_TO_BE_PROMOTED" = "baseline" ]; then
     yq d $INFERENCE_SERVICE_FILE spec.canary > $INFERENCE_SERVICE_FILE
 else
     # New baseline = canary
+    # check out yq's -i option so that > can be avoided
     yq d $INFERENCE_SERVICE_FILE spec.canaryTrafficPercent > $INFERENCE_SERVICE_FILE
     yq d $INFERENCE_SERVICE_FILE spec.default > $INFERENCE_SERVICE_FILE
     sed -i "s/canary:/default:/" $INFERENCE_SERVICE_FILE

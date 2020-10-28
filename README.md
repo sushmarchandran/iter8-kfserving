@@ -1,6 +1,6 @@
-# Iter8 domain package for KFServing models
+# Iter8 package for KFServing
 
-[KFServing](https://github.com/kubeflow/kfserving) enables serverless inferencing on Kubernetes. [Iter8](https://iter8.tools) enables live experiments and release automation for containerized applications and ML models on Kubernetes. This iter8-KFServing domain package brings these projects together.
+[KFServing](https://github.com/kubeflow/kfserving) enables serverless inferencing on Kubernetes. [Iter8](https://iter8.tools) enables live experiments and release automation for microservices and ML models on Kubernetes. This iter8 package for KFServing domain package brings the two projects together.
 
 ## Quick start on Minikube
 
@@ -14,47 +14,38 @@ minikube start --memory=16384 --cpus=4 --kubernetes-version=v1.17.5
 git clone https://github.com/iter8-tools/iter8-kfserving.git
 ```
 
-3. Install Istio, KNative Serving, KNative Monitoring, and KFServing.
+3. Install Istio, KNative Serving, KNative Monitoring, and KFServing, iter8, and iter8-KFServing.
 ```
 cd iter8-kfserving
-./bin/install-everything.sh
+./common/install-everything.sh
 ```
 
-4. Check KFServing controller pod. Ctrl-c out of this command once you verify pods are running.
+4. Check KFServing controller pod. `Ctrl-c` out of this command once you verify pods are running.
 ```
 kubectl get pods -n kfserving-system --watch
 ```
 
-5. Check KNative monitoring pods. Ctrl-c out of this command once you verify pods are running.
+5. Check KNative monitoring pods. `Ctrl-c` out of this command once you verify pods are running.
 ```
 kubectl get pods -n knative-monitoring --watch
 ```
 
-6. Create baseline model.
+6. Check iter8 metrics are installed.
 ```
-kubectl create ns kfserving-test
-kubectl apply -f demo/sklearn-iris.yaml -n kfserving-test
-```
-
-7. Check iter8 metric configmaps are installed.
-```
-kubectl get cm -n iter8-kfserving
+kubectl get metrics -n iter8-kfserving
 ```
 
-8. Setup InferenceService for canary analysis.
+7. Create InferenceService.
 ```
-cp demo/candidate.yaml inferenceservice/candidate.yaml
-kubectl get inferenceservice -n kfserving-test -o yaml > inferenceservice/baseline.yaml
-kubectl kustomize inferenceservice | kubectl apply -f -
+samples/common/create-inferenceservice.sh
 ```
 
-9. Setup an **automated canary release experiment with SLOs**.
+8. Create automated canary rollout experiment.
 ```
-kubectl kustomize experiment/canary | kubectl apply -f -
+samples/experiments/create-progressive-canary-rollout-experiment.sh
 ```
 
-**Note:** As an alternative to step 9, you can choose to set up an **automated A/B rollout experiment with SLOs** or an **automated BlueGreen deployment experiment with SLOs** using the following commands respectively. 
+9. Watch as the traffic shifts from default to canary model. `Ctrl-c` out of this command once you verify that the experiment is working.
 ```
-kubectl kustomize experiment/ab | kubectl apply -f - # A/B rollout
-kubectl kustomize experiment/bluegreen | kubectl apply -f - # BlueGreen deployment
+kubectl get inferenceservice sklearn-iris --watch
 ```

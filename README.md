@@ -1,6 +1,6 @@
 # Iter8 package for KFServing
 
-[KFServing](https://github.com/kubeflow/kfserving) enables serverless inferencing on Kubernetes. [Iter8](https://iter8.tools) enables live experiments and release automation for microservices and ML models on Kubernetes. This iter8 package for KFServing domain package brings the two projects together.
+[KFServing](https://github.com/kubeflow/kfserving) enables serverless inferencing on Kubernetes. [Iter8](https://iter8.tools) enables live experiments and release automation for microservices and ML models on Kubernetes. This iter8 package for KFServing brings the two projects together.
 
 ## Quick start on Minikube
 

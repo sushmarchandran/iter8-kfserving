@@ -20,17 +20,17 @@ cd iter8-kfserving
 ./common/install-everything.sh
 ```
 
-4. Check KFServing controller pod. `Ctrl-c` out of this command once you verify pods are running.
+4. Check KFServing controller pod. `Ctrl-c` after you verify pods are running.
 ```
 kubectl get pods -n kfserving-system --watch
 ```
 
-5. Check KNative monitoring pods. `Ctrl-c` out of this command once you verify pods are running.
+5. Check KNative monitoring pods. `Ctrl-c` after you verify pods are running.
 ```
 kubectl get pods -n knative-monitoring --watch
 ```
 
-6. Check iter8 pods. `Ctrl-c` out of this command once you verify pods are running.
+6. Check iter8 pods. `Ctrl-c` after you verify pods are running.
 ```
 kubectl get pods -n iter8 --watch
 ```
@@ -45,7 +45,7 @@ samples/common/create-inferenceservice.sh
 samples/experiments/create-automated-canary-rollout-experiment.sh
 ```
 
-9. Watch as the traffic shifts from default to canary model. `Ctrl-c` out of this command once you verify that the experiment is working.
+9. Watch as the traffic shifts from default to canary model. `Ctrl-c` after you verify experiment.
 ```
 kubectl get inferenceservice sklearn-iris --watch
 ```

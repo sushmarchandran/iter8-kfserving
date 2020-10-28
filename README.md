@@ -14,7 +14,7 @@ minikube start --memory=16384 --cpus=4 --kubernetes-version=v1.17.5
 git clone https://github.com/iter8-tools/iter8-kfserving.git
 ```
 
-3. Install Istio, KNative Serving, KNative Monitoring, KFServing, iter8, and iter8-KFServing.
+3. Install Istio, KNative Serving, KNative Monitoring, KFServing, and iter8-kfserving.
 ```
 cd iter8-kfserving
 ./common/install-everything.sh
@@ -40,12 +40,14 @@ kubectl get pods -n iter8 --watch
 samples/common/create-inferenceservice.sh
 ```
 
+8. Send a stream of prediction requests. 
+
 8. Create automated canary rollout experiment.
 ```
 samples/experiments/create-automated-canary-rollout-experiment.sh
 ```
 
-9. Watch as the traffic shifts from default to canary model. `Ctrl-c` after you verify experiment.
+10. The canary that you are experimenting with should succeed since it is designed to satisfy the experiment criteria. Watch as the traffic shifts from default to canary model. `Ctrl-c` after you verify experiment.
 ```
 kubectl get inferenceservice sklearn-iris --watch
 ```

@@ -42,12 +42,14 @@ samples/common/create-inferenceservice.sh
 
 8. Send a stream of prediction requests. 
 
-8. Create automated canary rollout experiment.
+9. Observe metrics for default and canary model versions in Prometheus.
+
+10. Create automated canary rollout experiment.
 ```
 samples/experiments/create-automated-canary-rollout-experiment.sh
 ```
 
-10. The canary that you are experimenting with should succeed since it is designed to satisfy the experiment criteria. Watch as the traffic shifts from default to canary model. `Ctrl-c` after you verify experiment.
+11. The canary that you are experimenting with should succeed since it is designed to satisfy the experiment criteria. Watch as the traffic shifts from default to canary model. `Ctrl-c` after you verify experiment.
 ```
 kubectl get inferenceservice sklearn-iris --watch
 ```

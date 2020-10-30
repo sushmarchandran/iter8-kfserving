@@ -1,4 +1,4 @@
-apiVersion: iter8.tools/v1alpha3
+apiVersion: core.iter8.tools/v1alpha3
 kind: Metric
 metadata:
   name: request-count
@@ -9,7 +9,7 @@ spec:
   type: counter
   provider: prometheus
 ---
-apiVersion: iter8.tools/v1alpha3
+apiVersion: core.iter8.tools/v1alpha3
 kind: Metric
 metadata:
   name: mean-latency
@@ -23,7 +23,7 @@ spec:
     name: request-count
   provider: prometheus
 ---
-apiVersion: iter8.tools/v1alpha3
+apiVersion: core.iter8.tools/v1alpha3
 kind: Metric
 metadata:
   name: 95th-percentile-tail-latency
@@ -38,7 +38,7 @@ spec:
     name: request-count
   provider: prometheus
 ---
-apiVersion: iter8.tools/v1alpha3
+apiVersion: core.iter8.tools/v1alpha3
 kind: Metric
 metadata:
   name: error-count
@@ -49,7 +49,7 @@ spec:
   type: counter
   provider: prometheus
 ---
-apiVersion: iter8.tools/v1alpha3
+apiVersion: core.iter8.tools/v1alpha3
 kind: Metric
 metadata:
   name: error-rate

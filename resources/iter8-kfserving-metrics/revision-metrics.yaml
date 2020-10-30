@@ -1,7 +1,7 @@
 apiVersion: iter8.tools/v1alpha3
 kind: Metric
 metadata:
-  name: request_count
+  name: request-count
 spec:
   params:
     query: sum(increase(revision_app_request_latencies_count{service_name=~'.*$name'}[$interval])) or on() vector(0)
@@ -13,7 +13,7 @@ spec:
 apiVersion: iter8.tools/v1alpha3
 kind: Metric
 metadata:
-  name: mean_latency
+  name: mean-latency
 spec:
   description: Mean latency
   units: milli seconds
@@ -27,7 +27,7 @@ spec:
 apiVersion: iter8.tools/v1alpha3
 kind: Metric
 metadata:
-  name: 95th_percentile_tail_latency
+  name: 95th-percentile-tail-latency
 spec:
   description: 95th percentile tail latency
   units: milli seconds
@@ -42,7 +42,7 @@ spec:
 apiVersion: iter8.tools/v1alpha3
 kind: Metric
 metadata:
-  name: error_count
+  name: error-count
 spec:
   description: Number of error responses
   params:
@@ -54,7 +54,7 @@ spec:
 apiVersion: iter8.tools/v1alpha3
 kind: Metric
 metadata:
-  name: error_rate
+  name: error-rate
 spec:
   description: Fraction of requests with error responses
   units: milli seconds

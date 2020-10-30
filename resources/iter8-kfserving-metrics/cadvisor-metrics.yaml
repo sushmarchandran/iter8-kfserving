@@ -1,7 +1,7 @@
 apiVersion: iter8.tools/v1alpha3
 kind: Metric
 metadata:
-  name: container_throttled_seconds_total
+  name: container-throttled-seconds-total
 spec:
   params:
     query: container_cpu_cfs_throttled_seconds_total{container='kfserving-container', id=~'/kubepods.*', pod=~'.*$name.*'} or on() vector(0)
@@ -14,7 +14,7 @@ spec:
 apiVersion: iter8.tools/v1alpha3
 kind: Metric
 metadata:
-  name: container_cpu_load_average_10s
+  name: container-cpu-load-average-10s
 spec:
   params:
     query: container_cpu_load_average_10s{container='kfserving-container', id=~'/kubepods.*',pod=~'.*$name.*'}
@@ -26,7 +26,7 @@ spec:
 apiVersion: iter8.tools/v1alpha3
 kind: Metric
 metadata:
-  name: container_fs_io_time_seconds_total
+  name: container-fs-io-time-seconds-total
 spec:
   params:
     query: container_fs_io_time_seconds_total{container='kfserving-container', id=~'/kubepods.*',pod=~'.*$name.*'} or on() vector(0)
@@ -39,7 +39,7 @@ spec:
 apiVersion: iter8.tools/v1alpha3
 kind: Metric
 metadata:
-  name: container_memory_usage_bytes
+  name: container-memory-usage-bytes
 spec:
   params:
     query: container_memory_usage_bytes{container='kfserving-container', id=~'/kubepods.*', pod=~'.*$name.*'}
@@ -53,7 +53,7 @@ spec:
 apiVersion: iter8.tools/v1alpha3
 kind: Metric
 metadata:
-  name: container_memory_failcnt
+  name: container-memory-failcnt
 spec:
   params:
     query: container_memory_failcnt{container='kfserving-container', id=~'/kubepods.*', pod=~'.*$name.*'} or on() vector(0)
@@ -65,7 +65,7 @@ spec:
 apiVersion: iter8.tools/v1alpha3
 kind: Metric
 metadata:
-  name: container_network_receive_errors_total
+  name: container-network-receive-errors-total
 spec:
   params:
     query: container_network_receive_errors_total{container='kfserving-container', id=~'/kubepods.*', pod=~'.*$name.*'} or on() vector(0)
@@ -77,7 +77,7 @@ spec:
 apiVersion: iter8.tools/v1alpha3
 kind: Metric
 metadata:
-  name: container_network_transmit_errors_total
+  name: container-network-transmit-errors-total
 spec:
   params:
     query: container_network_transmit_errors_total{container='kfserving-container', id=~'/kubepods.*', pod=~'.*$name.*'} or on() vector(0)
@@ -89,7 +89,7 @@ spec:
 apiVersion: iter8.tools/v1alpha3
 kind: Metric
 metadata:
-  name: container_processes
+  name: container-processes
 spec:
   params:
     query: container_processes{container='kfserving-container', id=~'/kubepods.*', pod=~'.*$name.*'}
@@ -101,7 +101,7 @@ spec:
 apiVersion: iter8.tools/v1alpha3
 kind: Metric
 metadata:
-  name: container_tasks_state
+  name: container-tasks-state
 spec:
   params:
     query: container_tasks_state{container='kfserving-container', id=~'/kubepods.*', pod=~'.*$name.*', state='running'}

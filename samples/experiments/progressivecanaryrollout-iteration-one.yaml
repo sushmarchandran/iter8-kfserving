@@ -3,7 +3,27 @@ kind: Experiment
 metadata:
   name: sklearn-iris-experiment-12
 spec:
-  target: mymodelnamespace/sklearn-iris # fully-qualified inference service
+  target: mymodelnamespace/sklearn-iris # namespaced name of the inference service
+  strategy:
+    experimentType: progressive_canary_rollout
+    handlers:
+      finish: promote # other option is git_push
+      candidateFailures: none # other option is rollback
+    weights:
+      maxExperimentationPercent: 50 # default value for this field = 100; candidate traffic never exceeds this percent    
+      maxIncrement: 5 # default
+      algorithm: progressive # default
+  versionInfo:
+    baseline:
+      name: default
+    candidates:
+    - name: canary
+      weightObjRef: 
+        apiVersion: serving.kubeflow.org/v1alpha2
+        kind: InferenceService
+        name: sklearn-iris
+        namespace: modelnamespaces
+        fieldPath: spec.canaryTrafficPercent
   criteria:
     indicators:
     - 95th_percentile_tail_latency
@@ -19,17 +39,4 @@ spec:
 status: # not a subresource
   iterationCount: 1
   phase: progressing
-  versionInfo:
-    baseline:
-      name: default
-    candidates:
-    - name: canary
-      weightObjRef: 
-        apiVersion: serving.kubeflow.org/v1alpha2
-        kind: InferenceService
-        name: sklearn-iris
-        namespace: modelnamespaces
-        fieldPath: spec.canaryTrafficPercent
-  metricSpecs:
-  - ...
   startTimeStamp: "2020-08-13T17:26:37Z"

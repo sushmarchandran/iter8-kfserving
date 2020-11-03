@@ -1,8 +1,10 @@
-# Iter8 package for KFServing
+# Iter8-kfserving package
 
-[KFServing](https://github.com/kubeflow/kfserving) enables serverless inferencing on Kubernetes. [Iter8](https://iter8.tools) enables live experiments and release automation for microservices and ML models on Kubernetes. This iter8 package for KFServing brings the two projects together.
+[KFServing](https://github.com/kubeflow/kfserving) enables serverless inferencing on [Kubernetes](https://kubernetes.io) and [OpenShift](https://www.openshift.com). [Iter8](https://iter8.tools) enables metrics-driven release automation for Kubernetes and OpenShift applications. This package brings the two projects together and enables metrics-driven release automation of KFServing models on Kubernetes and OpenShift.
 
 ## Quick start on Minikube
+
+### Setup platform
 
 1. Start Minikube with sufficient resources.
 ```
@@ -20,36 +22,35 @@ cd iter8-kfserving
 ./common/install-everything.sh
 ```
 
-4. Check KFServing controller pod. `Ctrl-c` after you verify pods are running.
+4. Check KFServing controller, KNative monitoring, and iter8 pods. `Ctrl-c` after you verify pods are running.
 ```
 kubectl get pods -n kfserving-system --watch
-```
-
-5. Check KNative monitoring pods. `Ctrl-c` after you verify pods are running.
-```
 kubectl get pods -n knative-monitoring --watch
-```
-
-6. Check iter8 pods. `Ctrl-c` after you verify pods are running.
-```
 kubectl get pods -n iter8 --watch
 ```
 
-7. Create InferenceService.
+### Setup KFServing InferenceService
+5. Create InferenceService.
 ```
 samples/common/create-inferenceservice.sh
 ```
 
-8. Send a stream of prediction requests. 
+6. Send a stream of prediction requests. 
 
-9. Observe metrics for default and canary model versions in Prometheus.
+7. Observe metrics for default and canary model versions in Prometheus.
 
-10. Create automated canary rollout experiment.
+### Perform iter8-kfserving experiment
+
+8. Create automated canary rollout experiment.
 ```
 samples/experiments/create-automated-canary-rollout-experiment.sh
 ```
 
-11. The canary that you are experimenting with should succeed since it is designed to satisfy the experiment criteria. Watch as the traffic shifts from default to canary model. `Ctrl-c` after you verify experiment.
+9. The canary that you are experimenting with should succeed since it is designed to satisfy the experiment criteria. Watch as the traffic shifts from default to canary model. `Ctrl-c` after you verify experiment.
 ```
 kubectl get inferenceservice sklearn-iris --watch
 ```
+
+## Documentation
+
+The types of experiments supported by iter8-kfserving and the metrics shipped "out-of-the-box" with iter8-kfserving are documented [here](docs/experiments.md).

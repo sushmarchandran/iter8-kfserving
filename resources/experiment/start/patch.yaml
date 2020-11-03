@@ -1,6 +1,4 @@
-status:
-  iterationCount: 0
-  phase: in-progress
+spec:
   versionInfo:
     baseline:
       name: default

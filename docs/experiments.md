@@ -47,13 +47,15 @@ The following examples illustrate a few iter8 experiment scenarios.
 #### Progressive canary rollout
 This figure illustrates a progressive canary rollout experiment. In this example, candidate satisfies the experiment criteria and is declared the winner at the end of the experiment; traffic is progressively shifted from baseline to candidate during the experiment, and candidate is promoted as the new baseline at the end of the experiment.
 
-![Progressive canary rollout](images/iter8-kfserving-canary.png)
+![Progressive canary rollout](images/progressivecanaryrollout.png)
 
 You can exercise this example using [this sample experiment object](../samples/experiments/progressivecanaryrollout.yaml).
 
 
 #### Fixed-split A/B testing
 This figure illustrates a fixed-split A/B testing experiment. In this scenario, candidate satisfies the experiment criteria, has a better reward compared to the baseline, and is declared the winner at the end of the experiment; traffic split is fixed throughout the experiment.
+
+![Fixed-split A/B testing](images/fixedsplitabtesting.png)
 
 You can exercise this scenario using [this sample experiment object](../samples/experiments/fixedsplitabtest.yaml).
 

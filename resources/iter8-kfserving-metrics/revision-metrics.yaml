@@ -55,7 +55,6 @@ metadata:
   name: error-rate
 spec:
   description: Fraction of requests with error responses
-  units: milliseconds
   params:
     query: (sum(increase(revision_app_request_latencies_count{response_code_class!='2xx',service_name=~'.*$name'}[$interval])) or on() vector(0)) / (sum(increase(revision_app_request_latencies_count{service_name=~'.*$name'}[$interval])) or on() vector(0))
   type: gauge

@@ -16,3 +16,15 @@ Iter8-kfserving package ships with x "out-of-the-box" metrics, which are describ
 |---    |----           |---    |---    |
 |request-count  | Number of requests      | counter   |    |
 |mean-latency   | Mean latency    | gauge      | milliseconds |
+|95th-percentile-tail-latency   | 95th percentile tail latency    | gauge      | milliseconds |
+|error-count   | Number of error responses    | counter      |  |
+|error-rate   | Fraction of requests with error responses    | gauge      |  |
+|container-throttled-seconds-total   | Total time duration the container has been throttled    | counter      | seconds |
+|container-cpu-load-average-10s   | Value of container cpu load average over the last 10 seconds    | gauge      | |
+|container-fs-io-time-seconds-total   | Cumulative count of seconds spent doing I/Os    | counter      | seconds |
+|container-memory-usage-bytes   | Current memory usage, including all memory regardless of when it was    | gauge      | bytes |
+|container-memory-failcnt   | Number of times memory usage hit resource limit    | counter      | |
+|container-network-receive-errors-total   | Cumulative count of errors encountered while receiving    | counter      | |
+|container-network-transmit-errors-total   | Cumulative count of errors encountered while transmitting    | counter      | |
+|container-processes   | Number of processes running inside the container    | gauge      | |
+|container-tasks-state   | Number of tasks in given state (sleeping, running, stopped, uninterruptible, or ioawaiting)    | gauge      | |

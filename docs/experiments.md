@@ -1,12 +1,32 @@
-# Iter8-kfserving experiments and metrics
+# Iter8-kfserving Overview
 
 [KFServing](https://github.com/kubeflow/kfserving) enables serverless inferencing on [Kubernetes](https://kubernetes.io) and [OpenShift](https://www.openshift.com). [Iter8](https://iter8.tools) enables metrics-driven release automation for Kubernetes and OpenShift applications. This package brings the two projects together and enables metrics-driven release automation of KFServing models on Kubernetes and OpenShift.
 
-## Experimentation strategies
+## Experimentation Overview
 
-### Basic strategies
+Iter8-kfserving supports **four** basic experimentation strategies, namely, *Canary*, *A/B*, *BlueGreen* and *Performance*. The first three strategies involve comparing two model versions while the last strategy involves testing a single model version. In general, an iter8-kfserving experiment can be customized along the following three dimensions.
 
-### Customization
+1. Traffic split during the experiment
+    * fixed: traffic split is held fixed between the two model versions during the experiment
+    * progressive: traffic split is progressively shifted towards the *winner* (see `Basic strategies` section below)
+2. Behavior when candidate fails experiment criteria during the experiment
+    * end experiment immediately
+    * no-op
+3. End-of-experiment behavior
+    * promote winner: InferenceService with the winning version as the default is applied.
+    * git push winner: InferenceService with the winning version as the default is git pushed.
+    * rollback: InferenceService at the start of the experiment is restored
+    * no-op
+
+We describe the basic strategies below followed by a description of these dimensions.
+
+### Examples
+
+Coming soon.
+
+### Experiment Samples
+
+Coming soon.
 
 ## Metrics
 

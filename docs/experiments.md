@@ -27,7 +27,6 @@ A/B experiments can end without a winner being found (for instance, when both ba
 **Performance:**  In a Performance experiment, there is a single version (baseline). The experiment checks if the baseline satisfies the criteria or not.
 
 ### Customization
-
 In general, an iter8-kfserving experiment can be customized along the following three dimensions.
 
 1. Traffic split during the experiment
@@ -43,33 +42,35 @@ In general, an iter8-kfserving experiment can be customized along the following 
     * no-op
 
 ### Examples of iter8-kfserving experiments
+The following examples illustrate a few iter8 experiment scenarios.
 
 #### Progressive canary rollout
-The following figure illustrates a progressive canary rollout experiment. Candidate satisfies the experiment criteria and is declared the winner at the end of the experiment. Traffic is progressively shifted from baseline to candidate during the experiment, and candidate is promoted as the new baseline at the end of the experiment.
+This figure illustrates a progressive canary rollout experiment. In this example, candidate satisfies the experiment criteria and is declared the winner at the end of the experiment; traffic is progressively shifted from baseline to candidate during the experiment, and candidate is promoted as the new baseline at the end of the experiment.
 
-You can exercise this scenario using [this sample experiment object](progressivecanaryrollout.yaml).
+![Progressive canary rollout](images/iter8-kfserving-canary.png)
+
+You can exercise this example using [this sample experiment object](../samples/experiments/progressivecanaryrollout.yaml).
+
 
 #### Fixed-split A/B testing
-The following figure illustrates a fixed-split A/B testing experiment. Candidate satisfies the experiment criteria, has a better reward compared to the baseline, and is declared the winner at the end of the experiment. Traffic split is fixed throughout the experiment.
+This figure illustrates a fixed-split A/B testing experiment. In this scenario, candidate satisfies the experiment criteria, has a better reward compared to the baseline, and is declared the winner at the end of the experiment; traffic split is fixed throughout the experiment.
 
-You can exercise this scenario using [this sample experiment object](fixedsplitabtest.yaml).
+You can exercise this scenario using [this sample experiment object](../samples/experiments/fixedsplitabtest.yaml).
 
 #### Progressive A/B rollout with Git push
-The following figure illustrates a progressive A/B rollout experiment with Git push. Candidate satisfies the experiment criteria, has a better reward compared to the baseline, and is declared the winner at the end of the experiment. Traffic is progressively shifted from baseline to candidate during the experiment, and a new InferenceService yaml with the candidate as the default model version is Git pushed.
+The following figure illustrates a progressive A/B rollout experiment with Git push. In this scenario, candidate satisfies the experiment criteria, has a better reward compared to the baseline, and is declared the winner at the end of the experiment; traffic is progressively shifted from baseline to candidate during the experiment, and a new InferenceService yaml with the candidate as the default model version is Git pushed.
 
-You can exercise this scenario using [this sample experiment object](progressiveabrolloutwithgitpush.yaml).
+You can exercise this scenario using [this sample experiment object](../samples/experiments/progressiveabrolloutwithgitpush.yaml).
 
 #### BlueGreen deployment
-The following figure illustrates a BlueGreen deployment experiment where the candidate is successful. The candidate model satisfies the experiment criteria and is declared the winner at the end of the experiment. All traffic is sent to the candidate during the experiment, and candidate is promoted as the new baseline at the end of the experiment. 
+The following figure illustrates a BlueGreen deployment experiment. In this scenario, candidate satisfies the experiment criteria and is declared the winner at the end of the experiment; all traffic is sent to the candidate during the experiment, and candidate is promoted as the new baseline at the end of the experiment. 
 
-You can exercise this scenario using [this sample experiment object](bluegreendeployment.yaml).
+You can exercise this scenario using [this sample experiment object](../samples/experiments/bluegreendeployment.yaml).
 
 #### Performance testing
-In a Performance test, ...
+The following figure illustrates a performance testing experiment. In this scenario, the baseline satisfies the experiment criteria.
 
-The following figure illustrates a progressive canary rollout experiment. The candidate model satisfies the experiment criteria, traffic is progressively shifted from baseline to candidate during the experiment, and candidate is promoted as the new baseline at the end of the experiment.
-
-You can exercise this scenario using [this sample experiment object](performancetest.yaml).
+You can exercise this scenario using [this sample experiment object](../samples/experiments/performancetest.yaml).
 
 ## Metrics
 

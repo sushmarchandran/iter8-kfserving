@@ -9,3 +9,10 @@
 ### Customization
 
 ## Metrics
+
+Iter8-kfserving package ships with x "out-of-the-box" metrics, which are described in the following table. You can extend this set by defining custom metrics. Each metric is defined at a per-version level. For example, the `request-count` metric measures the number of requests to a model version; the `mean-latency` metric measures the mean latency of a model version. Metrics can be of type `counter` or `gauge`. They are inspired by [Prometheus counter metric type](https://prometheus.io/docs/concepts/metric_types/#counter) and [Prometheus gauge metric type](https://prometheus.io/docs/concepts/metric_types/#gauge).
+
+|Name   |Description    |Type   |Units  |
+|---    |----           |---    |---    |
+|request-count  | Number of requests      | counter   |    |
+|mean-latency   | Mean latency    | gauge      | milliseconds |

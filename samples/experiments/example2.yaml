@@ -1,0 +1,39 @@
+apiVersion: core.iter8.tools/v1alpha3
+kind: Experiment
+metadata:
+  name: sklearn-iris-experiment-12
+spec:
+  target: mymodelnamespace/sklearn-iris
+  strategy:
+    type: A/B
+    weights:
+      algorithm: fixed_split
+      # an array of non-negative weights adding up to 100
+      # length of array must match number of versions being compared
+      # values are interpreted as weights for [baseline, candidate0, candidate1, ...]
+      # in the kfserving domain, except in performance testing experiments, number of candidates is always 2
+      # if algorithm == fixed_split, and split is not specified, then split uniformly
+      # if algorithm != fixed_split, and split is specified, at least ignore with a warning; throwing error is even better      
+      split: [75, 25] 
+  criteria: 
+    # namespaced-metric-names are searched in the namespace specified.
+    # for non-namespaced-metric-names, 
+    # iter8 will first search for metrics in experiment namespace
+    # followed iter8-domain namespace (which could be iter8 namespace itself)
+    reward:
+      metric: container-memory-usage-bytes # required
+      preferredDirection: lower # required; higher/lower
+    indicators:
+    - 95th-percentile-tail-latency
+    - container-throttled-seconds-total
+    objectives:
+    - metric: mean-latency
+      upperLimit: 200
+    - metric: my-other-metric-namespace/error-rate
+      upperLimit: "0.01"
+  duration:
+    interval: 20s
+    maxIterations: 8
+  webhooks:
+    termination:
+    - https://terminate.me

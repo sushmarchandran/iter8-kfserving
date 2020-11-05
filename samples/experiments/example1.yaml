@@ -1,0 +1,20 @@
+apiVersion: core.iter8.tools/v1alpha3
+kind: Experiment
+metadata:
+  name: sklearn-iris-experiment-12
+spec:
+  target: mymodelnamespace/sklearn-iris
+  strategy:
+    type: canary
+  criteria:
+    indicators:
+    - 95th-percentile-tail-latency
+    - container-throttled-seconds-total
+    objectives:
+    - metric: mean-latency
+      upperLimit: 200 # either upperLimit or lowerLimit must be specified
+    - metric: error-rate
+      upperLimit: "0.01"
+  duration:
+    interval: 20s
+    maxIterations: 8

@@ -1,6 +1,7 @@
 #!/bin/bash
 
 # Note: Failure handling is yet-to-be-implemented.
+# Note: In particular, this script should not get invoked as part of performance experiments.
 # A possible implementation could be as follows. If any of the steps fail (i.e., return with non-zero return code, this script returns with the non-zero error code, and the container enters failed state). 
 
 # Note: This is an idempotent handler. Executing it 'n' times successfully will produce the same result as executing it once successfully. This is a nice and often useful robustness guarantee.
@@ -13,11 +14,11 @@ INFERENCE_SERVICE_FQRN=$(yq r experiment.yaml spec.target)
 INFERENCE_SERVICE_FILE=$DOMAIN_PACKAGE_ROOT_DIR/resources/experiment/promote/inferenceservice/inferenceservice.yaml
 kubectl get $INFERENCE_SERVICE_FQRN -o yaml > $INFERENCE_SERVICE_FILE
 
-# Step 1f: Get the version to be promoted
-VERSION_TO_BE_PROMOTED=$(yq r experiment.yaml spec.status.versionToBePromoted)
+# Step 1f: Get the recommended baseline
+VERSION_TO_BE_PROMOTED=$(yq r experiment.yaml status.recommendedBaseline)
 
 # Step 2: Modify InferenceService object.
-if [ "$VERSION_TO_BE_PROMOTED" = "baseline" ]; then
+if [ "$VERSION_TO_BE_PROMOTED" == "baseline" ]; then
     # New baseline = old baseline
     yq d $INFERENCE_SERVICE_FILE spec.canaryTrafficPercent > $INFERENCE_SERVICE_FILE
     yq d $INFERENCE_SERVICE_FILE spec.canary > $INFERENCE_SERVICE_FILE

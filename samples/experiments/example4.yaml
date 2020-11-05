@@ -5,7 +5,7 @@ metadata:
 spec:
   target: mymodelnamespace/sklearn-iris
   strategy:
-    type: BlueGreen
+    type: bluegreen
   criteria:
     indicators:
     - 95th-percentile-tail-latency

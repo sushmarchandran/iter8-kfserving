@@ -13,18 +13,23 @@ kubectl get experiment $EXPERIMENT_NAME -o yaml > experiment.yaml
 INFERENCE_SERVICE_FQRN=$(yq r experiment.yaml spec.target)
 kubectl get $INFERENCE_SERVICE_FQRN -o yaml > inferenceservice.yaml
 
-# Step 3: Patch the InferenceService object with 0 traffic to canary
-kubectl patch -p '{"spec": {"canaryTrafficPercent": 0}}' $INFERENCE_SERVICE_FQRN
-
-# Step 4: Get name and namespace of InferenceService object
+# Step 3: Get name and namespace of InferenceService object
 MODEL_NAMESPACE=$(echo $INFERENCE_SERVICE_FQRN | cut -f1 -d/)
 MODEL_NAME=$(echo $INFERENCE_SERVICE_FQRN | cut -f2 -d/)
 
-# Step 5: Create a patch file with appropriate InferenceService name and namespace
-# replace sed with yq
-PATCH_FILE=$DOMAIN_PACKAGE_ROOT_DIR/resources/start/patch.yaml
-sed -i "s/MODEL_NAME/$MODEL_NAME/g" $PATCH_FILE
-sed -i "s/MODEL_NAMESPACE/$MODEL_NAMESPACE/g" $PATCH_FILE
+# Step 4: Apply patches
+if [ "$(yq r inferenceservice.yaml spec.strategy.type)" == "performance" ]; then
+# Step 4.a: this is a performance experiment.
+PATCH_FILE=$DOMAIN_PACKAGE_ROOT_DIR/resources/start/performancepatch.yaml
+else
+# Step 4.b.i: Patch the InferenceService object with 0 traffic to canary
+kubectl patch -p '{"spec": {"canaryTrafficPercent": 0}}' $INFERENCE_SERVICE_FQRN
 
-# Step 6: Patch the experiment CR object using the patch file created in Step 5
+# Step 4.b.ii: Create a patch file with appropriate InferenceService name and namespace
+PATCH_FILE=$DOMAIN_PACKAGE_ROOT_DIR/resources/start/patch.yaml
+yq w -i $PATCH_FILE spec.versionInfo.candidates[0].weightObjRef.name $MODEL_NAME
+yq w -i $PATCH_FILE spec.versionInfo.candidates[0].weightObjRef.namespace $MODEL_NAMESPACE
+fi
+
+# Step 5: Patch the experiment CR object using the appropriate patch file created in Step 4
 kubectl patch experiment $EXPERIMENT_NAME --patch "$(cat $PATCH_FILE)"

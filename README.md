@@ -33,7 +33,7 @@ cd iter8-kfserving
 export ITER8_KFSERVING_ROOT=$PWD
 ./quickstart/install-everything.sh
 ```
-The `export` command in 3. above is required for correct functioning of the scripts.
+The `export` command in the above step is required for correct functioning of the scripts.
 
 5. Check everything. `Ctrl-c` after you verify pods are running.
 

@@ -93,7 +93,7 @@ Iter8-kfserving package ships with fourteen "out-of-the-box" metrics, which are 
 |container-throttled-seconds-total   | Total time duration the container has been throttled    | counter      | seconds |
 |container-cpu-load-average-10s   | Value of container cpu load average over the last 10 seconds    | gauge      | |
 |container-fs-io-time-seconds-total   | Cumulative count of seconds spent doing I/Os    | counter      | seconds |
-|container-memory-usage-bytes   | Current memory usage, including all memory regardless of when it was    | gauge      | bytes |
+|container-memory-usage-bytes   | Current memory usage, including all memory regardless of when it was accessed | gauge      | bytes |
 |container-memory-failcnt   | Number of times memory usage hit resource limit    | counter      | |
 |container-network-receive-errors-total   | Cumulative count of errors encountered while receiving    | counter      | |
 |container-network-transmit-errors-total   | Cumulative count of errors encountered while transmitting    | counter      | |

@@ -75,7 +75,7 @@ watch -n 1.0 'curl -v -H "Host: ${SERVICE_HOSTNAME}" http://${INGRESS_HOST}:${IN
 
 ### Observe metrics
 
-9. Port forward Prometheus (in a separate terminal) so that you can observe metrics for default and canary model versions. You follow the instructions from [this page](https://knative.dev/v0.15-docs/serving/accessing-metrics/) or use the command below.
+9.*In a separate terminal,* port forward Prometheus so that you can observe metrics for default and canary model versions.
 
 ```
 kubectl port-forward -n knative-monitoring \
@@ -83,7 +83,7 @@ $(kubectl get pods -n knative-monitoring \
 --selector=app=prometheus --output=jsonpath="{.items[0].metadata.name}") \
 9090
 ```
-You can access the Prometheus UI at `http://localhost:9090`.
+You can now access the Prometheus UI at `http://localhost:9090`.
 
 ### Perform iter8-kfserving experiment
 

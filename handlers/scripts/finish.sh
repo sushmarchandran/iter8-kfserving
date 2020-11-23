@@ -7,11 +7,10 @@ set -e
 ## Step 0: Get the root directory.
 ## Step 1: Get the Experiment object.
 ## Step 2: Get namespace and name for InferenceService object.
-## Step 3: Ensure InferenceService object exists.
-## Step 4: Ensure InferenceService object is ready.
-## Step 5: Get the InferenceService object.
-## Step 6: Patch the InferenceService object if needed. Create file used to patch the Experiment object.
-## Step 7: Patch the experiment object.
+## Step 3: Get the InferenceService object.
+## Step 4: Find the recommended baseline.
+## Step 5: Remove spec.canaryTrafficPercent in InferenceService object if field exists.
+## Step 6: Replace spec.default with spec.canary and/or remove spec.canary in InferenceService object.
 
 # Step 0: Get the root directory.
 if [[ -z ${RESOURCE_DIR+x} ]]; then
@@ -49,7 +48,7 @@ if [[ -z ${INFERENCE_SERVICE_NAME+x} ]] || [[ -z ${INFERENCE_SERVICE_NAMESPACE+x
     exit 1
 fi
 
-# Step 3: Ensure InferenceService object referenced in the experiment exists.
+# Step 3: Get the InferenceService object.
 echo -n "Ensuring inference service exists. Will give up after 120 seconds ..."
 n=0
 until [ $n -ge 120 ]; do
@@ -68,30 +67,42 @@ if [[ -z ${INFERENCE_SERVICE_EXISTS} ]]; then
     exit 1
 fi
 
-# Step 4: Ensure InferenceService object is ready.
-echo "Ensuring InferenceService object is ready. Will give up after 120 seconds ..."
-kubectl wait --for=condition=ready inferenceservice ${INFERENCE_SERVICE_NAME} -n ${INFERENCE_SERVICE_NAMESPACE} --timeout=120s
-
-# Step 5: Get the InferenceService object.
 kubectl get inferenceservice ${INFERENCE_SERVICE_NAME} -n ${INFERENCE_SERVICE_NAMESPACE} -o yaml > ${RESOURCE_DIR}/inferenceservice.yaml
 echo "kubectl got the InferenceService object ..."
 
-# Step 6: Patch inference service if needed. Create file used to patch the experiment.
-STRATEGY=$(yq r ${RESOURCE_DIR}/inferenceservice.yaml spec.strategy.type)
-if [[ ${STRATEGY} == "performance" ]]; then
-    # Step 6.a: this is a performance experiment.
-    PATCH_FILE=${RESOURCE_DIR}/start/performancepatch.yaml
+# Step 4: Find the recommended baseline
+RECOMMENDED_BASELINE=$(yq r ${RESOURCE_DIR}/experiment.yaml status.recommendedBaseline)
+
+if [[ -n ${RECOMMENDED_BASELINE} ]]; then 
+    echo "RECOMMENDED_BASELINE=${RECOMMENDED_BASELINE}"
 else
-    # Step 6.b.i: Patch the InferenceService object with 0 traffic to canary.
-    echo "Patching InferenceService object using command: kubectl patch inferenceservice sklearn-iris -n kfserving-test -p '{\"spec\": {\"canaryTrafficPercent\": 0}}' --type=merge ..."
-
-    kubectl patch inferenceservice sklearn-iris -n kfserving-test -p '{"spec": {"canaryTrafficPercent": 0}}' --type=merge
-
-    # Step 6.b.ii: Create a patch file with appropriate InferenceService name and namespace.
-    PATCH_FILE=${RESOURCE_DIR}/start/patchwithtwoversions.yaml
-    yq w -i $PATCH_FILE spec.versionInfo.candidates[0].weightObjRef.name ${INFERENCE_SERVICE_NAME}
-    yq w -i $PATCH_FILE spec.versionInfo.candidates[0].weightObjRef.namespace ${INFERENCE_SERVICE_NAMESPACE}
+    echo "Recommended baseline is unavailable in experiment status ..."
+    echo "Setting RECOMMENDED_BASELINE=default"
+    RECOMMENDED_BASELINE="default"
 fi
 
-# Step 7: Patch the experiment CR object using the appropriate patch file created in Step 4.
-kubectl patch experiment $EXPERIMENT_NAME -n $EXPERIMENT_NAMESPACE --patch "$(cat $PATCH_FILE)" --type=merge
+# Step 5: Remove spec.canaryTrafficPercent from InferenceService object if field exists.
+CANARY_TRAFFIC_PERCENT=$(yq r ${RESOURCE_DIR}/inferenceservice.yaml spec.canaryTrafficPercent)
+if [[ -n ${CANARY_TRAFFIC_PERCENT} ]]; then
+    echo "Removing spec.canaryTrafficPercent ..."
+    kubectl patch inferenceservice ${INFERENCE_SERVICE_NAME} -n ${INFERENCE_SERVICE_NAMESPACE} --type=json -p='[{"op": "remove", "path": "/spec/canaryTrafficPercent"}]'
+fi
+
+# Step 6: Replace spec.default with spec.canary and/or remove spec.canary in InferenceService object.
+CANARY=$(yq r ${RESOURCE_DIR}/inferenceservice.yaml spec.canary)
+if [[ -n ${CANARY} ]]; then
+    if [[ ${RECOMMENDED_BASELINE} == "default" ]]; then
+        # New default = old default. Remove spec.canary.
+        echo "Removing spec.canary ..."
+    else
+        # New default = old canary. Store the old canary value and replace default with it.
+        echo "Replacing spec.default with spec.canary and removing spec.canary ..."
+
+        # Create a temp file to store canary as the new default.
+        yq r ${RESOURCE_DIR}/inferenceservice.yaml spec.canary > ${RESOURCE_DIR}/newbaselinedata.yaml
+        yq p -i ${RESOURCE_DIR}/newbaselinedata.yaml spec.default
+        # Overwrite default with the stored canary.
+        kubectl patch inferenceservice ${INFERENCE_SERVICE_NAME} -n ${INFERENCE_SERVICE_NAMESPACE} --type=merge --patch "$(cat ${RESOURCE_DIR}/newbaselinedata.yaml)"
+    fi
+    kubectl patch inferenceservice ${INFERENCE_SERVICE_NAME} -n ${INFERENCE_SERVICE_NAMESPACE} --type=json -p='[{"op": "remove", "path": "/spec/canary"}]'
+fi

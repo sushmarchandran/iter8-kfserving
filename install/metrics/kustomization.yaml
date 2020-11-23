@@ -1,0 +1,3 @@
+resources:
+ - cadvisor-metrics.yaml
+ - revision-metrics.yaml

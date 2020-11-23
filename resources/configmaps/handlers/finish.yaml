@@ -2,7 +2,7 @@ apiVersion: batch/v1
 kind: Job
 metadata:
   name: finish
-  namespace: iter8-system  
+  namespace: iter8-system
 spec:
   template:
     spec:

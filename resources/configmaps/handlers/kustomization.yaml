@@ -1,0 +1,5 @@
+configMapGenerator:
+- name: iter8
+  files:
+  - start.yaml
+  - finish.yaml

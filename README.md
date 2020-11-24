@@ -9,7 +9,7 @@
 1. Start Minikube with sufficient resources
 
 ```
-minikube start --cpus 4 --memory 8192 --kubernetes-version=v1.17.11 --driver=docker
+minikube start --cpus 4 --memory 12288 --kubernetes-version=v1.17.11 --driver=docker
 ```
 
 ### Install Istio, KNative Serving, KNative Monitoring, KFServing, and iter8-kfserving

@@ -47,6 +47,7 @@ sum(increase(revision_app_request_latencies_count{service_name=~'.*$name'}[$inte
 ```
 
 As shown above, the query template has two placeholders (i.e., terms beginning with $). These placeholders are substituted with actual values by _iter8-analytics_ in order to construct a Prometheus query.
-1) The `$name` placeholder is replaced by the name of the service participating in the experiment. _Iter8-analytics_ queries Prometheus with different values for this placeholder based on the type of the experiment- once for the baseline version and once for each of the candidate versions (if any)- using this placeholder. 2) The time period of aggregation is captured by the placeholder `$interval`.
+1) The `$name` placeholder is replaced by the name of the service participating in the experiment. _Iter8-analytics_ queries Prometheus with different values for this placeholder based on the type of the experiment- once for the baseline version and once for each of the candidate versions (if any)- using this placeholder.
+2) The time period of aggregation is captured by the placeholder `$interval`.
 
 Once the custom metric has been applied, it can be referenced in the `criteria` section of the experiment CRD.

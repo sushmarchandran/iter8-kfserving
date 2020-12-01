@@ -2,14 +2,14 @@
 
 ## Metrics defined by iter8
 
-By default, iter8 leverages some of the metrics stored in Prometheus. This list is available [here](https://github.com/iter8-tools/iter8-kfserving/blob/main/docs/experiments.md). Users relying on iter8's out-of-the-box metrics can simply reference them in the _criteria_ section of an _experiment_ specification. Description of the _experiment_ CRD is Coming Soon!
+By default, iter8 leverages some of the metrics stored in Prometheus. This list is available [here](experiments.md). Users relying on iter8's out-of-the-box metrics can simply reference them in the _criteria_ section of an _experiment_ specification. Description of the _experiment_ CRD is Coming Soon!
 
 During an `experiment`, for every call made from  _controller_ to _analytics_ service, the latter in turn calls Prometheus to retrieve values of the metrics referenced by the Kubernetes `experiment` resource. _Iter8-analytics_ analyzes the service versions that are a part of the experiment and arrives at an assessment based on their metric values. It returns this assessment to _controller_.
 
 
 ## Adding a new Metric
 
-When iter8 is installed, the out-of-the-box metrics available [here](https://github.com/iter8-tools/iter8-kfserving/tree/main/install/metrics)
+When iter8 is installed, the out-of-the-box metrics available [here](../install/metrics)
 is directly available to be used in _iter8-experiments_. You can extend this set by defining custom metrics. Some of the details needed to create a custom metric are described below using a sample metric CR:
 
 ```

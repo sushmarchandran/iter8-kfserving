@@ -16,7 +16,7 @@ spec:
     # Please refer to the Prometheus Query Template section below to learn more.
     query: (sum(increase(revision_app_request_latencies_sum{service_name=~'.*$name'}[$interval]))or on() vector(0)) / (sum(increase(revision_app_request_latencies_count{service_name=~'.*$name'}[$interval])) or on() vector(0))
   
-  # An metric description; optional
+  # A description for the metric; optional
   description: Mean latency
 
   # a string denoting the unit of the metric defined; optional

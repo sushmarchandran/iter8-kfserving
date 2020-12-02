@@ -1,73 +1,13 @@
 kind: ClusterRole
 apiVersion: rbac.authorization.k8s.io/v1
 metadata:
-  name: job-handling
-rules:
-- apiGroups:
-  - batch
-  resources:
-  - jobs
-  verbs:
-  - create
-  - delete
-  - deletecollection
-  - get
-  - list
-  - patch
-  - update
-  - watch
----
-kind: ClusterRole
-apiVersion: rbac.authorization.k8s.io/v1
-metadata:
-  name: experiment-handling
-rules:
-- apiGroups:
-  - iter8.tools
-  resources:
-  - experiments
-  verbs:
-  - create
-  - delete
-  - deletecollection
-  - get
-  - list
-  - patch
-  - update
-  - watch
----
-kind: ClusterRole
-apiVersion: rbac.authorization.k8s.io/v1
-metadata:
-  name: metric-handling
-rules:
-- apiGroups:
-  - iter8.tools
-  resources:
-  - metrics
-  verbs:
-  - create
-  - delete
-  - deletecollection
-  - get
-  - list
-  - patch
-  - update
-  - watch
----
-kind: ClusterRole
-apiVersion: rbac.authorization.k8s.io/v1
-metadata:
-  name: inferenceservice-handling
+  name: inferenceservices
 rules:
 - apiGroups:
   - serving.kubeflow.org
   resources:
   - inferenceservices
   verbs:
-  - create
-  - delete
-  - deletecollection
   - get
   - list
   - patch

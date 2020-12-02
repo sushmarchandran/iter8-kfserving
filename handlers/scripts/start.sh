@@ -13,6 +13,12 @@ set -e
 ## Step 6: Patch the InferenceService object if needed. Create file used to patch the Experiment object.
 ## Step 7: Patch the experiment object.
 
+# Environment variables.
+## RESOURCE_DIR: Root of the experiment directory. Useful in local testing and dev.
+## EXPERIMENT_NAME: Name of the Experiment object.
+## EXPERIMENT_NAMESPACE: Namespace of the Experiment object.
+## IGNORE_INFERENCESERVICE_READINESS: Boolean flag indicating if this script needs to wait for InferenceService object to be ready or not. Step 4 is skipped if this flag is set.
+
 # Step 0: Get the root directory.
 if [[ -z ${RESOURCE_DIR+x} ]]; then
     RESOURCE_DIR="./resources/experiment"
@@ -69,8 +75,10 @@ if [[ -z ${INFERENCE_SERVICE_EXISTS} ]]; then
 fi
 
 # Step 4: Ensure InferenceService object is ready.
-echo "Ensuring InferenceService object is ready. Will give up after 120 seconds ..."
-kubectl wait --for=condition=ready inferenceservice ${INFERENCE_SERVICE_NAME} -n ${INFERENCE_SERVICE_NAMESPACE} --timeout=120s
+if [[ -z ${IGNORE_INFERENCESERVICE_READINESS} ]]; then
+    echo "Ensuring InferenceService object is ready. Will give up after 120 seconds ..."
+    kubectl wait --for=condition=ready inferenceservice ${INFERENCE_SERVICE_NAME} -n ${INFERENCE_SERVICE_NAMESPACE} --timeout=120s
+fi
 
 # Step 5: Get the InferenceService object.
 kubectl get inferenceservice ${INFERENCE_SERVICE_NAME} -n ${INFERENCE_SERVICE_NAMESPACE} -o yaml > ${RESOURCE_DIR}/inferenceservice.yaml

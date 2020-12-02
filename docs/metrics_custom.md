@@ -1,6 +1,6 @@
 # Custom iter8 Metrics
 
-When iter8 is installed, the [out-of-the-box metrics](metrics_ootb.md) are directly available to be used in _iter8-experiments_. You can extend this set with custom metrics by creating a valid CR. Some of the details needed to create a custom metric are described below using a sample metric CR:
+When iter8 is installed, the [out-of-the-box metrics](metrics_ootb.md) are directly available to be used in _iter8-experiments_. You can extend this set with custom metrics by creating a valid Metric CR. Some of the details needed to create a custom metric are described below using a sample metric CR:
 
 ```
 apiVersion: iter8.tools/v2alpha1
@@ -12,7 +12,8 @@ metadata:
 spec:
   params:
 
-    # Iter8 uses a query template template to query Prometheus and compute the value of the metric for every service version. Currently, iter8 supports Prometheus as a backend database to observe metrics. Please refer to the Prometheus Query Template section below to learn more.
+    # Iter8 uses a query template template to query Prometheus and compute the value of the metric for every model version. Currently, iter8 supports Prometheus as a backend database to observe metrics.
+    # Please refer to the Prometheus Query Template section below to learn more.
     query: (sum(increase(revision_app_request_latencies_sum{service_name=~'.*$name'}[$interval]))or on() vector(0)) / (sum(increase(revision_app_request_latencies_count{service_name=~'.*$name'}[$interval])) or on() vector(0))
   
   # An metric description; optional
@@ -73,7 +74,7 @@ sum(increase(revision_app_request_latencies_count{service_name=~'.*$name'}[$inte
 ```
 
 As shown above, the query template has two placeholders (i.e., terms beginning with $). These placeholders are substituted with actual values by _iter8-analytics_ in order to construct a Prometheus query.
-1) The `$name` placeholder is replaced by the name of the service participating in the experiment. _Iter8-analytics_ queries Prometheus with different values for this placeholder based on the type of the experiment- once for the baseline version and once for each of the candidate versions (if any)- using this placeholder.
+1) The `$name` placeholder is replaced by the name of the model participating in the experiment. _Iter8-analytics_ queries Prometheus with different values for this placeholder based on the type of the experiment- once for the baseline version and once for each of the candidate versions (if any)- using this placeholder.
 2) The time period of aggregation is captured by the placeholder `$interval`.
 
 Once the custom metric has been applied, it can be referenced in the `criteria` section of the experiment CRD.

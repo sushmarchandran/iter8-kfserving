@@ -83,4 +83,4 @@ Try this example using [this sample experiment](../samples/experiments/performan
 
 A list and description of the metrics available out-of-the-box with iter8 is provided [here](metrics_ootb.md)
 
-A description of the Metrics CR and instructions on how to add custom metrics to your iter8 configuration is provided [here](metrics_custom.md)
+A description of the metrics CRD and instructions on how to add custom metrics to your iter8 configuration is provided [here](metrics_custom.md)

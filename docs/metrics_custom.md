@@ -1,7 +1,8 @@
-# Custom iter8 Metrics
+# Custom Metrics
 
-When iter8 is installed, the [out-of-the-box metrics](metrics_ootb.md) are directly available to be used in _iter8-experiments_. You can extend this set with custom metrics by creating a valid Metric CR. Some of the details needed to create a custom metric are described below using a sample metric CR:
+When you install iter8-kfserving, fourteen [out-of-the-box metrics](metrics_ootb.md) are available to be used in _iter8-experiments_. You can extend this set with custom metrics by creating a Metric object. Some of the details needed to create a custom metric are described in the following examples of sample _gauge_ and _counter_ metric objects.
 
+### Sample gauge metric
 ```
 apiVersion: iter8.tools/v2alpha1
 kind: Metric
@@ -12,7 +13,7 @@ metadata:
 spec:
   params:
 
-    # Iter8 uses a query template template to query Prometheus and compute the value of the metric for every model version. Currently, iter8 supports Prometheus as a backend database to observe metrics.
+    # Iter8 uses a query template to query Prometheus and compute the value of the metric for every model version. Currently, iter8 supports Prometheus as a backend database to observe metrics.
     # Please refer to the Prometheus Query Template section below to learn more.
     query: (sum(increase(revision_app_request_latencies_sum{service_name=~'.*$name'}[$interval]))or on() vector(0)) / (sum(increase(revision_app_request_latencies_count{service_name=~'.*$name'}[$interval])) or on() vector(0))
   
@@ -33,48 +34,42 @@ spec:
   provider: prometheus
 ```
 
-
-#### Sample Counter metric CR
+#### Sample counter metric CR
 ```
 apiVersion: iter8.tools/v2alpha1
 kind: Metric
 metadata:
+
+  # Name of the custom metric
   name: request-count
 spec:
   params:
-    query: sum(increase(revision_app_request_latencies_count{service_name=~'.*$name'}[$interval])) or on() vector(0)
-  description: Number of requests
-  type: counter
-  provider: prometheus
-```
 
-#### Sample Gauge metric CR
-```
-apiVersion: iter8.tools/v2alpha1
-kind: Metric
-metadata:
-  name: mean-latency
-spec:
-  description: Mean latency
-  units: milliseconds
-  params:
-    query: (sum(increase(revision_app_request_latencies_sum{service_name=~'.*$name'}[$interval]))or on() vector(0)) / (sum(increase(revision_app_request_latencies_count{service_name=~'.*$name'}[$interval])) or on() vector(0))
-  type: gauge
-  sample_size: 
-    name: request-count
+    # Iter8 uses a query template to query Prometheus and compute the value of the metric for every model version. Currently, iter8 supports Prometheus as a backend database to observe metrics.
+    # Please refer to the Prometheus Query Template section below to learn more.
+    query: sum(increase(revision_app_request_latencies_count{service_name=~'.*$name'}[$interval])) or on() vector(0)
+  
+  # A description for the metric; optional
+  description: Number of requests
+
+  # Iter8 metrics can be of two types: if the metric defined is a counter (i.e., its value never decreases over time) then its type is 'counter', otherwise it is 'gauge' 
+  type: counter
+
+  # Currently, iter8 supports Prometheus as a backend metrics provider. Other backend support is coming soon!
   provider: prometheus
 ```
 
 ### Prometheus query template
 
-A sample query template is shown below:
+Every metric object requires parameters as seen in the above section to enable _iter8_analytics_ to query the backend metrics database. Specifically, the Prometheus query template also has parameters that are processed by _iter8-analytics_ as described below.
 
+Here is a sample Prometheus query template:
 ```
 sum(increase(revision_app_request_latencies_count{service_name=~'.*$name'}[$interval])) or on() vector(0)
 ```
 
-As shown above, the query template has two placeholders (i.e., terms beginning with $). These placeholders are substituted with actual values by _iter8-analytics_ in order to construct a Prometheus query.
-1) The `$name` placeholder is replaced by the name of the model participating in the experiment. _Iter8-analytics_ queries Prometheus with different values for this placeholder based on the type of the experiment- once for the baseline version and once for each of the candidate versions (if any)- using this placeholder.
-2) The time period of aggregation is captured by the placeholder `$interval`.
+The query template has two placeholders (i.e., terms beginning with $). These placeholders are substituted with actual values by _iter8-analytics_ in order to construct a Prometheus query.
+1) The `$name` placeholder is replaced the name of the model version participating in the experiment. _Iter8-analytics_ queries Prometheus with different values (i.e. default or canary) for this placeholder based on the type of the experiment using this placeholder.
+2) The `$interval` placeholder captures the time period of aggregation.
 
-Once the custom metric has been applied, it can be referenced in the `criteria` section of the experiment CRD.
+Once the custom metric is created, it can be referenced in the `criteria` section of the experiment CRD.

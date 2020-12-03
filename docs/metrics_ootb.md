@@ -1,4 +1,4 @@
-# Out-of-the-box iter8 metrics
+# Out-of-the-box metrics
 
 Iter8-kfserving package ships with fourteen "out-of-the-box" metrics, which are described in the following table. You can extend this set by defining custom metrics. Each metric is defined at a per-version level. For example, the `request-count` metric measures the number of requests to a model version; the `mean-latency` metric measures the mean latency of a model version. Metrics can be of type `counter` or `gauge`. They are inspired by [Prometheus counter metric type](https://prometheus.io/docs/concepts/metric_types/#counter) and [Prometheus gauge metric type](https://prometheus.io/docs/concepts/metric_types/#gauge).
 
@@ -21,4 +21,4 @@ Users relying on iter8's out-of-the-box metrics can simply reference them in the
 |container-processes   | Number of processes running inside the container    | gauge      | |
 |container-tasks-state   | Number of tasks in given state (sleeping, running, stopped, uninterruptible, or ioawaiting)    | gauge      | |
 
-A description of the metrics CRD and instructions on how to add custom metrics to your iter8 configuration is provided [here](metrics_custom.md)
+A description of the metrics CRD and instructions on how to add custom metrics is provided [here](metrics_custom.md).

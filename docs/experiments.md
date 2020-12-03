@@ -79,23 +79,8 @@ Try this example using [this sample experiment](../samples/experiments/performan
 
 ![Performance testing](images/performancetesting.png)
 
-## Metrics
+## Iter8 Metrics
 
-Iter8-kfserving package ships with fourteen "out-of-the-box" metrics, which are described in the following table. You can extend this set by defining custom metrics. Each metric is defined at a per-version level. For example, the `request-count` metric measures the number of requests to a model version; the `mean-latency` metric measures the mean latency of a model version. Metrics can be of type `counter` or `gauge`. They are inspired by [Prometheus counter metric type](https://prometheus.io/docs/concepts/metric_types/#counter) and [Prometheus gauge metric type](https://prometheus.io/docs/concepts/metric_types/#gauge). A description of the metric CRD is provided [here] (metrics.md)
+A list and description of the metrics available out-of-the-box with iter8 is provided [here](metrics_ootb.md).
 
-|Name   |Description    |Type   |Units  |
-|---    |----           |---    |---    |
-|request-count  | Number of requests      | counter   |    |
-|mean-latency   | Mean latency    | gauge      | milliseconds |
-|95th-percentile-tail-latency   | 95th percentile tail latency    | gauge      | milliseconds |
-|error-count   | Number of error responses    | counter      |  |
-|error-rate   | Fraction of requests with error responses    | gauge      |  |
-|container-throttled-seconds-total   | Total time duration the container has been throttled    | counter      | seconds |
-|container-cpu-load-average-10s   | Value of container cpu load average over the last 10 seconds    | gauge      | |
-|container-fs-io-time-seconds-total   | Cumulative count of seconds spent doing I/Os    | counter      | seconds |
-|container-memory-usage-bytes   | Current memory usage, including all memory regardless of when it was accessed | gauge      | bytes |
-|container-memory-failcnt   | Number of times memory usage hit resource limit    | counter      | |
-|container-network-receive-errors-total   | Cumulative count of errors encountered while receiving    | counter      | |
-|container-network-transmit-errors-total   | Cumulative count of errors encountered while transmitting    | counter      | |
-|container-processes   | Number of processes running inside the container    | gauge      | |
-|container-tasks-state   | Number of tasks in given state (sleeping, running, stopped, uninterruptible, or ioawaiting)    | gauge      | |
+A description of the metrics CRD and instructions on how to add custom metrics is provided [here](metrics_custom.md).

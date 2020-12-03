@@ -61,7 +61,7 @@ spec:
 
 ### Prometheus query template
 
-Every metric object requires parameters as seen in the above section to enable _iter8_analytics_ to query the backend metrics database. Specifically, the Prometheus query template also has parameters that are processed by _iter8-analytics_ as described below.
+Every metric object requires parameters as seen in the above section to enable _iter8_analytics_ to query the backend metrics database. Specifically, the Prometheus query template also has placeholders that are processed by _iter8-analytics_ as described below.
 
 Here is a sample Prometheus query template:
 ```
@@ -69,7 +69,7 @@ sum(increase(revision_app_request_latencies_count{service_name=~'.*$name'}[$inte
 ```
 
 The query template has two placeholders (i.e., terms beginning with $). These placeholders are substituted with actual values by _iter8-analytics_ in order to construct a Prometheus query.
-1) The `$name` placeholder is replaced the name of the model version participating in the experiment. _Iter8-analytics_ queries Prometheus with different values (i.e. default or canary) for this placeholder based on the type of the experiment using this placeholder.
+1) The `$name` placeholder is replaced by the name of the model version participating in the experiment. _Iter8-analytics_ queries Prometheus with different values (i.e. default or canary) for this placeholder based on the type of the experiment.
 2) The `$interval` placeholder captures the time period of aggregation.
 
 Once the custom metric is created, it can be referenced in the `criteria` section of the experiment CRD.

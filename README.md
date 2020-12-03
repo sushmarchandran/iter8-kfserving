@@ -12,22 +12,32 @@
 minikube start --cpus 4 --memory 12288 --kubernetes-version=v1.17.11 --driver=docker
 ```
 
-### Install Istio, KNative Serving, KNative Monitoring, KFServing, and iter8-kfserving
-
-2. Git clone iter8-kfserving repo.
-
-```
-git clone https://github.com/iter8-tools/iter8-kfserving.git
-```
-
-3. Install everything.
+### Install KFServing (including Istio and KNative Serving)
+2. Install KFServing
 
 ```
-cd iter8-kfserving
-export ITER8_KFSERVING_ROOT=$PWD
-./quickstart/install-everything.sh
+git clone https://github.com/kubeflow/kfserving.git
+
+cd kfserving
+
+./hack/quick_install.sh
 ```
-The `export` command in the above step is required for correct functioning of the scripts.
+
+### Install KNative monitoring
+4. Install KNative monitoring
+
+```
+kubectl create ns knative-monitoring
+
+kubectl apply --filename https://github.com/knative/serving/releases/download/v0.18.0/monitoring-metrics-prometheus.yaml
+```
+
+### Install iter8-kfserving
+5. Install iter8-kfserving
+
+```
+kubectl apply -k ....
+```
 
 4. Check everything. `Ctrl-c` after you verify that pods are running using the watches.
 

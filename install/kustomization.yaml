@@ -1,4 +1,6 @@
+namespace: iter8-system
 resources:
-  - configmaps/
   - metrics/
   - rbac/
+  - iter8-analytics/
+  - iter8-controller/

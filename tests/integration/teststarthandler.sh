@@ -38,8 +38,8 @@ then
     sudo snap install yq
 fi
 
-echo "Fixing and launching start handler"       
-cp resources/configmaps/handlers/start.yaml tests/integration/handlers/start.yaml
+echo "Fixing and launching start handler"    
+cp install/iter8-controller/configmaps/handlers/start.yaml tests/integration/handlers/start.yaml
 yq w -i tests/integration/handlers/start.yaml spec.template.spec.containers[0].image ${IMAGE_NAME}
 yq w -i tests/integration/handlers/start.yaml spec.template.spec.containers[0].imagePullPolicy Never
 yq w -i tests/integration/handlers/start.yaml spec.template.spec.containers[0].env[0].value kfserving-test

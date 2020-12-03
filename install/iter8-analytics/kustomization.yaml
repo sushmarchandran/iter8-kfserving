@@ -1,8 +1,11 @@
+namePrefix: iter8-
+
 resources:
-- github.com/sriumcp/iter8-analytics/install/kubernetes/kustomize?ref=actions
+- https://raw.githubusercontent.com/iter8-tools/iter8-analytics/install/install/kubernetes/kustomize/service.yaml
+- https://raw.githubusercontent.com/iter8-tools/iter8-analytics/install/install/kubernetes/kustomize/deployment.yaml
 
 configMapGenerator:
-- name: iter8-analytics
+- name: analytics
   files:
   - config.yaml
 generatorOptions:

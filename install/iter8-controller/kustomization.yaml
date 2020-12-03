@@ -1,0 +1,10 @@
+namePrefix: iter8-
+resources:
+- configmaps
+- github.com/iter8-tools/etc3/config/crd/?ref=kustomize
+- github.com/iter8-tools/etc3/config/rbac-iter8/?ref=kustomize
+- github.com/iter8-tools/etc3/config/manager/?ref=kustomize
+# bases:
+# - ../crd
+# - ../rbac-iter8
+# - ../manager

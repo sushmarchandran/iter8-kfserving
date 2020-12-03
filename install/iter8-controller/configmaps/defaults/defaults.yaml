@@ -1,0 +1,24 @@
+experimentTypes: # keys are from enums
+  - name: canary
+    handlers:
+      start: start
+      rollback: finish
+      finish: finish
+      failure: finish
+  - name: ab
+    handlers:
+      start: start
+      rollback: finish
+      finish: finish
+      failure: finish
+  - name: performance
+    handlers:
+      start: start
+  - name: bluegreen
+    handlers:
+      start: start
+      rollback: finish
+      finish: finish
+      failure: finish
+metrics:
+  requestCount: request-count

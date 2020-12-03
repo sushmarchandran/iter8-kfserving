@@ -1,3 +1,0 @@
-defaultHandlers:
-  start: iter8-kfserving/start-handler
-  finish: iter8-kfserving/finish-handler

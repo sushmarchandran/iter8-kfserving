@@ -26,6 +26,8 @@ kubectl apply --filename https://github.com/knative/serving/releases/download/v0
 **Step 4:** Install iter8-kfserving.
 ```
 kustomize build github.com/iter8-tools/iter8-kfserving/install/?ref=main | kubectl apply -f -
+kubectl wait --for condition=established --timeout=60s crd/metrics.iter8.tools # wait for condition to be met
+kustomize build github.com/iter8-tools/iter8-kfserving/install/metrics/?ref=main | kubectl apply -f -
 ```
 
 **Step 5:** Check everything. `Ctrl-c` after you verify that pods are running.

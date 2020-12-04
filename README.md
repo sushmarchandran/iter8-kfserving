@@ -51,9 +51,9 @@ kubectl apply -f ./samples/common/sklearn-iris.yaml -n kfserving-test
 ```
 This creates the `default` and `canary` versions of sklearn-iris model.
 
-**Step 8:** Verify that the InferenceService is ready. `Ctrl-c` after you verify `READY==TRUE`.
+**Step 8:** Verify that the InferenceService is ready. This step takes a couple of minutes.
 ```
-kubectl get inferenceservice -n kfserving-test --watch
+kubectl wait --for condition=ready --timeout=180s inferenceservice/sklearn-iris -n kfserving-test
 ```
 
 **Step 9:** Send prediction requests to model versions. *In a separate terminal,* export `SERVICE_HOSTNAME`, `INGRESS_HOST` and `INGRESS_PORT` environment variables, and send prediction requests to the inference service as follows.

@@ -25,11 +25,11 @@ cd kfserving
 
 kubectl create ns knative-monitoring
 
-kubectl apply --filename https://github.com/knative/serving/releases/download/v0.18.0/monitoring-metrics-prometheus.yaml
+kubectl apply -f https://github.com/knative/serving/releases/download/v0.18.0/monitoring-metrics-prometheus.yaml
 
 cd ${ITER8_KFSERVING_ROOT}
 
-# At this point, install iter8 -- skipping for now
-
-# At this point, install iter8-kfserving -- skipping for now
-
+# Install iter8-kfserving
+kubectl apply -f https://raw.githubusercontent.com/iter8-tools/iter8-kfserving/main/install/iter8-kfserving.yaml
+kubectl wait --for condition=established --timeout=120s crd/metrics.iter8.tools
+kubectl apply -f https://raw.githubusercontent.com/iter8-tools/iter8-kfserving/main/install/metrics/iter8-kfserving-metrics.yaml

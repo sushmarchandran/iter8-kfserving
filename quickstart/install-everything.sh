@@ -13,6 +13,8 @@ else
     echo "ITER8_KFSERVING_ROOT is set to '$ITER8_KFSERVING_ROOT'"
 fi
 
+rm -rf ${ITER8_KFSERVING_ROOT}/.tmp
+
 mkdir ${ITER8_KFSERVING_ROOT}/.tmp
 
 cd ${ITER8_KFSERVING_ROOT}/.tmp

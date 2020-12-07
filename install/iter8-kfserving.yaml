@@ -892,22 +892,22 @@ apiVersion: v1
 data:
   defaults.yaml: |
     experimentTypes: # keys are from enums
-      - name: canary
+      - name: Canary
         handlers:
           start: start
           rollback: finish
           finish: finish
           failure: finish
-      - name: ab
+      - name: A/B
         handlers:
           start: start
           rollback: finish
           finish: finish
           failure: finish
-      - name: performance
+      - name: Performance
         handlers:
           start: start
-      - name: bluegreen
+      - name: BlueGreen
         handlers:
           start: start
           rollback: finish
@@ -934,7 +934,7 @@ data:
           containers:
           - name: ik-finish
             image: iter8/iter8-kfserving:latest
-            command: ["handlers/scripts/finish.sh"]
+            command: ["handlers/finish.sh"]
             env:
             - name: EXPERIMENT_NAMESPACE
               value: EXPERIMENT_NAMESPACE_VALUE
@@ -955,7 +955,7 @@ data:
           containers:
           - name: ik-start
             image: iter8/iter8-kfserving:latest
-            command: ["handlers/scripts/start.sh"]
+            command: ["handlers/start.sh"]
             env:
             - name: EXPERIMENT_NAMESPACE
               value: EXPERIMENT_NAMESPACE_VALUE

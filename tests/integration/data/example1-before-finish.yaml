@@ -3,10 +3,11 @@ kind: Experiment
 metadata:
   name: sklearn-iris-experiment-1
 spec:
-  target: kfserving-test/sklearn-iris
+  target: kfserving-test/sklearn-iris # namespaced name of the inference service
   strategy:
     type: Canary
   criteria:
+    requestCount: request-count
     indicators:
     - 95th-percentile-tail-latency
     - container-throttled-seconds-total
@@ -18,3 +19,5 @@ spec:
   duration:
     intervalSeconds: 20
     maxIterations: 8
+status:
+  recommendedBaseline: canary

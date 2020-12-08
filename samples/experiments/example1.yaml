@@ -11,7 +11,7 @@ spec:
     - 95th-percentile-tail-latency
     - container-throttled-seconds-total
     objectives:
-    - metric: default/mean-latency
+    - metric: mean-latency
       upperLimit: 1000
     - metric: error-rate
       upperLimit: "0.01"

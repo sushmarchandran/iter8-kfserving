@@ -8,14 +8,20 @@ The picture below illustrates an automated canary rollout orchestrated by iter8-
 
 ## Table of Contents
 - [Quick start on Minikube](#Quick-start-on-Minikube)
-- [Installation](./docs/installation.md)
-  * [on Kubernetes Clusters](./docs/kubernetes.md)
+<!-- - [Installation](./docs/installation.md)
+  * [on Kubernetes Clusters](./docs/kubernetes.md) -->
+- Installation
+  * on Kubernetes Clusters
   <!-- * [on OpenShift Clusters](./docs/openshift.md) -->
   * on OpenShift Clusters
-- [Anatomy of an Experiment](./docs/anatomy.md)
+<!-- - [Anatomy of an Experiment](./docs/anatomy.md)
 - [Live Experimentation Strategies](./docs/strategy.md)
   * [Online Model Validation Strategies](./docs/validation.md)
-    + [Canary](./docs/canary.md)
+    + [Canary](./docs/canary.md) -->
+- Anatomy of an Experiment
+- Live Experimentation Strategies
+  * Online Model Validation Strategies
+    + Canary
     <!-- + [A/B](./docs/ab.md)
     + [A/B/n](./docs/abn.md)
     + [BlueGreen](./docs/bluegreen.md) -->
@@ -38,16 +44,24 @@ The picture below illustrates an automated canary rollout orchestrated by iter8-
     + Ensemble
     + Personalization
     + Pareto Front
-- [Fixed Split Experiments](./docs/fixed.md)
+<!-- - [Fixed Split Experiments](./docs/fixed.md)
 - [Experiment Criteria](./docs/criteria.md)
-  * [Objectives](./docs/objectives.md)
+  * [Objectives](./docs/objectives.md) -->
+- Fixed Split Experiments
+- Experiment Criteria
+  * Objectives
   <!-- * [Rewards](./docs/rewards.md) -->
   * Rewards
-  * [Indicators](./docs/indicators.md)
-- [Concurrent Experiments](./docs/concurrency.md)
+  <!-- * [Indicators](./docs/indicators.md) -->
+<!-- - [Concurrent Experiments](./docs/concurrency.md)
 - [Explainability](./docs/explanation.md)
   * [Winner Assessment](./docs/winner.md)
-  * [Version Assessment](./docs/version.md)
+  * [Version Assessment](./docs/version.md) -->
+  * Indicators
+- Concurrent Experiments
+- Explainability
+  * Winner Assessment
+  * Version Assessment
   <!-- * [Objective Details](./docs/objectives.md)
   * [Reward and Improvement Details](./docs/reward.md)
   * [Indicator Details](./docs/indicators.md) -->
@@ -98,16 +112,22 @@ The picture below illustrates an automated canary rollout orchestrated by iter8-
     + Elastic
     + Datadog
     + Jaeger
-- [Reference](./docs/reference.md)
+<!-- - [Reference](./docs/reference.md)
   * [Experiment CRD](./docs/experiment-crd.md)
   * [Metrics CRD](./docs/metrics-crd.md)
   * [Out-of-the-box Metrics](./docs/metrics-crd.md)
-    + [System Metrics](./docs/system-metrics.md)
+    + [System Metrics](./docs/system-metrics.md) -->
+- Reference
+  * Experiment CRD
+  * Metrics CRD
+  * Out-of-the-box Metrics
+    + System Metrics
     <!-- + [ML Metrics](./docs/ml-metrics.md)
     + [Business Metrics](./docs/business-metrics.md) -->
     + ML Metrics
     + Business Metrics
-  * [Custom Metrics](./docs/custom-metrics.md)
+  <!-- * [Custom Metrics](./docs/custom-metrics.md) -->
+  * Custom Metrics
   <!-- * [Classical and Contextual Multi-armed Bandit Algorithms](./docs/mab.md)
     + [Progressive Rollout Algorithms](rolloutalgos.md)
       - [Constrained Epsilon Greedy](epsilon.md)
@@ -134,8 +154,10 @@ The picture below illustrates an automated canary rollout orchestrated by iter8-
     + Bayesian Hypothesis Testing
     + Bayes Risk
   * Analytics Customization
-- [Roadmap](./docs/roadmap.md)
-- [Contributing](./docs/contributing.md)
+<!-- - [Roadmap](./docs/roadmap.md)
+- [Contributing](./docs/contributing.md) -->
+- Roadmap
+- Contributing
 
 ## Quick start on Minikube
 Steps 1 through 10 below enable you to perform automated canary rollout of a KFServing model using latency and error-rate metrics collected in a Prometheus backend. Metrics definition and collection is enabled by the KNative monitoring and iter8-kfserving components installed in Step 3 below.

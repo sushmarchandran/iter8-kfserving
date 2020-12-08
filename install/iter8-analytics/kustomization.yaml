@@ -1,7 +1,7 @@
 namePrefix: iter8-
 
 resources:
-- github.com/sriumcp/iter8-analytics/install/kubernetes/kustomize/?ref=install
+- github.com/iter8-tools/iter8-analytics/install/kubernetes/kustomize/?ref=master
 
 configMapGenerator:
 - name: analytics

@@ -1006,15 +1006,14 @@ spec:
       containers:
       - env:
         - name: METRICS_BACKEND_CONFIGFILE
-          value: config.yaml
+          value: /config/config.yaml
         image: iter8/iter8-analytics:latest
         imagePullPolicy: Always
         name: iter8-analytics
         resources: {}
         volumeMounts:
-        - mountPath: /config.yaml
+        - mountPath: /config
           name: config-volume
-          subPath: config.yaml
       volumes:
       - configMap:
           name: iter8-analytics

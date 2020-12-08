@@ -204,7 +204,7 @@ You can now access the Prometheus UI at `http://localhost:9090`. -->
 
 **Step 9:** Create the canary rollout experiment.
 ```
-kubectl apply -f samples/experiments/example1.yaml
+kubectl apply -f samples/experiments/example1.yaml -n kfserving-test
 ```
 
 **Step 10:** Watch as the canary version succeeds and gets promoted as the new default.

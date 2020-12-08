@@ -1,6 +1,9 @@
 name: Build-test-and-docker-push
 
 on:
+  # manual runs
+  workflow_dispatch:
+
   push:
     # Publish `main` as Docker `latest` image.
     branches:
@@ -14,11 +17,53 @@ on:
   pull_request:
 
 jobs:
-  build-and-test:
+  local-docker-build:
     runs-on: ubuntu-latest
+    steps:
+    - uses: actions/checkout@v2    
+    - uses: docker/setup-buildx-action@v1
+    - name: Build and push to /tmp
+      uses: docker/build-push-action@v2
+      with:
+        context: .
+        file: ./Dockerfile
+        tags: iter8-kfserving:latest
+        outputs: type=docker,dest=/tmp/image.tar
+    - name: Upload artifact
+      uses: actions/upload-artifact@v2
+      with:
+        name: image
+        path: /tmp/image.tar
 
+  test-install-yaml:
+    runs-on: ubuntu-latest
+    steps:
+    - uses: actions/checkout@v2
+    - name: Run Kubernetes tools
+      uses: stefanprodan/kube-tools@v1
+      with:
+        kubectl: 1.18.2
+        kustomize: 3.5.5    
+    - run: tests/install/testinstallyaml.sh
+
+  test-start-and-finish-handlers:
+    runs-on: ubuntu-latest
+    needs:
+    - local-docker-build
+    - test-install-yaml
     steps:
       - uses: actions/checkout@v2
+      - name: Set up Docker Buildx
+        uses: docker/setup-buildx-action@v1
+      - name: Download artifact
+        uses: actions/download-artifact@v2
+        with:
+          name: image
+          path: /tmp
+      - name: Load Docker image
+        run: |
+          docker load --input /tmp/image.tar
+          docker image ls -a
       - name: Setup Minikube
         uses: manusa/actions-setup-minikube@v2.0.1
         with:
@@ -28,16 +73,38 @@ jobs:
         uses: stefanprodan/kube-tools@v1
         with:
           kubectl: 1.18.2
-          kustomize: 3.5.5      
+          kustomize: 3.5.5     
+      - run: tests/integration/teststarthandler.sh
       - run: tests/integration/teststarthandler.sh
       - run: tests/integration/cleanupstart.sh
       - run: tests/integration/testfinishhandler.sh
       - run: tests/integration/cleanupfinish.sh
-      - run: tests/install/checkinstall.sh        
+
+  test-install:
+    runs-on: ubuntu-latest
+    needs:
+    - local-docker-build
+    - test-install-yaml
+
+    steps:
+      - uses: actions/checkout@v2
+      - name: Run Kubernetes tools
+        uses: stefanprodan/kube-tools@v1
+        with:
+          kubectl: 1.18.2
+          kustomize: 3.5.5    
+      - name: Setup Minikube
+        uses: manusa/actions-setup-minikube@v2.0.1
+        with:
+          minikube version: 'v1.15.1'
+          kubernetes version: 'v1.17.11'
+      - run: tests/install/checkinstalleverything.sh 
 
   build-and-push:
     # Ensure test job passes before pushing image.
-    needs: build-and-test
+    needs: 
+    - test-start-and-finish-handlers
+    - test-install
 
     runs-on: ubuntu-latest
 

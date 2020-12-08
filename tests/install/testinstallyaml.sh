@@ -1,6 +1,8 @@
 #!/bin/bash
 
-# Check if installation file is correct
+# Check if installation file is correctly generated from latest codebase
+
+mkdir -p tests/scratch
 
 kustomize build install/ > tests/scratch/build.yaml
 

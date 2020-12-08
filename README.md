@@ -197,7 +197,7 @@ Enter password if prompted in the above step.
 kubectl create ns kfserving-test
 kubectl apply -f samples/common/sklearn-iris.yaml -n kfserving-test
 ```
-This creates the `default` and `canary` versions of sklearn-iris model.
+This creates the `default` and `canary` versions of sklearn-iris model (`flowers` and `flowers-2` respectively).
 
 **Step 7:** Verify that the InferenceService is ready. This step takes a couple of minutes.
 ```
@@ -233,3 +233,28 @@ kubectl apply -f samples/experiments/example1.yaml -n kfserving-test
 ```
 kubectl get inferenceservice -n kfserving-test --watch
 ```
+
+You should see output similar to the following.
+
+```
+NAME           URL                                              READY   DEFAULT TRAFFIC   CANARY TRAFFIC   AGE
+sklearn-iris   http://sklearn-iris.kfserving-test.example.com   True    95                5                112s
+sklearn-iris   http://sklearn-iris.kfserving-test.example.com   True    95                5                2m47s
+sklearn-iris   http://sklearn-iris.kfserving-test.example.com   True    85                15               2m47s
+sklearn-iris   http://sklearn-iris.kfserving-test.example.com   True    85                15               3m10s
+sklearn-iris   http://sklearn-iris.kfserving-test.example.com   True    75                25               3m11s
+sklearn-iris   http://sklearn-iris.kfserving-test.example.com   True    75                25               3m33s
+sklearn-iris   http://sklearn-iris.kfserving-test.example.com   True    65                35               3m33s
+sklearn-iris   http://sklearn-iris.kfserving-test.example.com   True    65                35               3m55s
+sklearn-iris   http://sklearn-iris.kfserving-test.example.com   True    55                45               3m56s
+sklearn-iris   http://sklearn-iris.kfserving-test.example.com   True    55                45               3m59s
+sklearn-iris   http://sklearn-iris.kfserving-test.example.com   True    100                                4m
+sklearn-iris                                                    False                                      4m
+sklearn-iris                                                    False                                      4m
+sklearn-iris                                                    False                                      4m34s
+sklearn-iris                                                    False                                      4m35s
+sklearn-iris                                                    False                                      4m35s
+sklearn-iris   http://sklearn-iris.kfserving-test.example.com   True    100                                4m36s
+```
+
+If you inspect the InferenceService object (`kubectl get inferenceservice -n kfserving-test -o yaml`), you will notice that `flowers-2` (canary version) has been **promoted** as the new default, all traffic flows to `flowers-2`, and there is no longer a canary version.

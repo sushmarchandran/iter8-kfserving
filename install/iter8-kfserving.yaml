@@ -1050,13 +1050,9 @@ spec:
             fieldRef:
               fieldPath: metadata.namespace
         - name: DEFAULTS_DIR
-          valueFrom:
-            fieldRef:
-              fieldPath: spec.template.spec.containers[0].volumeMounts[0]
+          value: /defaults
         - name: HANDLERS_DIR
-          valueFrom:
-            fieldRef:
-              fieldPath: spec.template.spec.containers[0].volumeMounts[1]
+          value: /handlers
         image: iter8/etc3:latest
         name: manager
         resources:

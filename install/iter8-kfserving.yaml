@@ -882,7 +882,7 @@ data:
   config.yaml: |
     port: 8080
     metricsBackend:
-      url: http://prometheus.knative-monitoring:9090
+      url: http://prometheus-system-discovery.knative-monitoring:9090
 kind: ConfigMap
 metadata:
   name: iter8-analytics

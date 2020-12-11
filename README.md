@@ -24,28 +24,36 @@ The picture below illustrates an automated canary rollout orchestrated by iter8-
 ## Quick start on Minikube
 Steps 1 through 10 below enable you to perform automated canary rollout of a KFServing model using latency and error-rate metrics collected in a Prometheus backend. Metrics definition and collection is enabled by the KNative monitoring and iter8-kfserving components installed in Step 3 below.
 
-**Step 1:** Start Minikube with sufficient resources.
+**Step 0:** Start Minikube with sufficient resources.
 ```
 minikube start --cpus 4 --memory 8192 --kubernetes-version=v1.17.11 --driver=docker
 ```
 
-**Step 2:** Git clone iter8-kfserving.
+**Step 1:** Install KFServing.
 ```
-git clone https://github.com/iter8-tools/iter8-kfserving.git
-```
-
-**Step 3:** Install KFServing, KNative monitoring, and iter8-kfserving. This step takes a couple of minutes.
-```
-cd iter8-kfserving
-export ITER8_KFSERVING_ROOT=$PWD
-./quickstart/install-everything.sh
+git clone --branch v0.4.1 https://github.com/kubeflow/kfserving.git
+cd kfserving
+eval ./hack/quick_install.sh
 ```
 
-**Step 4:** Verify that pods are running.
+**Step 2:** Install KNative-Monitoring (this step will be replaced by a Prometheus add-on installation step in the near future).
 ```
-kubectl wait --for condition=ready --timeout=180s pods --all -n kfserving-system
-kubectl wait --for condition=ready --timeout=180s pods --all -n knative-monitoring
-kubectl wait --for condition=ready --timeout=180s pods --all -n iter8-system
+kubectl create ns knative-monitoring
+kubectl apply -f https://github.com/knative/serving/releases/download/v0.18.0/monitoring-metrics-prometheus.yaml
+```
+
+**Step 3:** Install iter8-kfserving using Kustomize (you can install Kustomize from [here](https://kubectl.docs.kubernetes.io/installation/kustomize/)).
+```
+ kustomize build github.com/iter8-tools/iter8-kfserving/install?ref=main | kubectl apply -f -
+ kubectl wait --for condition=established --timeout=120s crd/metrics.iter8.tools
+ kustomize build github.com/iter8-tools/iter8-kfserving/install/metrics?ref=main | kubectl apply -f -
+```
+
+**Step 4:** Verify that all pods are running.
+```
+kubectl wait --for condition=ready --timeout=300s pods --all -n kfserving-system
+kubectl wait --for condition=ready --timeout=300s pods --all -n knative-monitoring
+kubectl wait --for condition=ready --timeout=300s pods --all -n iter8-system
 ```
 
 **Step 5:** *In a separate terminal,*, setup Minikube tunnel.
@@ -57,7 +65,7 @@ Enter password if prompted in the above step.
 **Step 6:** Create InferenceService in the `kfserving-test` namespace.
 ```
 kubectl create ns kfserving-test
-kubectl apply -f samples/common/sklearn-iris.yaml -n kfserving-test
+kubectl apply -f https://raw.githubusercontent.com/iter8-tools/iter8-kfserving/main/samples/common/sklearn-iris.yaml -n kfserving-test
 ```
 This creates the `default` and `canary` versions of sklearn-iris model (`flowers` and `flowers-2` respectively).
 
@@ -71,27 +79,15 @@ kubectl wait --for condition=ready --timeout=180s inferenceservice/sklearn-iris 
 export INGRESS_HOST=$(kubectl -n istio-system get service istio-ingressgateway -o jsonpath='{.status.loadBalancer.ingress[0].ip}')
 export INGRESS_PORT=$(kubectl -n istio-system get service istio-ingressgateway -o jsonpath='{.spec.ports[?(@.name=="http2")].port}')
 export SERVICE_HOSTNAME=$(kubectl get inferenceservice sklearn-iris -n kfserving-test -o jsonpath='{.status.url}' | cut -d "/" -f 3)
-watch -n 1.0 'curl -v -H "Host: ${SERVICE_HOSTNAME}" http://${INGRESS_HOST}:${INGRESS_PORT}/v1/models/sklearn-iris:predict -d @./samples/common/input.json'
+let i=0; while clear; echo "Request $i"; do curl https://raw.githubusercontent.com/iter8-tools/iter8-kfserving/main/samples/common/input.json | curl -H "Host: ${SERVICE_HOSTNAME}" http://${INGRESS_HOST}:${INGRESS_PORT}/v1/models/sklearn-iris:predict -d @-; let i=i+1; sleep 0.5; done
 ```
-
-<!-- ### Observe metrics
-
-9.*In a separate terminal,* port forward Prometheus so that you can observe metrics for default and canary model versions.
-
-```
-kubectl port-forward -n knative-monitoring \
-$(kubectl get pods -n knative-monitoring \
---selector=app=prometheus --output=jsonpath="{.items[0].metadata.name}") \
-9090
-```
-You can now access the Prometheus UI at `http://localhost:9090`. -->
 
 **Step 9:** Create the canary rollout experiment.
 ```
-kubectl apply -f samples/experiments/example1.yaml -n kfserving-test
+kubectl apply -f https://raw.githubusercontent.com/iter8-tools/iter8-kfserving/main/samples/experiments/example1.yaml -n kfserving-test
 ```
 
-**Step 10:** Watch as the canary version succeeds and gets promoted as the new default.
+**Step 10:** Watch changes to the InferenceService as the canary version succeeds and is progressively rolled out as the new default.
 ```
 kubectl get inferenceservice -n kfserving-test --watch
 ```
@@ -119,4 +115,27 @@ sklearn-iris                                                    False           
 sklearn-iris   http://sklearn-iris.kfserving-test.example.com   True    100                                4m36s
 ```
 
-If you inspect the InferenceService object (`kubectl get inferenceservice -n kfserving-test -o yaml`), you will notice that `flowers-2` (canary version) has been **promoted** as the new default, all traffic flows to `flowers-2`, and there is no longer a canary version.
+**Step 11:** *In a separate terminal,* watch the experiment progress.
+```
+kubectl get experiment -n kfserving-test --watch
+```
+
+You should see output similar to the following.
+
+```
+kubectl get experiment -n kfserving-test --watch
+NAME                        TYPE     TARGET                        COMPLETED ITERATIONS   MESSAGE
+sklearn-iris-experiment-1   Canary   kfserving-test/sklearn-iris   0                      ExperimentInitialized: Late initialization complete
+sklearn-iris-experiment-1   Canary   kfserving-test/sklearn-iris   1                      IterationUpdate: Completed Iteration 1
+sklearn-iris-experiment-1   Canary   kfserving-test/sklearn-iris   2                      IterationUpdate: Completed Iteration 2
+sklearn-iris-experiment-1   Canary   kfserving-test/sklearn-iris   3                      IterationUpdate: Completed Iteration 3
+sklearn-iris-experiment-1   Canary   kfserving-test/sklearn-iris   4                      IterationUpdate: Completed Iteration 4
+sklearn-iris-experiment-1   Canary   kfserving-test/sklearn-iris   5                      IterationUpdate: Completed Iteration 5
+sklearn-iris-experiment-1   Canary   kfserving-test/sklearn-iris   6                      IterationUpdate: Completed Iteration 6
+sklearn-iris-experiment-1   Canary   kfserving-test/sklearn-iris   7                      IterationUpdate: Completed Iteration 7
+sklearn-iris-experiment-1   Canary   kfserving-test/sklearn-iris   8                      IterationUpdate: Completed Iteration 8
+sklearn-iris-experiment-1   Canary   kfserving-test/sklearn-iris   9                      IterationUpdate: Completed Iteration 9
+sklearn-iris-experiment-1   Canary   kfserving-test/sklearn-iris   10                     ExperimentCompleted: Experiment completed successfully
+```
+
+At the end of the experiment, if you inspect the InferenceService object (`kubectl get inferenceservice -n kfserving-test -o yaml`), you will notice that `flowers-2` (canary version) has been **promoted** as the new default, all traffic flows to `flowers-2`, and there is no longer a canary version.

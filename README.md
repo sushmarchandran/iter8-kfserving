@@ -7,17 +7,18 @@ The picture below illustrates an automated canary rollout orchestrated by iter8-
 
 ## Table of Contents
 - [Quick start on Minikube](#Quick-start-on-Minikube)
-- Installation
-- Experimentation strategies
-  * Automated canary rollouts
+- [Installation](./docs/installation.md)
+<!-- - [Anatomy of an Experiment](./docs/anatomy.md) -->
+- Experimentation strategies: Automated canary rollouts
 - Metrics and experiment criteria
 - Concurrent experiments
-- [Under the hood](./docs/underthehood.md)
 - Reference
   * Experiment CRD
   * Metrics CRD
   * [Out-of-the-box iter8-kfserving metrics](./docs/metrics_ootb.md)
   * [Adding a custom metric](./docs/metrics_custom.md)
+- [Under the hood](./docs/underthehood.md)
+- [Known issues](./docs/knownissues.md)
 - [Roadmap](./docs/roadmap.md)
 - [Contributing](./docs/roadmap.md#Contributing)
 
@@ -36,11 +37,12 @@ cd kfserving
 eval ./hack/quick_install.sh
 ```
 
-**Step 2:** Install KNative-Monitoring (this step will be replaced by a Prometheus add-on installation step in the near future).
+**Step 2:** Install KNative-Monitoring.
 ```
 kubectl create ns knative-monitoring
 kubectl apply -f https://github.com/knative/serving/releases/download/v0.18.0/monitoring-metrics-prometheus.yaml
 ```
+This step enables metrics collection. However, due to deprecation of KNative-Monitoring, this step will be replaced in the near future. 
 
 **Step 3:** Install iter8-kfserving using Kustomize (you can install Kustomize from [here](https://kubectl.docs.kubernetes.io/installation/kustomize/)).
 ```

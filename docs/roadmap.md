@@ -1,18 +1,19 @@
 ## Roadmap
 The following features are planned as part of future releases of iter8-kfserving.
 
+- Removing Knative-monitoring dependency
 - Support for KFServing v0.5
-- Support for OpenShift clusters
+- Support for OpenShift
 - Diverse experimentation strategies live experimentation strategies
   * A/B, A/B/n, BlueGreen
   * Performance test, concept and data drift
   * Multi-model: ensemble, personalization, pareto
-- Explainability
+- Better explanation and interpretation of experiment outcomes
 - CI/CD templates
   * HelmOps, GitOps, Kustomization
   * Pipelines: Kubeflow Pipelines, Github Actions, Tekton, Argo CD, Circle CI, GitLab, Jenkins-X, TravisCI
   * Notifications: webhooks, Slack
-- Telemetry backends: Prometheus, OpenMetrics, Elastic, Datadog, Jaeger
+- Support for diverse telemetry backends in addition to Prometheus: OpenMetrics, Elastic, Datadog, Jaeger
 
 ## Contributing
 

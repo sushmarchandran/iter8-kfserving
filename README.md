@@ -27,7 +27,7 @@ Steps 1 through 10 below enable you to perform automated canary rollout of a KFS
 
 **Step 0:** Start Minikube with sufficient resources.
 ```
-minikube start --cpus 4 --memory 8192 --kubernetes-version=v1.17.11 --driver=docker
+minikube start --cpus 4 --memory 12288 --kubernetes-version=v1.17.11 --driver=docker
 ```
 
 **Step 1:** Install KFServing.
@@ -37,22 +37,22 @@ cd kfserving
 eval ./hack/quick_install.sh
 ```
 
-**Step 2:** Install iter8-monitoring using Kustomize (you can get Kustomize from [here](https://kubectl.docs.kubernetes.io/installation/kustomize/)).
+**Step 2:** Install iter8-kfserving domain package using Kustomize (you can get Kustomize from [here](https://kubectl.docs.kubernetes.io/installation/kustomize/)).
+```
+ kustomize build github.com/iter8-tools/iter8-kfserving/install?ref=main | kubectl apply -f -
+```
+
+**Step 3:** Install Prometheus operator components and iter8-kfserving metric definitions.
 ```
 kustomize build github.com/iter8-tools/iter8-monitoring/prometheus-operator?ref=main | kubectl apply -f -
 kubectl wait --for condition=established --timeout=120s crd/prometheuses.monitoring.coreos.com
+kubectl wait --for condition=established --timeout=120s crd/metrics.iter8.tools
 kubectl wait --for condition=established --timeout=120s crd/servicemonitors.monitoring.coreos.com
 kustomize build github.com/iter8-tools/iter8-monitoring/prometheus?ref=main | kubectl apply -f -
+kustomize build github.com/iter8-tools/iter8-kfserving/install/iter8-monitoring?ref=main | kubectl apply -f -
 ```
 
-**Step 3:** Install iter8-kfserving domain package.
-```
- kustomize build github.com/iter8-tools/iter8-kfserving/install?ref=main | kubectl apply -f -
- kubectl wait --for condition=established --timeout=120s crd/metrics.iter8.tools
- kustomize build github.com/iter8-tools/iter8-kfserving/install/metrics?ref=main | kubectl apply -f -
-```
-
-**Step 4:** Verify that all pods are running.
+**Step 4:** Verify pods are running.
 ```
 kubectl wait --for condition=ready --timeout=300s pods --all -n kfserving-system
 kubectl wait --for condition=ready --timeout=300s pods --all -n iter8-system

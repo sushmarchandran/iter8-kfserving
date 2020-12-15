@@ -9,7 +9,6 @@ spec:
   criteria:
     indicators:
     - 95th-percentile-tail-latency
-    - container-throttled-seconds-total
     objectives:
     - metric: mean-latency
       upperLimit: 1000

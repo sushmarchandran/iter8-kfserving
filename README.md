@@ -1,5 +1,5 @@
 # Iter8-kfserving
-> [KFServing](https://github.com/kubeflow/kfserving) enables serverless inferencing on [Kubernetes](https://kubernetes.io) and [OpenShift](https://www.openshift.com). [Iter8](https://iter8.tools) enables metrics-driven live experiments, release engineering and rollout optimization for Kubernetes and OpenShift applications. The iter8-kfserving package brings the two projects together.
+> [KFServing](https://github.com/kubeflow/kfserving) enables serverless inferencing on [Kubernetes](https://kubernetes.io) and [OpenShift](https://www.openshift.com). [Iter8](https://iter8.tools) enables metrics-driven live experiments, release engineering and rollout optimization for Kubernetes and OpenShift applications. The iter8-kfserving domain package brings the two projects together.
 
 The picture below illustrates an automated canary rollout orchestrated by iter8-kfserving.
 
@@ -37,14 +37,15 @@ cd kfserving
 eval ./hack/quick_install.sh
 ```
 
-**Step 2:** Install KNative-Monitoring.
+**Step 2:** Install iter8-monitoring using Kustomize (you can get Kustomize from [here](https://kubectl.docs.kubernetes.io/installation/kustomize/)).
 ```
-kubectl create ns knative-monitoring
-kubectl apply -f https://github.com/knative/serving/releases/download/v0.18.0/monitoring-metrics-prometheus.yaml
+kustomize build github.com/iter8-tools/iter8-monitoring/prometheus-operator?ref=main | kubectl apply -f -
+kubectl wait --for condition=established --timeout=120s crd/prometheuses.monitoring.coreos.com
+kubectl wait --for condition=established --timeout=120s crd/servicemonitors.monitoring.coreos.com
+kustomize build github.com/iter8-tools/iter8-monitoring/prometheus?ref=main | kubectl apply -f -
 ```
-This step enables metrics collection. However, due to deprecation of KNative-Monitoring, this step will be replaced in the near future. 
 
-**Step 3:** Install iter8-kfserving using Kustomize (you can install Kustomize from [here](https://kubectl.docs.kubernetes.io/installation/kustomize/)).
+**Step 3:** Install iter8-kfserving domain package.
 ```
  kustomize build github.com/iter8-tools/iter8-kfserving/install?ref=main | kubectl apply -f -
  kubectl wait --for condition=established --timeout=120s crd/metrics.iter8.tools
@@ -54,8 +55,8 @@ This step enables metrics collection. However, due to deprecation of KNative-Mon
 **Step 4:** Verify that all pods are running.
 ```
 kubectl wait --for condition=ready --timeout=300s pods --all -n kfserving-system
-kubectl wait --for condition=ready --timeout=300s pods --all -n knative-monitoring
 kubectl wait --for condition=ready --timeout=300s pods --all -n iter8-system
+kubectl wait --for condition=ready --timeout=300s pods --all -n iter8-monitoring
 ```
 
 **Step 5:** *In a separate terminal,*, setup Minikube tunnel.

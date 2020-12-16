@@ -1,4 +1,4 @@
-## Anatomy of an Experiment
+## Anatomy of an iter8 Experiment
 
 > In experiments such as Canary, A/B and A/B/n that involve two or more versions, iter8 identifies a `winner` based on the experiment criteria. Typically, traffic shifts progressively towards the winner during the experiment, and it is promoted at the end.
 

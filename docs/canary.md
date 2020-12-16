@@ -1,21 +1,25 @@
-## Progressive Canary Rollout
+## Progressive Canary Release Experiment
 
-- [Winning Version](#winning-version)
-- [Example](#example)
+> Canary release is a technique to reduce the risk of introducing a new software version in production by slowly rolling out the change to a small subset of users before rolling it out to the entire infrastructure and making it available to everybody.
+> - Danilo Sato, https://martinfowler.com/bliki/CanaryRelease.html
+
+We describe how iter8 identifies the `winner` in a canary release experiment, how traffic is shifted, and illustrate canary release experiment with an example. For a basic overview of an iter8 experiment, see [anatomy of an iter8 experiment](anatomy.md).
 
 ### Winning Version
 
-Iter8 uses the following rules while identifying a `winner` (see [anatomy of an experiment](anatomy.md)).
+Iter8 uses the following rules while identifying the `winner` in a canary release experiment.
 
 1. If `canary` satisfies all `objectives`, then `canary` is the winner.
-2. If `default` satisfies all `objectives` and the `canary` does not, then `default` is the winner.
+2. If `default` satisfies all `objectives` and `canary` does not, then `default` is the winner.
 3. If neither versions satisfy all `objectives`, then there is no winner.
 
-The typical behavior in a progressive canary rollout experiment is as follows. All traffic flows to `default` at the start of the experiment. If `canary` is the winner, traffic progressively shifts towards `canary` during the experiment; `canary` is promoted at the end of the experiment, and all traffic flows to `canary`. When `default` is the winner or when there is no winner, traffic is mostly concentrated on `default` during the experiment; there is a `rollback` at the end of the experiment and `canary` is removed.
+### Traffic Shifting
+
+The typical traffic shifting during canary release is as follows. All traffic flows to `default` at the start of the experiment. If `canary` is the winner, traffic progressively shifts towards `canary` during the experiment; `canary` is promoted at the end of the experiment, and all traffic flows to `canary`. When `default` is the winner or when there is no winner, traffic is mostly concentrated on `default` during the experiment; there is a `rollback` at the end of the experiment and `canary` is removed.
 
 ### Example
 
-The following is an example of a progressive canary rollout experiment.
+The following is an example of a canary release experiment.
 
 ```yaml
 apiVersion: iter8.tools/v2alpha1

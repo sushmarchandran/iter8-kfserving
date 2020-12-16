@@ -8,8 +8,8 @@ The picture below illustrates progressive canary rollout of a KFServing model us
 ## Table of Contents
 - [Quick start on Minikube](#Quick-start-on-Minikube)
 - [Installation](./docs/installation.md)
-- [Anatomy of an experiment](./docs/anatomy.md)
-- [Progressive canary rollout](./docs/canary.md)
+- [Anatomy of an iter8 experiment](./docs/anatomy.md)
+- [Progressive canary release experiment](./docs/canary.md)
 - Metrics
   * Anatomy of a metric
   * Using metrics in an experiment

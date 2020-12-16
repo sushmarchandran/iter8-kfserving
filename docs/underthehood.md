@@ -2,7 +2,7 @@
 
 The following sequence diagram provides an overview of the various components involved in an iter8-kfserving experiment, and their interactions.
 
-![iter8-kfserving sequence diagram](images/iter8kfservingsequencediagram.png)
+![Under the hood](images/underthehood.png)
 
 ### Explanation of Concepts
 

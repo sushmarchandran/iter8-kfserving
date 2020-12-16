@@ -1,9 +1,9 @@
 # Iter8-kfserving
-> [KFServing](https://github.com/kubeflow/kfserving) enables serverless inferencing on [Kubernetes](https://kubernetes.io) and [OpenShift](https://www.openshift.com). [Iter8](https://iter8.tools) enables metrics-driven live experiments, release engineering and rollout optimization for Kubernetes and OpenShift applications. The iter8-kfserving domain package brings the two projects together.
+> [KFServing](https://github.com/kubeflow/kfserving) enables serverless inferencing on [Kubernetes](https://kubernetes.io) and [OpenShift](https://www.openshift.com). [Iter8](https://iter8.tools) enables metrics and AI-driven live experiments, progressive delivery, and rollout optimization for Kubernetes and OpenShift applications. The iter8-kfserving domain package brings the two projects together.
 
-The picture below illustrates an automated canary rollout orchestrated by iter8-kfserving.
+The picture below illustrates progressive canary rollout of a KFServing model using iter8-kfserving.
 
-![Automated canary rollout orchestrated by iter8-kfserving](docs/images/iter8kfservingquickstart.png)
+![Progressive canary rollout orchestrated by iter8-kfserving](docs/images/iter8kfservingquickstart.png)
 
 ## Table of Contents
 - [Quick start on Minikube](#Quick-start-on-Minikube)

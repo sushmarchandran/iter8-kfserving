@@ -1,7 +1,6 @@
 ## Roadmap
 The following features are planned as part of future releases of iter8-kfserving.
 
-- Removing Knative-monitoring dependency
 - Support for KFServing v0.5
 - Support for OpenShift
 - Diverse experimentation strategies live experimentation strategies

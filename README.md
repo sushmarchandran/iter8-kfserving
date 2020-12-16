@@ -8,17 +8,16 @@ The picture below illustrates progressive canary rollout of a KFServing model us
 ## Table of Contents
 - [Quick start on Minikube](#Quick-start-on-Minikube)
 - [Installation](./docs/installation.md)
-<!-- - [Anatomy of an Experiment](./docs/anatomy.md) -->
-- Experimentation strategies: Automated canary rollouts
+- [Anatomy of an Experiment](./docs/anatomy.md)
+- Progressive canary rollout
 - Metrics and experiment criteria
+  * [Out-of-the-box metrics](./docs/metrics_ootb.md)
+  * [Adding a custom metric](./docs/metrics_custom.md)
 - Concurrent experiments
 - Reference
   * Experiment CRD
   * Metrics CRD
-  * [Out-of-the-box iter8-kfserving metrics](./docs/metrics_ootb.md)
-  * [Adding a custom metric](./docs/metrics_custom.md)
 - [Under the hood](./docs/underthehood.md)
-- [Known issues](./docs/knownissues.md)
 - [Roadmap](./docs/roadmap.md)
 - [Contributing](./docs/roadmap.md#Contributing)
 

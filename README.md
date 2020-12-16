@@ -9,10 +9,12 @@ The picture below illustrates progressive canary rollout of a KFServing model us
 - [Quick start on Minikube](#Quick-start-on-Minikube)
 - [Installation](./docs/installation.md)
 - [Anatomy of an experiment](./docs/anatomy.md)
-- Progressive canary rollout
-- Metrics and experiment criteria
+- [Progressive canary rollout](./docs/canary.md)
+- Metrics
+  * Anatomy of a metric
+  * Using metrics in an experiment
   * [Out-of-the-box metrics](./docs/metrics_ootb.md)
-  * [Adding a custom metric](./docs/metrics_custom.md)
+  * [Defining a custom metric](./docs/metrics_custom.md)
 - Concurrent experiments
 - Reference
   * Experiment CRD

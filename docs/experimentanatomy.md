@@ -4,7 +4,7 @@
 
 The key elements of an iter8 experiment, taken from [this sample experiment manifest](../samples/experiments/example1.yaml), are illustrated in the following picture.
 
-![Anatomy of an experiment](images/anatomyofanexperiment.png)
+![Anatomy of an experiment](images/experimentanatomy.png)
 
 1. **Target** refers to the InferenceService object used in this experiment. It is a specified using the `namespace/name` format.
 

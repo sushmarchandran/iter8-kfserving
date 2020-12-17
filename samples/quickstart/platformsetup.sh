@@ -2,7 +2,7 @@
 
 set -e
 
-# Platform setup for e2e tests
+# Platform setup for quickstart and e2e tests
 
 ## Ensure Minikube is running with sufficient resources
 HOST_STATUS=$(minikube status | awk '/^host:/' - | cut -d ' ' -f 2)

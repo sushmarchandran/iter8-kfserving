@@ -1,6 +1,11 @@
 # Out-of-the-box Metrics
 
-Iter8-kfserving ships with five out-of-the-box metrics, which are described in the following table. You can extend the set of available metrics by [defining custom metrics](metrics_custom.md). Each metric is defined at a per-version level. For example, the `request-count` metric measures the number of requests to a model version; the `mean-latency` metric measures the mean latency of a model version. Metrics can be of type `counter` or `gauge`. They are inspired by [Prometheus counter metric type](https://prometheus.io/docs/concepts/metric_types/#counter) and [Prometheus gauge metric type](https://prometheus.io/docs/concepts/metric_types/#gauge).
+> Iter8-kfserving ships with five out-of-the-box metrics. You can extend the set of available metrics by [defining custom metrics](metrics_custom.md).
+
+Metrics shipped out-of-the-box with iter8-kfserving are described in the following table.
+
+* Each metric is defined at a per-version level. For example, the `request-count` metric measures the number of requests to a model version; the `mean-latency` metric measures the mean latency of a model version. 
+* Metrics can be of type `counter` or `gauge`. The value of a counter metric never decreases over time. The two metric types are inspired by [Prometheus metric types](https://prometheus.io/docs/concepts/metric_types/#counter).
 
 <!-- Users relying on iter8's out-of-the-box metrics can simply reference them in the _criteria_ section of an _experiment_ specification. Description of the _experiment_ CRD is coming soon! During an `experiment`, for every call made from the _controller_ to the _analytics_ service, the latter, in turn, calls Prometheus to retrieve values of the metrics referenced by the Kubernetes `experiment` resource. _Iter8-analytics_ analyzes the model versions that are a part of the experiment and arrives at an assessment based on their metric values. It returns this assessment to the _controller_. -->
 
@@ -12,15 +17,15 @@ Iter8-kfserving ships with five out-of-the-box metrics, which are described in t
 |error-count   | Number of error responses    | counter      |  |
 |error-rate   | Fraction of requests with error responses    | gauge      |  |
 <!-- |container-throttled-seconds-total   | Total time duration the container has been throttled    | counter      | seconds |
-|container-cpu-load-average-10s   | Value of container cpu load average over the last 10 seconds    | gauge      | |
+|container-cpu-load-average-10s   | Value of container CPU load average over the last 10 seconds    | gauge      | |
 |container-fs-io-time-seconds-total   | Cumulative count of seconds spent doing I/Os    | counter      | seconds |
 |container-memory-usage-bytes   | Current memory usage, including all memory regardless of when it was accessed | gauge      | bytes |
 |container-memory-failcnt   | Number of times memory usage hit resource limit    | counter      | |
 |container-network-receive-errors-total   | Cumulative count of errors encountered while receiving    | counter      | |
 |container-network-transmit-errors-total   | Cumulative count of errors encountered while transmitting    | counter      | |
 |container-processes   | Number of processes running inside the container    | gauge      | |
-|container-tasks-state   | Number of tasks in given state (sleeping, running, stopped, uninterruptible, or ioawaiting)    | gauge      | | -->
+|container-tasks-state   | Number of tasks in a given state (sleeping, running, stopped, uninterruptible, or ioawaiting)    | gauge      | | -->
 
 <!-- A description of the metrics CRD and instructions on how to add custom metrics is provided [here](metrics_custom.md). -->
 
-More details on metrics are [here](metrics.md). Documentation on using metrics within experiments is [here](usingmetrics.md). Iter8 metric CRD is documented [here](metricscrd.md).
+An overview of iter8 metric resource objects is [here](metricsanatomy.md). Documentation on how to use metrics within experiments is [here](usingmetrics.md). Fields in an iter8 metric resource object `spec` are documented [here](metricscrd.md).

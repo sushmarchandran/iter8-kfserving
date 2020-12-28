@@ -3,7 +3,10 @@ Follow this guide to install iter8-kfserving on Kubernetes using [Kustomize v3](
 
 ### Prerequisites
 1. Kubernetes 1.15+
-2. [KFServing](https://github.com/kubeflow/kfserving) installed on your Kubernetes cluster
+2. [KFServing](https://github.com/kubeflow/kfserving) installed on your Kubernetes cluster. You can verify KFServing is up and running using the following command:
+```
+kubectl wait --for condition=ready --timeout=300s pods --all -n kfserving-system
+```
 
 ### Install iter8-kfserving
 ```shell

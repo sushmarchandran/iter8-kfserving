@@ -7,7 +7,7 @@
 ## Dependencies
 ## 1. kubectl with cluster access
 ## 2. kustomize
-## 3. yq (if yq is unavailable, snap needs to be available to install yq)
+## 3. yq
 
 # Exit on error
 set -e

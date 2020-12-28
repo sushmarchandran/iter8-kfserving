@@ -55,9 +55,10 @@ if [[ -z ${INFERENCE_SERVICE_NAME+x} ]] || [[ -z ${INFERENCE_SERVICE_NAMESPACE+x
 fi
 
 # Step 3: Get the InferenceService object.
-echo -n "Ensuring inference service exists. Will give up after 120 seconds ..."
-n=0
-until [ $n -ge 120 ]; do
+echo -n "Ensuring inference service exists. Will give up after 60 seconds ..."
+((n=0)) || true;
+until [ $n -ge 60 ]; do
+    let n=n+1
     INFERENCE_SERVICE_EXISTS=$(kubectl get inferenceservice ${INFERENCE_SERVICE_NAME} -n ${INFERENCE_SERVICE_NAMESPACE} --ignore-not-found)
     if [[ ! -z ${INFERENCE_SERVICE_EXISTS} ]]; then
         echo ""

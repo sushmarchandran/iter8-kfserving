@@ -6,19 +6,19 @@
 
 Iter8-kfserving supports **four** basic experimentation strategies, namely, *Canary*, *A/B*, *BlueGreen* and *Performance*. The first three strategies involve comparing two model versions while the last strategy involves testing a single model version. 
 
-### Canary, A/B, BlueGreen and Performance experiments
+### Canary, A/B, BlueGreen, and Performance experiments
 
 **Canary:**  In a Canary experiment, there is a baseline version (default predictor) and a candidate version (canary predictor). If the candidate version satisfies the `experiment criteria`, then it is declared as the `winner`. Otherwise, the baseline is declared as the winner.
 
 **A/B:**  In an A/B experiment, there is a baseline version and a candidate version.
 
-Candidate is the winner if:
-1. Candidate satisfies the experiment criteria and the baseline does not, or
-2. Candidate satisfies the experiment criteria and has a better `reward` than the baseline.
+The candidate is the winner if:
+1. The candidate satisfies the experiment criteria and the baseline does not, or
+2. The candidate satisfies the experiment criteria and has a better `reward` than the baseline.
 
-Baseline is the winner if:
-1. Baseline satisfies the experiment criteria and the candidate does not, or
-2. Baseline satisfies the experiment criteria and has a better reward than the candidate.
+The baseline is the winner if:
+1. The baseline satisfies the experiment criteria and the candidate does not, or
+2. The baseline satisfies the experiment criteria and has a better reward than the candidate.
 
 A/B experiments can end without a winner being found (for instance, when both baseline and candidate fail to satisfy the experiment criteria).
 
@@ -37,7 +37,7 @@ In general, an iter8-kfserving experiment can be customized along the following 
     * no-op
 3. End-of-experiment behavior
     * promote winner: InferenceService with the winning version as the baseline (default version) is applied.
-    * it push winner: InferenceService with the winning version as the baseline is git pushed.
+    * Git push winner: InferenceService with the winning version as the baseline is git pushed.
     * rollback: InferenceService at the start of the experiment is restored
     * no-op
 

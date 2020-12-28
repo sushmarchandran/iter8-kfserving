@@ -1,7 +1,7 @@
 # Iter8-kfserving
-> Iter8-kfserving enables metrics and AI-driven live experiments, progressive delivery, and automated rollouts for ML models in production over Kubernetes and Openshift.
+> Iter8-kfserving enables metrics and AI-driven live experiments, progressive delivery, and automated rollouts for ML models in production over Kubernetes and OpenShift clusters.
 
-The picture below illustrates progressive canary release of a KFServing model using iter8.
+The picture below illustrates progressive delivery of a KFServing model using iter8.
 
 ![Progressive canary rollout orchestrated by iter8-kfserving](docs/images/quickstart.png)
 
@@ -13,15 +13,14 @@ The picture below illustrates progressive canary release of a KFServing model us
 - Iter8 metrics
   * [Using metrics in experiments](./docs/usingmetrics.md)
   * [Out-of-the-box metrics](./docs/metrics_ootb.md)
-  * Anatomy of an iter8 metric
+  * [Anatomy of iter8 metrics](./docs/metricsanatomy.md)
   * [Defining a custom metric](./docs/metrics_custom.md)
-- Concurrent experiments
+- [Concurrent experiments](./docs/concurrency.md)
 - Reference
-  * Experiment CRD
-  * Metrics CRD
-- [Under the hood](./docs/underthehood.md)
-- [Roadmap](./docs/roadmap.md)
-- [Contributing](./docs/roadmap.md#Contributing)
+  * [Experiment resource object](./docs/experimentcrd.md)
+  * [Metric resource object](./docs/metricscrd.md)
+- [Wiki with roadmap and developer documentation](https://github.com/iter8-tools/iter8-kfserving/wiki)
+- [Contributing](./docs/contributing.md)
 
 ## Quick start on Minikube
 Steps 1 through 8 demonstrate metrics-driven progressive canary release of a KFServing model using iter8.
@@ -105,4 +104,4 @@ sklearn-iris-experiment-1   Canary   kfserving-test/sklearn-iris   9            
 sklearn-iris-experiment-1   Canary   kfserving-test/sklearn-iris   10                     ExperimentCompleted: Experiment completed successfully
 ```
 
-At this point, if you inspect the InferenceService object (`kubectl get inferenceservice -n kfserving-test -o yaml`), you can see that the canary version (`flowers-2`) has been **promoted** as the new default.
+At this point, if you inspect the InferenceService object (`kubectl get inferenceservice -n kfserving-test -o yaml`), you can see that the canary version (`flowers-2`) has been promoted as the new default.

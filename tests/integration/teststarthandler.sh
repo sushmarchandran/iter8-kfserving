@@ -40,7 +40,8 @@ echo "Ensuring yq is installed"
 if ! command -v yq &> /dev/null
 then
     echo "yq could not be found"
-    sudo snap install yq
+    sudo wget -O /usr/local/bin/yq https://github.com/mikefarah/yq/releases/download/3.3.0/yq_linux_amd64
+    sudo chmod +x /usr/local/bin/yq
 fi
 
 echo "Setting up SCRATCH_DIR"

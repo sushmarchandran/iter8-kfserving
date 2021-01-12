@@ -1,0 +1,10 @@
+namePrefix: kfserving-
+namespace: kfserving-monitoring
+commonLabels:
+  creator: iter8
+resources:
+- clusterrole.yaml
+- clusterrolebinding.yaml
+- prometheus.yaml
+- serviceaccount.yaml
+- kfserving-service-monitor.yaml

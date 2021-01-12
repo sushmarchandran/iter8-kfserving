@@ -1,6 +1,6 @@
 ## Experiment Resource Object
 
-Fields in an iter8 experiment resource object `spec` are documented here. Currently, this documentation is limited to the fields use in [this sample](../samples/experiments/example1.yaml). For complete documentation, refer to the iter8 Experiment API implemented [here](https://github.com/iter8-tools/etc3/blob/main/api/v2alpha1/experiment_types.go).
+Fields in an iter8 experiment resource object `spec` are documented here. Currently, this documentation is limited to the fields used in [this sample](../samples/quickstart/experiment.yaml). For complete documentation, refer to the iter8 Experiment API implemented [here](https://github.com/iter8-tools/etc3/blob/main/api/v2alpha1/experiment_types.go).
 
 ### Spec
 

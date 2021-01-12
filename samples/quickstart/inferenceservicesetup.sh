@@ -2,8 +2,10 @@
 
 set -e
 
-# InferenceService setup for quickstart and e2e tests
+# InferenceService setup for quickstart
 
-kubectl create ns kfserving-test || true
-kubectl apply -f https://raw.githubusercontent.com/iter8-tools/iter8-kfserving/main/samples/common/sklearn-iris.yaml -n kfserving-test
-kubectl wait --for condition=ready --timeout=180s inferenceservice/sklearn-iris -n kfserving-test
+kubectl apply -f https://raw.githubusercontent.com/iter8-tools/iter8-kfserving/main/samples/quickstart/default.yaml
+kubectl wait isvc/my-model --for condition=Ready --timeout=180s
+kubectl apply -f https://raw.githubusercontent.com/iter8-tools/iter8-kfserving/main/samples/quickstart/canary.yaml
+kubectl wait isvc/my-model --for condition=Ready --timeout=180s
+

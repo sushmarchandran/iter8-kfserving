@@ -1,9 +1,9 @@
 apiVersion: iter8.tools/v2alpha1
 kind: Experiment
 metadata:
-  name: sklearn-iris-experiment-1
+  name: experiment-1
 spec:
-  target: kfserving-test/sklearn-iris
+  target: default/my-model
   strategy:
     type: Canary
   criteria:

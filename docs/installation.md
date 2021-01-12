@@ -5,35 +5,42 @@ Follow this guide to install iter8-kfserving on Kubernetes using [Kustomize v3](
 1. Kubernetes 1.15+
 2. [KFServing](https://github.com/kubeflow/kfserving) installed on your Kubernetes cluster. You can verify KFServing is up and running using the following command:
 ```
-kubectl wait --for condition=ready --timeout=300s pods --all -n kfserving-system
+kubectl wait pods --all -n kfserving-system --for condition=ready --timeout=300s 
 ```
 
 ### Install iter8-kfserving
 ```shell
-kustomize build github.com/iter8-tools/iter8-kfserving/install?ref=main | kubectl apply -f -
+TAG=main
+kustomize build github.com/iter8-tools/iter8-kfserving/install?ref=$TAG | kubectl apply -f -
+kubectl wait crd -l creator=iter8 --for condition=established --timeout=120s
+kustomize build github.com/iter8-tools/iter8-kfserving/install/iter8-metrics?ref=$TAG | kubectl apply -f -
 ```
 
-### Install iter8-monitoring
+### Install kfserving-monitoring
+Install `kfserving-monitoring` using the following instructions.
 ```shell
-kustomize build github.com/iter8-tools/iter8-monitoring/prometheus-operator?ref=main | kubectl apply -f -
-kubectl wait --for condition=established --timeout=120s crd/prometheuses.monitoring.coreos.com
-kubectl wait --for condition=established --timeout=120s crd/metrics.iter8.tools
-kubectl wait --for condition=established --timeout=120s crd/servicemonitors.monitoring.coreos.com
-kustomize build github.com/iter8-tools/iter8-monitoring/prometheus?ref=main | kubectl apply -f -
-kustomize build github.com/iter8-tools/iter8-kfserving/install/iter8-monitoring?ref=main | kubectl apply -f -
+TAG=main
+kustomize build github.com/iter8-tools/iter8-kfserving/install/monitoring/prometheus-operator?ref=$TAG | kubectl apply -f -
+kubectl wait crd -l creator=iter8 --for condition=established --timeout=120s
+kustomize build github.com/iter8-tools/iter8-kfserving/install/monitoring/prometheus?ref=$TAG | kubectl apply -f -
 ```
 
 ### Verify your installation
 ```shell
 kubectl wait --for condition=ready --timeout=300s pods --all -n iter8-system
-kubectl wait --for condition=ready --timeout=300s pods --all -n iter8-monitoring
+kubectl wait --for condition=ready --timeout=300s pods --all -n kfserving-monitoring
 ```
 
 ## Removal
-Use the following commands to remove iter8-monitoring and iter8-kfserving from your Kubernetes cluster.
+Use the following command to remove kfserving-monitoring from your Kubernetes cluster.
 ```shell
-kustomize build github.com/iter8-tools/iter8-kfserving/install/iter8-monitoring?ref=main | kubectl delete -f -
-kustomize build github.com/iter8-tools/iter8-monitoring/prometheus?ref=main | kubectl delete -f -
-kustomize build github.com/iter8-tools/iter8-monitoring/prometheus-operator?ref=main | kubectl delete -f -
-kustomize build github.com/iter8-tools/iter8-kfserving/install?ref=main | kubectl delete -f -
+TAG=main
+kustomize build github.com/iter8-tools/iter8-kfserving/install/monitoring/prometheus?ref=$TAG | kubectl delete -f -
+kustomize build github.com/iter8-tools/iter8-kfserving/install/monitoring/prometheus-operator?ref=$TAG | kubectl delete -f -
+```
+
+Use the following command to remove iter8-kfserving from your Kubernetes cluster.
+```shell
+TAG=main
+kustomize build github.com/iter8-tools/iter8-kfserving/install?ref=$TAG | kubectl delete -f -
 ```

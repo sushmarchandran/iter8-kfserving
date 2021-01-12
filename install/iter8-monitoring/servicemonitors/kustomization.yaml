@@ -1,3 +1,0 @@
-namespace: iter8-monitoring
-resources:
- - kfserving-service-monitor.yaml

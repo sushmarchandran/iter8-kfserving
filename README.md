@@ -1,7 +1,7 @@
 # Iter8-kfserving
-> Iter8-kfserving enables metrics and AI-driven live experiments, progressive delivery, and automated rollouts for ML models in production over Kubernetes and OpenShift clusters.
+> Iter8-kfserving enables metrics-driven live experiments, progressive delivery, and automated rollouts for ML models in production over Kubernetes and OpenShift clusters.
 
-The picture below illustrates progressive delivery of a KFServing model using iter8.
+The picture below illustrates progressive canary release of a KFServing model using iter8-kfserving.
 
 ![Progressive canary rollout orchestrated by iter8-kfserving](docs/images/quickstart.png)
 
@@ -10,6 +10,7 @@ The picture below illustrates progressive delivery of a KFServing model using it
 - [Installation](./docs/installation.md)
 - [Anatomy of an iter8 experiment](./docs/experimentanatomy.md)
 - [Progressive canary release experiment](./docs/canary.md)
+- [Describe experiments using iter8ctl](./docs/iter8ctl.md)
 - Iter8 metrics
   * [Using metrics in experiments](./docs/usingmetrics.md)
   * [Out-of-the-box metrics](./docs/metrics_ootb.md)
@@ -23,14 +24,16 @@ The picture below illustrates progressive delivery of a KFServing model using it
 - [Contributing](./docs/contributing.md)
 
 ## Quick start on Minikube
-Steps 1 through 8 demonstrate metrics-driven progressive canary release of a KFServing model using iter8.
+Steps 1 to 7 demonstrate metrics-driven progressive canary release of a KFServing model using iter8-kfserving. 
+
+To run steps 1 to 6, you need [Minikube](https://minikube.sigs.k8s.io/docs/start/) and [Kustomize v3](https://kubectl.docs.kubernetes.io/installation/kustomize/). To run step 7, you need [Go 1.13+](https://golang.org/doc/install).
 
 **Step 1:** Start Minikube with sufficient resources.
 ```shell
 minikube start --cpus 4 --memory 12288 --kubernetes-version=v1.17.11 --driver=docker
 ```
 
-**Step 2:** Install KFServing, iter8-kfserving, and iter8-monitoring. This step requires [Kustomize v3](https://kubectl.docs.kubernetes.io/installation/kustomize/).
+**Step 2:** Install KFServing, kfserving-monitoring, and iter8-kfserving. This step requires `kubectl` and [Kustomize v3](https://kubectl.docs.kubernetes.io/installation/kustomize/).
 ```shell
 curl -L https://raw.githubusercontent.com/iter8-tools/iter8-kfserving/main/samples/quickstart/platformsetup.sh | /bin/bash
 ```
@@ -40,7 +43,7 @@ curl -L https://raw.githubusercontent.com/iter8-tools/iter8-kfserving/main/sampl
 minikube tunnel --cleanup
 ```
 
-**Step 4:** Create InferenceService object with `default` and `canary` model versions. Wait until it is ready.
+**Step 4:** Create an InferenceService object with an initial `default` model. Update it with a `canary` model.
 ```shell
 curl -L https://raw.githubusercontent.com/iter8-tools/iter8-kfserving/main/samples/quickstart/inferenceservicesetup.sh | /bin/bash
 ```
@@ -50,58 +53,73 @@ curl -L https://raw.githubusercontent.com/iter8-tools/iter8-kfserving/main/sampl
 curl -L https://raw.githubusercontent.com/iter8-tools/iter8-kfserving/main/samples/quickstart/predictionrequests.sh | /bin/bash
 ```
 
-**Step 6:** Create the canary release experiment.
+**Step 6:** Create the iter8-kfserving canary experiment.
 ```shell
-kubectl apply -f https://raw.githubusercontent.com/iter8-tools/iter8-kfserving/main/samples/experiments/example1.yaml -n kfserving-test
+kubectl apply -f https://raw.githubusercontent.com/iter8-tools/iter8-kfserving/main/samples/quickstart/experiment.yaml
 ```
 
-**Step 7:** Watch the InferenceService object as the canary version is progressively rolled out.
+**Step 7:** *In a separate terminal,* periodically describe the experiment.
+
+**Install** [iter8ctl](https://github.com/iter8-tools/iter8ctl). You can change the directory where `iter8ctl` binary is installed by changing GOBIN below.
 ```shell
-kubectl get inferenceservice -n kfserving-test --watch
+GOBIN=/usr/local/bin go get github.com/iter8-tools/iter8ctl@v0.1-alpha
 ```
 
-You should see output similar to the following.
-```shell
-NAME           URL                                              READY   DEFAULT TRAFFIC   CANARY TRAFFIC   AGE
-sklearn-iris   http://sklearn-iris.kfserving-test.example.com   True    95                5                112s
-sklearn-iris   http://sklearn-iris.kfserving-test.example.com   True    95                5                2m47s
-sklearn-iris   http://sklearn-iris.kfserving-test.example.com   True    85                15               2m47s
-sklearn-iris   http://sklearn-iris.kfserving-test.example.com   True    85                15               3m10s
-sklearn-iris   http://sklearn-iris.kfserving-test.example.com   True    75                25               3m11s
-sklearn-iris   http://sklearn-iris.kfserving-test.example.com   True    75                25               3m33s
-sklearn-iris   http://sklearn-iris.kfserving-test.example.com   True    65                35               3m33s
-sklearn-iris   http://sklearn-iris.kfserving-test.example.com   True    65                35               3m55s
-sklearn-iris   http://sklearn-iris.kfserving-test.example.com   True    55                45               3m56s
-sklearn-iris   http://sklearn-iris.kfserving-test.example.com   True    55                45               3m59s
-sklearn-iris   http://sklearn-iris.kfserving-test.example.com   True    100                                4m
-sklearn-iris                                                    False                                      4m
-sklearn-iris                                                    False                                      4m
-sklearn-iris                                                    False                                      4m34s
-sklearn-iris                                                    False                                      4m35s
-sklearn-iris                                                    False                                      4m35s
-sklearn-iris   http://sklearn-iris.kfserving-test.example.com   True    100                                4m36s
+Periodically describe the experiment.
 ```
-
-**Step 8:** *In a separate terminal,* watch the Experiment object.
-```shell
-kubectl get experiment -n kfserving-test --watch
+while clear; do
+  kubectl get experiment experiment-1 -o yaml | iter8ctl describe -f -
+  sleep 15
+done
 ```
 
 You should see output similar to the following.
 ```shell
-kubectl get experiment -n kfserving-test --watch
-NAME                        TYPE     TARGET                        COMPLETED ITERATIONS   MESSAGE
-sklearn-iris-experiment-1   Canary   kfserving-test/sklearn-iris   0                      ExperimentInitialized: Late initialization complete
-sklearn-iris-experiment-1   Canary   kfserving-test/sklearn-iris   1                      IterationUpdate: Completed Iteration 1
-sklearn-iris-experiment-1   Canary   kfserving-test/sklearn-iris   2                      IterationUpdate: Completed Iteration 2
-sklearn-iris-experiment-1   Canary   kfserving-test/sklearn-iris   3                      IterationUpdate: Completed Iteration 3
-sklearn-iris-experiment-1   Canary   kfserving-test/sklearn-iris   4                      IterationUpdate: Completed Iteration 4
-sklearn-iris-experiment-1   Canary   kfserving-test/sklearn-iris   5                      IterationUpdate: Completed Iteration 5
-sklearn-iris-experiment-1   Canary   kfserving-test/sklearn-iris   6                      IterationUpdate: Completed Iteration 6
-sklearn-iris-experiment-1   Canary   kfserving-test/sklearn-iris   7                      IterationUpdate: Completed Iteration 7
-sklearn-iris-experiment-1   Canary   kfserving-test/sklearn-iris   8                      IterationUpdate: Completed Iteration 8
-sklearn-iris-experiment-1   Canary   kfserving-test/sklearn-iris   9                      IterationUpdate: Completed Iteration 9
-sklearn-iris-experiment-1   Canary   kfserving-test/sklearn-iris   10                     ExperimentCompleted: Experiment completed successfully
+******
+Experiment name: experiment-1
+Experiment namespace: default
+Experiment target: default/my-model
+
+******
+Number of completed iterations: 10
+
+******
+Winning version: canary
+
+******
+Objectives
++--------------------------+---------+--------+
+|        OBJECTIVE         | DEFAULT | CANARY |
++--------------------------+---------+--------+
+| mean-latency <= 1000.000 | true    | true   |
++--------------------------+---------+--------+
+| error-rate <= 0.010      | true    | true   |
++--------------------------+---------+--------+
+
+******
+Metrics
++--------------------------------+---------+---------+
+|             METRIC             | DEFAULT | CANARY  |
++--------------------------------+---------+---------+
+| request-count                  | 132.294 |  73.254 |
++--------------------------------+---------+---------+
+| 95th-percentile-tail-latency   | 298.582 | 294.597 |
+| (milliseconds)                 |         |         |
++--------------------------------+---------+---------+
+| mean-latency (milliseconds)    | 229.529 | 230.090 |
++--------------------------------+---------+---------+
+| error-rate                     |   0.000 |   0.000 |
++--------------------------------+---------+---------+
 ```
 
-At this point, if you inspect the InferenceService object (`kubectl get inferenceservice -n kfserving-test -o yaml`), you can see that the canary version (`flowers-2`) has been promoted as the new default.
+The experiment should complete after 10 iterations (~3 mins). Once the experiment completes, inspect the InferenceService object. 
+```shell
+kubectl get isvc/my-model
+```
+
+You should see 100% of the traffic shifted to the canary model, similar to the below output.
+```
+# output of the above command should be similar to the below
+NAME       URL                                   READY   PREV   LATEST   PREVROLLEDOUTREVISION   LATESTREADYREVISION                AGE
+my-model   http://my-model.default.example.com   True           100                              my-model-predictor-default-zwjbq   5m
+```

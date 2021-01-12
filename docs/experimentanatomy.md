@@ -4,7 +4,7 @@
 
 > Iter8 experiments generally identify a `winning version` (`winner`) based on the experiment criteria. Typically, traffic shifts progressively towards the winner during the experiment, and the winner is promoted at the end.
 
-The following picture illustrates the main elements of an iter8 experiment specification using this [sample experiment manifest](../samples/experiments/example1.yaml).
+The following picture illustrates the main elements of an iter8 experiment.
 
 ![Anatomy of an experiment](images/experimentanatomy.png)
 ---
@@ -17,4 +17,4 @@ The following picture illustrates the main elements of an iter8 experiment speci
 
 **`criteria`:** metrics-based criteria used to evaluate the model versions.
 
-**`duration`:** The number of iterations of the experiment, along with the duration of each iteration (in seconds).
+**`duration`:** number of iterations of the experiment, along with the duration of each iteration (in seconds).

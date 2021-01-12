@@ -6,12 +6,34 @@
 
 The main elements of iter8 metrics are illustrated in the following two examples.
 
-![Anatomy of a counter metric](images/countermetricsanatomy.png)
+```yaml
+apiVersion: iter8.tools/v2alpha1
+kind: Metric
+metadata:
+  name: request-count
+spec:
+  params: # templated HTTP query parameters
+    query: sum(increase(revision_app_request_latencies_count{revision_name='$revision'}[$interval])) or on() vector(0)
+  description: Number of requests # description of the metric
+  type: counter # type of the metric
+  provider: prometheus # type of the metric database
 ---
-![Anatomy of a gauge metric](images/gaugemetricsanatomy.png)
----
+apiVersion: iter8.tools/v2alpha1
+kind: Metric
+metadata:
+  name: mean-latency
+spec:
+  description: Mean latency
+  units: milliseconds # units of measurement
+  params:
+    query: (sum(increase(revision_app_request_latencies_sum{revision_name='$revision'}[$interval]))or on() vector(0)) / (sum(increase(revision_app_request_latencies_count{revision_name='$revision'}[$interval])) or on() vector(0))
+  type: gauge
+  sample_size: # number of data points used to compute metrics
+    name: request-count
+  provider: prometheus
+```
 
-### Description of keys highlighted above
+### Description of fields in iter8-metric specs
 
 **`params`:** templated HTTP query parameters; `params` are instantiated by iter8 before querying metrics databases. More details are available [here](metrics_custom.md#example-1-defining-a-counter-metric).
 

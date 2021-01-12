@@ -8,8 +8,8 @@ spec:
       serviceAccountName: iter8-handlers
       containers:
       - name: ik-finish
-        image: iter8/iter8-kfserving:latest
-        command: ["handlers/finish.sh"]
+        image: iter8/iter8-kfserving-handler:0.1-alpha.1
+        command: ["/handler", "finish"]
         env:
         - name: EXPERIMENT_NAMESPACE
           value: EXPERIMENT_NAMESPACE_VALUE

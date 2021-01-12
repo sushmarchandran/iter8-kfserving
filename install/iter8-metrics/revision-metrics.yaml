@@ -4,7 +4,7 @@ metadata:
   name: request-count
 spec:
   params:
-    query: sum(increase(revision_app_request_latencies_count{service_name=~'.*$name'}[$interval])) or on() vector(0)
+    query: sum(increase(revision_app_request_latencies_count{revision_name='$revision'}[$interval])) or on() vector(0)
   description: Number of requests
   type: counter
   provider: prometheus
@@ -17,7 +17,7 @@ spec:
   description: Mean latency
   units: milliseconds
   params:
-    query: (sum(increase(revision_app_request_latencies_sum{service_name=~'.*$name'}[$interval]))or on() vector(0)) / (sum(increase(revision_app_request_latencies_count{service_name=~'.*$name'}[$interval])) or on() vector(0))
+    query: (sum(increase(revision_app_request_latencies_sum{revision_name='$revision'}[$interval]))or on() vector(0)) / (sum(increase(revision_app_request_latencies_count{revision_name='$revision'}[$interval])) or on() vector(0))
   type: gauge
   sample_size: 
     name: request-count
@@ -31,7 +31,7 @@ spec:
   description: 95th percentile tail latency
   units: milliseconds
   params:
-    query: histogram_quantile(0.95, sum(rate(revision_app_request_latencies_bucket{service_name=~'.*$name'}[$interval]))
+    query: histogram_quantile(0.95, sum(rate(revision_app_request_latencies_bucket{revision_name='$revision'}[$interval]))
       by (le))
   type: gauge
   sample_size: 
@@ -45,7 +45,7 @@ metadata:
 spec:
   description: Number of error responses
   params:
-    query: sum(increase(revision_app_request_latencies_count{response_code_class!='2xx',service_name=~'.*$name'}[$interval])) or on() vector(0)
+    query: sum(increase(revision_app_request_latencies_count{response_code_class!='2xx',revision_name='$revision'}[$interval])) or on() vector(0)
   type: counter
   provider: prometheus
 ---
@@ -56,7 +56,7 @@ metadata:
 spec:
   description: Fraction of requests with error responses
   params:
-    query: (sum(increase(revision_app_request_latencies_count{response_code_class!='2xx',service_name=~'.*$name'}[$interval])) or on() vector(0)) / (sum(increase(revision_app_request_latencies_count{service_name=~'.*$name'}[$interval])) or on() vector(0))
+    query: (sum(increase(revision_app_request_latencies_count{response_code_class!='2xx',revision_name='$revision'}[$interval])) or on() vector(0)) / (sum(increase(revision_app_request_latencies_count{revision_name='$revision'}[$interval])) or on() vector(0))
   type: gauge
   sample_size: 
     name: request-count

@@ -4,7 +4,7 @@
 
 ### Installation
 ```
-GOBIN=/usr/local/bin go install github.com/iter8-tools/iter8ctl
+GOBIN=/usr/local/bin go get github.com/iter8-tools/iter8ctl@v0.1-alpha
 ```
 The above command installs `iter8ctl` under the `/usr/local/bin` directory. To install under a different directory, change the value of `GOBIN` above.
 

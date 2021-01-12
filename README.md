@@ -43,7 +43,7 @@ curl -L https://raw.githubusercontent.com/iter8-tools/iter8-kfserving/main/sampl
 minikube tunnel --cleanup
 ```
 
-**Step 4:** Create an InferenceService object with an initial `default` model. Update it with a `canary` model.
+**Step 4:** Create an InferenceService object with an initial `default` model. Update it with a `canary` model. This step takes a couple of minutes to complete.
 ```shell
 curl -L https://raw.githubusercontent.com/iter8-tools/iter8-kfserving/main/samples/quickstart/inferenceservicesetup.sh | /bin/bash
 ```
@@ -112,7 +112,7 @@ Metrics
 +--------------------------------+---------+---------+
 ```
 
-The experiment should complete after 10 iterations (~3 mins). Once the experiment completes, inspect the InferenceService object. 
+The experiment should complete after 12 iterations (~3 mins). Once the experiment completes, inspect the InferenceService object. 
 ```shell
 kubectl get isvc/my-model
 ```

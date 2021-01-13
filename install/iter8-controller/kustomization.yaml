@@ -1,13 +1,13 @@
 namePrefix: iter8-
 resources:
 - configmaps
-- github.com/iter8-tools/etc3/config/crd/?ref=v0.1.0-rc
-- github.com/iter8-tools/etc3/config/rbac-iter8/?ref=v0.1.0-rc
-- github.com/iter8-tools/etc3/config/manager/?ref=v0.1.0-rc
+- github.com/iter8-tools/etc3/config/crd/?ref=v0.1.1-alpha
+- github.com/iter8-tools/etc3/config/rbac-iter8/?ref=v0.1.1-alpha
+- github.com/iter8-tools/etc3/config/manager/?ref=v0.1.1-alpha
 # To use a tagged release, for example v0.1.0-rc, change main to v0.1.0-rc in the above three lines
 
 images:
 - name: iter8/etc3:latest
-  newTag: 0.1.0-rc
+  newTag: 0.1.1-alpha
   # To use a tagged release, for example v0.1.0-rc, change latest to 0.1.0-rc in newTag
   # Note the lack of 'v' in the image tag

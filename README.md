@@ -26,7 +26,7 @@ The picture below illustrates progressive canary release of a KFServing model us
 ## Quick start on Minikube
 Steps 1 to 7 demonstrate metrics-driven progressive canary release of a KFServing model using iter8-kfserving. 
 
-Before you begin, you will need [Minikube](https://minikube.sigs.k8s.io/docs/start/), [Kustomize v3](https://kubectl.docs.kubernetes.io/installation/kustomize/), and [Go 1.14+](https://golang.org/doc/install).
+Before you begin, you will need [Minikube](https://minikube.sigs.k8s.io/docs/start/), [Kustomize v3](https://kubectl.docs.kubernetes.io/installation/kustomize/), and [Go 1.13+](https://golang.org/doc/install).
 
 **Step 1:** Start Minikube with sufficient resources.
 ```shell
@@ -49,13 +49,6 @@ curl -L https://raw.githubusercontent.com/iter8-tools/iter8-kfserving/main/sampl
 ```
 
 **Step 5:** *In a separate terminal,* generate prediction requests for the inferenceservice.
-
-**Install** [fortio](https://github.com/fortio/fortio). You can change the directory where `fortio` binary is installed by changing GOBIN below.
-```shell
-GOBIN=/usr/local/bin go get github.com/fortio/fortio
-```
-
-Generate prediction requests.
 ```shell
 curl -L https://raw.githubusercontent.com/iter8-tools/iter8-kfserving/main/samples/quickstart/predictionrequests.sh | /bin/bash
 ```
